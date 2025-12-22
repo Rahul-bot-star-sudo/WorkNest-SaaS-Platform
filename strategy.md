@@ -1,3 +1,9 @@
+```
+Logic kya hai?
+Flow kya hai?
+Decision kahaan hai?
+```
+---
 
 # 🧠 **MODULE CREATE KARNE KI FINAL STRATEGY (STEP-BY-STEP)**
 
