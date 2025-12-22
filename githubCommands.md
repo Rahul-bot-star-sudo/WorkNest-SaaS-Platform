@@ -1,5 +1,3 @@
-
-
 # 🧾 Git Commands Used – With Purpose 
 
 ---
