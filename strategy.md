@@ -10,7 +10,6 @@ Decision kahaan hai?
 > **Socho → Likho → Map karo → Code karo → Improve karo**
 
 ---
-
 ## 🔵 STEP 1: MODULE SCOPE FREEZE KARO (WHAT & WHY)
 
 Har module start karne se pehle ye likho:
