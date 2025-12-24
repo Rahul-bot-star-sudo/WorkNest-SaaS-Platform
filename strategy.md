@@ -6,7 +6,6 @@ Decision kahaan hai?
 ---
 
 # 🧠 **MODULE CREATE KARNE KI FINAL STRATEGY (STEP-BY-STEP)**
-
 > **Golden Rule:**
 > **Socho → Likho → Map karo → Code karo → Improve karo**
 
