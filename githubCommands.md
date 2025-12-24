@@ -39,6 +39,7 @@ git config user.email "rahulshinde2577@gmail.com"
 
 ---
 
+
 ## 4️⃣ Set Git user globally
 
 ```bash
