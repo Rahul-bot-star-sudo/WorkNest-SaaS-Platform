@@ -6,6 +6,7 @@
 
 ## 🔐 **MODULE 1: Authentication & Authorization**
 
+
 ### 🔹 JavaScript / TypeScript Concepts
 
 * Closures (JWT verify middleware)
