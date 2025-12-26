@@ -1,4 +1,12 @@
-
+ ```
+ git config --global --list
+ gpgconf --kill all
+ gpgconf --launch gpg-agent
+ git add .
+ git commit -m "learn strategy"
+ git push
+```
+---
 Neeche main tumhe **ONE STRONG PROJECT** de raha hoon jo:
 
 * 2027 tak relevant rahe
