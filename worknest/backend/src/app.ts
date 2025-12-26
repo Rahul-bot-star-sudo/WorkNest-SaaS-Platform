@@ -1,16 +1,17 @@
-import express from "express";
-import cors from "cors";
+import express from 'express'
+import cors from 'cors'
+import { connectDB } from './db'
+import { registerController } from './modules/auth/auth.controller'
 
-const app = express();
+const app = express()
 
-app.use(cors());
-app.use(express.json());
+app.use(cors({ origin: 'http://localhost:4200' }))
+app.use(express.json())
 
-app.get("/api/v1/health", (_req, res) => {
-  res.json({
-    status: "OK",
-    message: "WorkNest API running"
-  });
-});
+connectDB()
 
-export default app;
+app.post('/register', registerController)
+
+app.listen(3000, () => {
+  console.log('Server running on port 3000')
+})
