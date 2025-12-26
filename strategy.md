@@ -1,11 +1,34 @@
 ```
+Flow of feature
+  ↓
 ALGORITHM
   ↓
 FILE MAP
   ↓
-CODE SKELETON
+CODE SKELETON (
+  NAME
+  ↓
+PROBLEM
+  ↓
+RESPONSIBILITY
+  ↓
+FLOW POSITION
+  ↓
+LANGUAGE-INDEPENDENT EXAMPLE
+  ↓
+SYNTAX (LAST)
+
+)
   ↓
 IMPLEMENT STEPS
+  ↓
+STEP
+  ↓
+CONCEPT
+  ↓
+WHY (use case)
+  ↓
+SYNTAX (baad me)
   ↓
 TEST
   ↓
