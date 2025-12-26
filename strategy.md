@@ -1,4 +1,37 @@
 ```
+ALGORITHM
+  ↓
+FILE MAP
+  ↓
+CODE SKELETON
+  ↓
+IMPLEMENT STEPS
+  ↓
+TEST
+  ↓
+EXPLAIN (khud ko)
+```
+1. STEP 1: Algo-Map ko “TASK LIST” banao
+2. STEP 2: Ek time pe SIRF EK FILE
+```
+1️⃣ register.dto.ts
+2️⃣ auth.controller.ts
+3️⃣ auth.service.ts
+4️⃣ password.util.ts
+5️⃣ auth.repository.ts
+6️⃣ auth.config.ts
+```
+3. Har file ke liye SAME 4 QUESTIONS pucho
+
+Jab bhi koi file kholo, khud se pucho:
+```
+1️⃣ Is file ka role kya hai?
+2️⃣ Isme kaunsa algorithm step aata hai?
+3️⃣ Is file me kya NAHI aana chahiye?
+4️⃣ Ye file kis file se baat karegi?
+```
+---
+```
 Logic kya hai?
 Flow kya hai?
 Decision kahaan hai?

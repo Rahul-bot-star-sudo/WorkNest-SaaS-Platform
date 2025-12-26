@@ -1,17 +1,22 @@
 import express from 'express'
 import cors from 'cors'
-import { connectDB } from './db'
-import { registerController } from './modules/auth/auth.controller'
+import { AuthController } from './modules/auth/auth.controller'
 
 const app = express()
 
-app.use(cors({ origin: 'http://localhost:4200' }))
+app.use(cors())
 app.use(express.json())
 
-connectDB()
+const authController = new AuthController()
 
-app.post('/register', registerController)
-
-app.listen(3000, () => {
-  console.log('Server running on port 3000')
+// ✅ REGISTER ROUTE
+app.post('/register', (req, res) => {
+  authController.register(req, res)
 })
+
+// sanity check
+app.get('/', (_, res) => {
+  res.send('App working')
+})
+
+export default app

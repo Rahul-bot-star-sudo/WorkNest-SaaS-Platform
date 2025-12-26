@@ -1,3 +1,1 @@
-export const AUTH_CONFIG = {
-  DEFAULT_ROLE: 'MEMBER'
-}
+export const DEFAULT_ROLE = 'MEMBER'

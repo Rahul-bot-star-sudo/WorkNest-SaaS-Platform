@@ -1,20 +1,25 @@
 import { Request, Response } from 'express'
-import { registerUser } from './auth.service'
+import { AuthService } from './auth.service'
 
-export async function registerController(req: Request, res: Response) {
-  try {
-    console.log('REGISTER API HIT', req.body)
+export class AuthController {
+  private authService: AuthService
 
-    const result = await registerUser(req.body)
+  constructor() {
+    this.authService = new AuthService()
+  }
 
-    // 🔥 RESPONSE MUST BE RETURNED
-    return res.status(201).json(result)
+  register(req: Request, res: Response) {
+    try {
+      const { email, password } = req.body
 
-  } catch (err: any) {
-    console.error('REGISTER ERROR:', err)
+      const result = this.authService.registerUser({
+        email,
+        password,
+      })
 
-    return res.status(400).json({
-      message: err.message || 'Registration failed'
-    })
+      res.status(201).json(result)
+    } catch (error: any) {
+      res.status(400).json({ message: error.message })
+    }
   }
 }

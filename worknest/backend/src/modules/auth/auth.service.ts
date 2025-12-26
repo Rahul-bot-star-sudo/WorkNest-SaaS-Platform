@@ -1,31 +1,23 @@
-import bcrypt from 'bcryptjs'
-import { userRepository } from '../user/user.repository'
+import { RegisterDTO } from './dto/register.dto'
+import { DEFAULT_ROLE } from './auth.config'
 
-export async function registerUser(dto: any) {
-  const { email, password } = dto
+export class AuthService {
+  registerUser(dto: RegisterDTO) {
+    // STEP 1: validate
+    if (!dto.email) throw new Error('Email required')
+    if (!dto.password) throw new Error('Password required')
 
-  if (!email || !password) {
-    throw new Error('Email and password required')
-  }
+    // STEP 2: password strength
+    if (dto.password.length < 8)
+      throw new Error('Weak password')
 
-  const existingUser = await userRepository.findByEmail(email)
-  if (existingUser) {
-    throw new Error('Email already exists')
-  }
+    // STEP 3: create user (temporary, DB later)
+    const user = {
+      email: dto.email,
+      role: DEFAULT_ROLE,
+    }
 
-  const hashedPassword = await bcrypt.hash(password, 10)
-
-  const savedUser = await userRepository.save({
-    email,
-    password: hashedPassword,
-    role: 'MEMBER',
-    status: 'ACTIVE'
-  })
-
-  // ✅ savedUser is SINGLE document now
-  return {
-    email: savedUser.email,
-    role: savedUser.role,
-    status: savedUser.status
+    // STEP 4: return safe response
+    return user
   }
 }
