@@ -1,3 +1,6 @@
+ * 
+* mujhe ye project create karana hai mujhe har module ka alag alag foleder chahiye usame mujhe us module ki readme file, module flow ki readme, flow ka algorithm readme, algo map readme , algo ka codemap in seprate readme create to folder frontend and backend use ts and angular for fronted and node use for backend tum sab karo mujhe kuchh karane ki jarurat na ho mujhe ye project production ready banao esame test cases add karo aur use pass bhi karo exernal css use karo ek css file me sari css banao, html ka aur css ka structure ui and ux ke hisab se banao 
+ 
  ```
  git config --global --list
  gpgconf --kill all
