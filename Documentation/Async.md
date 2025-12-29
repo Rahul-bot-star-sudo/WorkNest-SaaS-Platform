@@ -1,3 +1,4 @@
+```
 Function Parameters
 Rest Parameters
 Spread
@@ -233,3 +234,4 @@ Ex:
    </div>
 </body>
 </html>
+```
