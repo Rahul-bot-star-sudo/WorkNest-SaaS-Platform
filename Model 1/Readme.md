@@ -1,5 +1,30 @@
+### Features 
+---
+```
+Register
+
+Login
+
+Logout
+
+Refresh Token
+
+Role-based Authorization
+
+Forgot Password
+
+Reset Password| Level                    | Count |
+| ------------------------ | ----- |
+| **Auth Module Features** | **4** |
+| Register                 | 1     |
+| Login                    | 1     |
+| Auth Middleware          | 1     |
+| Role Authorization       | 1     |
 
 
+Change Password
+```
+---
 
 # 🧠 **COMPLETE PROFESSIONAL CONCEPT MAP (MODULE-WISE)**
 
