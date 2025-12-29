@@ -1,25 +1,15 @@
-import { Request, Response } from 'express'
-import { AuthService } from './auth.service'
+// auth.config.ts
 
-export class AuthController {
-  private authService: AuthService
+// 🧠 Algorithm
+// STEP 0: Define default values used during user registration
+// DEFAULT_ROLE = MEMBER
+// DEFAULT_STATUS = ACTIVE
 
-  constructor() {
-    this.authService = new AuthService()
-  }
+// Code Skeleton → Converted to valid TypeScript code
+export const AuthConfig = {
+  // default role assigned during registration
+  DEFAULT_ROLE: 'MEMBER',
 
-  register(req: Request, res: Response) {
-    try {
-      const { email, password } = req.body
-
-      const result = this.authService.registerUser({
-        email,
-        password,
-      })
-
-      res.status(201).json(result)
-    } catch (error: any) {
-      res.status(400).json({ message: error.message })
-    }
-  }
+  // default user status
+  DEFAULT_STATUS: 'ACTIVE',
 }
