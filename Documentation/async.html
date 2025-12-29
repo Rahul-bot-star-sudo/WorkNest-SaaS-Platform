@@ -1,0 +1,13 @@
+<script>
+     let data;
+     fetch("https://fakestoreapi.com/products")
+     .then(async function(response){
+         return await response.json();
+     })
+     .then(async function(products){
+          data = await products;
+          data.map(function(item){
+             document.write(item.title + "<br>");
+          })
+     })
+</script>
