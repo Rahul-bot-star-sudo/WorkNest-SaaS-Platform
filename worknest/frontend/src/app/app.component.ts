@@ -5,6 +5,6 @@ import { RegisterComponent } from './register/register.component'
   selector: 'app-root',
   standalone: true,
   imports: [RegisterComponent],
-  template: `<app-register></app-register>`
+  templateUrl: './app.component.html'
 })
 export class AppComponent {}

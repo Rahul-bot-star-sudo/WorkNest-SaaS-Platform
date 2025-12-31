@@ -1,1 +1,98 @@
-/* You can add global styles to this file, and also import other style files */
+/* ===== GLOBAL RESET ===== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* ===== PAGE LAYOUT ===== */
+.auth-page {
+  min-height: 100vh;
+  background: linear-gradient(135deg, #4f46e5, #6366f1);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== CARD ===== */
+.auth-card {
+  background: #ffffff;
+  width: 100%;
+  max-width: 400px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+/* ===== TEXT ===== */
+.auth-title {
+  text-align: center;
+  font-size: 24px;
+  margin-bottom: 5px;
+  color: #111827;
+}
+
+.auth-subtitle {
+  text-align: center;
+  font-size: 14px;
+  color: #6b7280;
+  margin-bottom: 25px;
+}
+
+/* ===== FORM ===== */
+.auth-form .form-group {
+  margin-bottom: 18px;
+}
+
+.auth-form label {
+  display: block;
+  margin-bottom: 6px;
+  font-size: 14px;
+  color: #374151;
+}
+
+.auth-form input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  font-size: 14px;
+  outline: none;
+}
+
+.auth-form input:focus {
+  border-color: #6366f1;
+}
+
+/* ===== BUTTON ===== */
+.btn-primary {
+  width: 100%;
+  padding: 12px;
+  background: #4f46e5;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-primary:hover {
+  background: #4338ca;
+}
+
+/* ===== MESSAGES ===== */
+.success-message {
+  margin-top: 15px;
+  text-align: center;
+  color: #16a34a;
+  font-size: 14px;
+}
+
+.error-message {
+  margin-top: 15px;
+  text-align: center;
+  color: #dc2626;
+  font-size: 14px;
+}
