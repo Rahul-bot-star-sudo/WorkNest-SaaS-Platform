@@ -49,15 +49,16 @@
     <p style="margin-top:16px; text-align:center">
       New user?
       <a href="#" (click)="onSwitch(); $event.preventDefault()">
-  Create account
-</a>
-
+        Create account
+      </a>
     </p>
 
-    <!-- Success Message -->
-    <p class="success-message" *ngIf="successMessage">
-      {{ successMessage }}
-    </p>
+    <!-- ❌ SUCCESS MESSAGE REMOVED -->
 
     <!-- Error Message -->
     <p class="error-message" *ngIf="errorMessage">
+      {{ errorMessage }}
+    </p>
+
+  </div>
+</div>

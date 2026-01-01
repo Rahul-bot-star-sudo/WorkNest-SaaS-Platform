@@ -1,23 +1,63 @@
+// ─────────────────────────────
+// 🌍 ENV CONFIG
+// ─────────────────────────────
+import dotenv from 'dotenv'
+dotenv.config()
+
+// ─────────────────────────────
+// 📦 IMPORTS
+// ─────────────────────────────
 import express from 'express'
 import cors from 'cors'
-import authRoutes from './modules/auth/auth.routes'
-import { connectDatabase } from './config/database.config'
 
+import authRoutes from './modules/auth/auth.routes'
+import secureRoutes from './modules/secure/secure.routes'
+
+import { connectDatabase } from './config/database.config'
+import { errorMiddleware } from './middlewares/error.middleware'
+
+// ─────────────────────────────
+// 🚀 APP INIT
+// ─────────────────────────────
 const app = express()
 
-// 🔥 CORS allow (Angular 4200 → Backend 3000)
+// ─────────────────────────────
+// 🌍 GLOBAL MIDDLEWARES
+// ─────────────────────────────
+
+// 🔥 Allow CORS (Angular :4200 → Backend :3000)
 app.use(cors())
 
-// 🔥 JSON body parse
+// 🔥 Parse JSON body
 app.use(express.json())
 
-// 🔥 Auth routes
+// ─────────────────────────────
+// 🚏 ROUTES
+// ─────────────────────────────
+
+// 🔓 Public routes
 app.use('/auth', authRoutes)
+
+// 🔐 Protected routes
+app.use('/secure', secureRoutes)
+
+// ─────────────────────────────
+// 🛢️ DATABASE
+// ─────────────────────────────
 
 // 🔥 MongoDB connect
 connectDatabase()
 
-// 🔥 Start server
-app.listen(3000, () => {
-  console.log('🚀 Server running on port 3000')
+// ─────────────────────────────
+// ❌ GLOBAL ERROR HANDLER (LAST ONLY)
+// ─────────────────────────────
+app.use(errorMiddleware)
+
+// ─────────────────────────────
+// 🚀 SERVER START
+// ─────────────────────────────
+const PORT = process.env.PORT || 3000
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running on port ${PORT}`)
 })
