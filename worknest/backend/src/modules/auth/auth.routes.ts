@@ -20,9 +20,13 @@ import { AuthController } from './auth.controller'
 const router = Router()
 const authController = new AuthController()
 
+// ✅ controller ka instance banao (MISSING THA)
+const controller = new AuthController()
 // POST /register
 router.post('/register', (req, res) => {
   authController.register(req, res)
 })
+router.post('/login', controller.login.bind(controller))
+
 
 export default router

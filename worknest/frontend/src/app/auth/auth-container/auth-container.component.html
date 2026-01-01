@@ -1,0 +1,15 @@
+<div class="auth-page">
+  <div class="auth-card">
+
+    <app-login
+      *ngIf="showLogin"
+      (switchToRegister)="switchToRegister()">
+    </app-login>
+
+    <app-register
+      *ngIf="!showLogin"
+      (switchToLogin)="switchToLogin()">
+    </app-register>
+
+  </div>
+</div>

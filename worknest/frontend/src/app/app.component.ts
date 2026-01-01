@@ -1,10 +1,10 @@
 import { Component } from '@angular/core'
-import { RegisterComponent } from './register/register.component'
+import { AuthContainerComponent } from './auth/auth-container/auth-container.component'
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RegisterComponent],
-  templateUrl: './app.component.html'
+  imports: [AuthContainerComponent],
+  template: `<app-auth-container></app-auth-container>`
 })
 export class AppComponent {}

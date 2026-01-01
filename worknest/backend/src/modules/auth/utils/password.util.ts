@@ -6,6 +6,7 @@
 Ye file sirf PASSWORD se related kaam karti hai:
 1. Password strong hai ya nahi check karna
 2. Password ko secure form me convert (hash) karna
+3. Login ke time password compare karna
 
 👉 Security ka code yahin isolate hota hai
 👉 Service / Controller clean rehte hain
@@ -23,7 +24,7 @@ export class PasswordUtil {
       throw new Error('Password must be at least 8 characters long')
     }
 
-    // STEP 2: Check complexity (simple version for beginner)
+    // STEP 2: Check complexity
     const hasNumber = /\d/.test(password)
     const hasLetter = /[a-zA-Z]/.test(password)
 
@@ -32,15 +33,18 @@ export class PasswordUtil {
     }
   }
 
-  // STEP 3: Hash password using bcrypt
+  // STEP 3: Hash password using bcrypt (REGISTER)
   static async hash(password: string): Promise<string> {
-
     const saltRounds = 10
-
-    // bcrypt password ko unreadable bana deta hai
-    const hashedPassword = await bcrypt.hash(password, saltRounds)
-
-    return hashedPassword
+    return await bcrypt.hash(password, saltRounds)
   }
 
+  // STEP 4: Compare password (LOGIN) 🔥
+  static async compare(
+    plainPassword: string,
+    hashedPassword: string
+  ): Promise<boolean> {
+
+    return await bcrypt.compare(plainPassword, hashedPassword)
+  }
 }

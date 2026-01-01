@@ -1,54 +1,63 @@
 <div class="auth-page">
   <div class="auth-card">
 
-    <h2 class="auth-title">Create Account</h2>
-    <p class="auth-subtitle">Register to continue</p>
+    <!-- Title -->
+    <h2 class="auth-title">Welcome Back</h2>
+    <p class="auth-subtitle">
+      Login to continue to your account
+    </p>
 
-    <form (ngSubmit)="register()" class="auth-form">
+    <!-- Login Form -->
+    <form class="auth-form" (ngSubmit)="login()">
 
+      <!-- Email -->
       <div class="form-group">
         <label>Email</label>
         <input
           type="email"
-          [(ngModel)]="email"
           name="email"
+          [(ngModel)]="email"
           placeholder="Enter your email"
           required
         />
       </div>
 
+      <!-- Password -->
       <div class="form-group">
         <label>Password</label>
         <input
           type="password"
-          [(ngModel)]="password"
           name="password"
+          [(ngModel)]="password"
           placeholder="Enter your password"
           required
         />
       </div>
 
-      <button type="submit" class="btn-primary">
-        Register
+      <!-- Button -->
+      <button
+        type="submit"
+        class="btn-primary"
+        [disabled]="loading"
+      >
+        {{ loading ? 'Logging in...' : 'Login' }}
       </button>
 
     </form>
 
     <!-- SWITCH LINK 🔁 -->
     <p style="margin-top:16px; text-align:center">
-      Already have an account?
-      <a href="login" (click)="onSwitch(); $event.preventDefault()">
-        Login
-      </a>
+      New user?
+      <a href="#" (click)="onSwitch(); $event.preventDefault()">
+  Create account
+</a>
+
     </p>
 
+    <!-- Success Message -->
     <p class="success-message" *ngIf="successMessage">
       {{ successMessage }}
     </p>
 
+    <!-- Error Message -->
     <p class="error-message" *ngIf="errorMessage">
-      {{ errorMessage }}
-    </p>
-
-  </div>
-</div>

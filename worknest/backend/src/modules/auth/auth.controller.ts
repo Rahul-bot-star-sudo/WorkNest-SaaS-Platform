@@ -21,6 +21,25 @@ import { RegisterDto } from './dto/register.dto'
 export class AuthController {
 
   private authService = new AuthService()
+  async login(req: any, res: any) {
+  try {
+    const dto = {
+      email: req.body.email,
+      password: req.body.password
+    }
+
+    const result = await this.authService.loginUser(dto)
+
+    return res.status(200).json({
+      message: 'Login successful',
+      data: result
+    })
+  } catch (error: any) {
+    return res.status(400).json({
+      message: error.message || 'Login failed'
+    })
+  }
+}
 
   async register(req: any, res: any) {
     try {
