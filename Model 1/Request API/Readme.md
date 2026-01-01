@@ -1,9 +1,3 @@
-Perfect 👍
-Main **sirf LOGIC** likh raha hoon — **no code**, **no syntax**.
-Exactly jaise company me **feature design document** hota hai.
-
----
-
 # 🔐 FEATURE: ROLE-BASED AUTHORIZATION
 
 *(Request → JWT → Role → Controller)*
