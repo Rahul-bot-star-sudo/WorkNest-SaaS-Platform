@@ -1,7 +1,8 @@
 import { Component, EventEmitter, Output } from '@angular/core'
 import { CommonModule } from '@angular/common'
 import { FormsModule } from '@angular/forms'
-import { HttpClient } from '@angular/common/http'
+import { Router } from '@angular/router'
+import { AuthService } from '../../services/auth.service'
 
 @Component({
   selector: 'app-login',
@@ -12,45 +13,44 @@ import { HttpClient } from '@angular/common/http'
 })
 export class LoginComponent {
 
-  // 🔁 switch signal to parent
   @Output() switchToRegister = new EventEmitter<void>()
 
-  email: string = ''
-  password: string = ''
+  email = ''
+  password = ''
 
-  loading: boolean = false
-  successMessage: string = ''
-  errorMessage: string = ''
+  loading = false
+  errorMessage = ''
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   login() {
     this.loading = true
-    this.successMessage = ''
     this.errorMessage = ''
 
-    this.http.post<any>('http://localhost:3000/auth/login', {
+    this.authService.login({
       email: this.email,
       password: this.password
     }).subscribe({
-      next: (res) => {
-        this.successMessage = 'Login successful ✅'
-        this.loading = false
-        localStorage.setItem('token', res.data.token)
+      next: () => {
+        // ✅ token AuthService me save ho chuka hai
+        // ✅ direct dashboard redirect
+        this.router.navigate(['/dashboard'])
       },
-      error: (err) => {
+      error: (err: any) => {
+        this.loading = false
         this.errorMessage =
           err?.error?.message || 'Login failed'
+      },
+      complete: () => {
         this.loading = false
       }
     })
   }
 
-  // 🔁 manual switch (link click)
-  
-onSwitch() {
-  console.log('📤 emitting switchToRegister')
-  this.switchToRegister.emit()
-}
-
+  onSwitch() {
+    this.switchToRegister.emit()
+  }
 }

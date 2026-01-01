@@ -1,23 +1,28 @@
 // src/modules/auth/auth.service.ts
 
 /*
-🧠 PURPOSE (Beginner Samjho)
+🧠 PURPOSE
 
-Ye file AUTH ka poora business logic handle karti hai.
+AUTH ka poora business logic yahan hota hai.
 
 REGISTER:
-User create hota hai
+- user create
+- password hash
+- role + status assign
 
 LOGIN:
-User verify hota hai + token milta hai
+- credentials verify
+- access + refresh token generate
 */
 
 import { AuthRepository } from './auth.repository'
-import { PasswordUtil } from './utils/password.util'
+import { PasswordUtil } from '../../utils/password.util'
 import { AuthConfig } from './auth.config'
 import { RegisterDto } from './dto/register.dto'
 import { LoginDto } from './dto/login.dto'
-import { JwtUtil } from './utils/jwt.util'
+import { AppError } from '../../utils/AppError'
+import { generateAccessToken, generateRefreshToken } from '../../utils/token.util'
+import jwt from 'jsonwebtoken'
 
 export class AuthService {
 
@@ -30,13 +35,13 @@ export class AuthService {
 
     // STEP 1: Validate input
     if (!dto.email || !dto.password) {
-      throw new Error('Email and password are required')
+      throw new AppError('Email and password are required', 400)
     }
 
     // STEP 2: Find user
     const user = await this.authRepository.findByEmail(dto.email)
     if (!user) {
-      throw new Error('Invalid email or password')
+      throw new AppError('Invalid email or password', 401)
     }
 
     // STEP 3: Compare password
@@ -46,28 +51,62 @@ export class AuthService {
     )
 
     if (!isValid) {
-      throw new Error('Invalid email or password')
+      throw new AppError('Invalid email or password', 401)
     }
 
     // STEP 4: Check status
     if (user.status !== AuthConfig.DEFAULT_STATUS) {
-      throw new Error('User account is inactive')
+      throw new AppError('User account is inactive', 403)
     }
 
-    // STEP 5: Generate token
-    const token = JwtUtil.generate({
+    // STEP 5: Prepare token payload
+    const payload = {
       userId: user.id,
       role: user.role
-    })
+    }
 
-    // STEP 6: Return response
+    // STEP 6: Generate tokens
+    const accessToken = generateAccessToken(payload)
+    const refreshToken = generateRefreshToken(payload)
+
+    // 🔥 FUTURE: save refreshToken in DB (rotation / logout)
+
+    // STEP 7: Return response
     return {
-      token,
+      accessToken,
+      refreshToken,
       user: {
         email: user.email,
         role: user.role,
         status: user.status
       }
+    }
+  }
+
+  // ======================
+  // REFRESH ACCESS TOKEN
+  // ======================
+  async refreshAccessToken(refreshToken: string) {
+
+    if (!refreshToken) {
+      throw new AppError('Refresh token required', 400)
+    }
+
+    try {
+      const decoded: any = jwt.verify(
+        refreshToken,
+        process.env.JWT_SECRET!
+      )
+
+      const newAccessToken = generateAccessToken({
+        userId: decoded.userId,
+        role: decoded.role
+      })
+
+      return { accessToken: newAccessToken }
+
+    } catch (error) {
+      throw new AppError('Invalid refresh token', 401)
     }
   }
 
@@ -78,13 +117,13 @@ export class AuthService {
 
     // STEP 1: Validate input
     if (!dto.email || !dto.password) {
-      throw new Error('Email and password are required')
+      throw new AppError('Email and password are required', 400)
     }
 
     // STEP 2: Check if email already exists
     const existingUser = await this.authRepository.findByEmail(dto.email)
     if (existingUser) {
-      throw new Error('User with this email already exists')
+      throw new AppError('User with this email already exists', 409)
     }
 
     // STEP 3: Check password strength
