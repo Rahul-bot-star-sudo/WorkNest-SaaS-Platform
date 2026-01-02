@@ -2,6 +2,8 @@ import { Routes } from '@angular/router'
 import { AuthContainerComponent } from './auth/auth-container/auth-container.component'
 import { DashboardComponent } from './dashboard/dashboard.component'
 import { authGuard } from './guards/auth.guard'
+import { model } from '@angular/core'
+import { Register } from './first-module/register/register'
 
 export const routes: Routes = [
 
@@ -9,6 +11,12 @@ export const routes: Routes = [
   {
     path: '',
     component: AuthContainerComponent
+  },
+  // First module 
+  {
+    path:'register', 
+    component: Register
+
   },
 
   // 🔐 DASHBOARD (PROTECTED)
