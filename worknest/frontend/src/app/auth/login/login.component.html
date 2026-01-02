@@ -1,64 +1,71 @@
+<!-- AUTH PAGE -->
 <div class="auth-page">
+
+  <!-- AUTH CARD -->
   <div class="auth-card">
 
-    <!-- Title -->
-    <h2 class="auth-title">Welcome Back</h2>
-    <p class="auth-subtitle">
-      Login to continue to your account
-    </p>
+    <!-- HEADER -->
+    <div class="auth-header">
+      <h2 class="auth-title">Welcome Back</h2>
+      <p class="auth-subtitle">
+        Login to continue to your account
+      </p>
+    </div>
 
-    <!-- Login Form -->
+    <!-- FORM -->
     <form class="auth-form" (ngSubmit)="login()">
 
-      <!-- Email -->
+      <!-- EMAIL -->
       <div class="form-group">
-        <label>Email</label>
+        <label for="email">Email address</label>
         <input
+          id="email"
           type="email"
           name="email"
           [(ngModel)]="email"
-          placeholder="Enter your email"
+          placeholder="you@example.com"
           required
         />
       </div>
 
-      <!-- Password -->
+      <!-- PASSWORD -->
       <div class="form-group">
-        <label>Password</label>
+        <label for="password">Password</label>
         <input
+          id="password"
           type="password"
           name="password"
           [(ngModel)]="password"
-          placeholder="Enter your password"
+          placeholder="••••••••"
           required
         />
       </div>
 
-      <!-- Button -->
+      <!-- BUTTON -->
       <button
         type="submit"
         class="btn-primary"
         [disabled]="loading"
       >
-        {{ loading ? 'Logging in...' : 'Login' }}
+        {{ loading ? 'Logging in…' : 'Login' }}
       </button>
 
     </form>
 
-    <!-- SWITCH LINK 🔁 -->
-    <p style="margin-top:16px; text-align:center">
-      New user?
+    <!-- FEEDBACK -->
+    <div class="auth-feedback">
+      <p class="error-message" *ngIf="errorMessage">
+        {{ errorMessage }}
+      </p>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="auth-footer">
+      <span>New user?</span>
       <a href="#" (click)="onSwitch(); $event.preventDefault()">
         Create account
       </a>
-    </p>
-
-    <!-- ❌ SUCCESS MESSAGE REMOVED -->
-
-    <!-- Error Message -->
-    <p class="error-message" *ngIf="errorMessage">
-      {{ errorMessage }}
-    </p>
+    </div>
 
   </div>
 </div>

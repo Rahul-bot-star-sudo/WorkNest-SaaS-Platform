@@ -1,2 +1,100 @@
-<h2>Welcome to Dashboard 🎉</h2>
-<p>You are logged in successfully.</p>
+<style>
+/* ===== DASHBOARD PAGE ===== */
+.dashboard-page {
+  min-height: 100vh;
+  background: var(--bg-color);
+  padding: 40px;
+  color: var(--text-primary);
+}
+
+/* ===== HEADER ===== */
+.dashboard-header {
+  margin-bottom: 32px;
+}
+
+.dashboard-header h1 {
+  font-size: 28px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.dashboard-header p {
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* ===== CARDS GRID ===== */
+.dashboard-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 20px;
+}
+
+/* ===== CARD ===== */
+.dashboard-card {
+  background: var(--card-bg);
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 24px;
+}
+
+.dashboard-card h3 {
+  font-size: 18px;
+  margin-bottom: 8px;
+  color: var(--text-primary);
+}
+
+.dashboard-card p {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: 16px;
+}
+
+/* ===== SECONDARY BUTTON ===== */
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--secondary-color);
+  color: var(--secondary-color);
+  padding: 8px 14px;
+  border-radius: 6px;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.btn-secondary:hover {
+  background: var(--secondary-color);
+  color: #231F20;
+}
+</style>
+<div class="dashboard-page">
+
+  <!-- HEADER -->
+  <header class="dashboard-header">
+    <h1>Welcome back 👋</h1>
+    <p>You are logged in successfully</p>
+  </header>
+
+  <!-- STATS / CARDS -->
+  <section class="dashboard-cards">
+
+    <div class="dashboard-card">
+      <h3>Profile</h3>
+      <p>View and update your personal information.</p>
+      <button class="btn-secondary">View Profile</button>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>Security</h3>
+      <p>Manage password and account security.</p>
+      <button class="btn-secondary">Security Settings</button>
+    </div>
+
+    <div class="dashboard-card">
+      <h3>Activity</h3>
+      <p>Check your recent account activity.</p>
+      <button class="btn-secondary">View Activity</button>
+    </div>
+
+  </section>
+
+</div>

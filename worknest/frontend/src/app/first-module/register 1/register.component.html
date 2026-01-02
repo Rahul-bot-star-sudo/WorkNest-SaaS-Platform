@@ -1,0 +1,33 @@
+
+<!-- 🧠 STEP 1: UI Render -->
+<h2>Create Account</h2>
+
+<form (ngSubmit)="register()">
+
+  <!-- 🧠 STEP 2: Input -->
+  <input
+    type="email"
+    name="email"
+    [(ngModel)]="email"
+    placeholder="Email"
+    required
+  />
+
+  <input
+    type="password"
+    name="password"
+    [(ngModel)]="password"
+    placeholder="Password"
+    required
+  />
+
+  <!-- 🧠 STEP 3: Submit -->
+  <button type="submit" [disabled]="loading">
+    {{ loading ? 'Registering...' : 'Register' }}
+  </button>
+
+</form>
+
+<!-- 🧠 STEP 5: Feedback -->
+<p *ngIf="successMessage">{{ successMessage }}</p>
+<p *ngIf="errorMessage">{{ errorMessage }}</p>
