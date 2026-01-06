@@ -4,10 +4,10 @@
 
 ## 1️⃣ **WHY (Problem)**
 
-**Why does async / await exist?**
+### **Why does async / await exist?**
 To make **asynchronous code easy to read and understand**.
 
-**Without it, what problem happens?**
+#### **Without it, what problem happens?**
 
 * Too many `.then()` and callbacks
 * Code becomes confusing
