@@ -1,4 +1,12 @@
-
+### Job role in future
+---
+```
+Software Engineer
+   → Senior Engineer
+      → Tech Lead
+         → Software Architect
+```
+---
 ## 🧠 Your Framework (CORE) — Is It Correct?
 
 You wrote:
