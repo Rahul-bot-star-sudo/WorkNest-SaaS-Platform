@@ -1,3 +1,87 @@
+### strategy with system design 
+---
+```
+LEARN → DO → THINK → REBUILD
+```
+1. Requirements
+2. actors
+3. data
+4. flow
+5. constraints
+6. quality attributes
+7. HLD
+8. LLD
+9. Template UI Flow
+10. Add validation
+11. Draw activity diagram
+12. Draw use case diagram
+13. Draw sequence diagram
+14. Draw class diagram
+15. flow of feature
+16. algorithm of that flow
+17. file map with this algorithm
+18. code skeleton
+19. implement steps of code skeleton
+20. concept
+21. why (use case)
+22. syntax(bad me)
+23. test
+24. explain
+
+---
+
+```
+LEARN → DESIGN → DO → THINK → REBUILD → TEST → EXPLAIN
+```
+
+### 🔹 LEARN
+
+1. Concept
+2. Why (use case)
+3. Syntax (later)
+
+### 🔹 DESIGN (SYSTEM CORE)
+
+4. Requirements
+5. Actors
+6. Data
+7. Flow
+8. Constraints
+9. Quality Attributes
+10. HLD
+11. LLD
+
+### 🔹 MODEL (DIAGRAMS)
+
+12. UI Flow
+13. Use Case Diagram
+14. Activity Diagram
+15. Sequence Diagram
+16. Class Diagram
+
+### 🔹 FEATURE LOGIC
+
+17. Feature Flow
+18. Algorithm
+19. File Map
+
+### 🔹 DO (CODE)
+
+20. Code Skeleton
+21. Implement Step-by-Step
+
+### 🔹 QUALITY
+
+22. Validation & Error Handling
+23. Testing
+
+### 🔹 THINK
+
+24. Explain Design & Trade-offs
+
+
+---
+
 ```
   Template UI Flow
   Add validation
@@ -53,7 +137,7 @@ EXPLAIN (khud ko)
 5️⃣ auth.repository.ts
 6️⃣ auth.config.ts
 ```
-3. Har file ke liye SAME 4 QUESTIONS pucho
+1. Har file ke liye SAME 4 QUESTIONS pucho
 
 Jab bhi koi file kholo, khud se pucho:
 ```
