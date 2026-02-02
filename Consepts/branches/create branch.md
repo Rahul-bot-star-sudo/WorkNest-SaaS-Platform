@@ -1,6 +1,4 @@
-Great question 👍
-Sentence correction pehle 👇
-**“mai ek project folder create kara aur usme do folder create kare use do folder ko alag alag do brach create kari aur use complete hone pe main pe push kara kya ye sahi hai ha to kaise” ❌**
+
 👉 **“Maine ek project folder banaya, usme do feature folders banaye. Kya main unke liye alag-alag branches bana sakta hoon aur complete hone par main branch me merge kar sakta hoon? Agar haan, to kaise?” ✅**
 
 ---
