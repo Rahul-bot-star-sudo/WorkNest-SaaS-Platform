@@ -3,6 +3,9 @@
 ```
 LEARN → DO → THINK → REBUILD
 ```
+> Feature → Flow → Algorithm → File Mapping → Skeleton → Code
+---
+
 1. Requirements
 2. actors
 3. data
