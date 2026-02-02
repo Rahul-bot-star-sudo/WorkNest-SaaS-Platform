@@ -1,5 +1,4 @@
 // setup.service.js
-
 const SystemRepository = require('../system/system.repository')
 
 class SetupService {
