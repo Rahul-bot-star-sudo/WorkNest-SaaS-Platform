@@ -1,12 +1,14 @@
-const express = require('express')
-const router = express.Router()
-const { SetupController } = require('../module1/super-admin/super admin setup/setup.controller')
+// setup.routes.js
 
-const setupController = new SetupController()
+const express = require('express');
+const router = express.Router();
+
+// ✅ INSTANCE import (NO new)
+const setupController = require('../module1/super-admin/super admin setup/setup.controller');
 
 router.post(
-  '/setup/super-admin',
+  '/super-admin',
   setupController.createSuperAdmin.bind(setupController)
-)
+);
 
-module.exports = router
+module.exports = router;

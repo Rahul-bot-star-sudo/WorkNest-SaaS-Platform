@@ -1,0 +1,7 @@
+// STEP 8: AUTH CONFIG
+
+module.exports = {
+  ACTIVE_STATUS: 'ACTIVE',
+  ACCESS_TOKEN_EXPIRY: '15m',
+  REFRESH_TOKEN_EXPIRY: '7d'
+}

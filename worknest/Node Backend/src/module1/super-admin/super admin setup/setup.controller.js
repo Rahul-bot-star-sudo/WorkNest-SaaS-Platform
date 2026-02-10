@@ -1,40 +1,41 @@
-const { SetupService } = require('./setup.service')
+// setup.controller.js
+
+// ✅ INSTANCE import (NO destructuring)
+const setupService = require('./setup.service');
 
 class SetupController {
 
   constructor() {
-    // controller khud service create karega
-    this.setupService = new SetupService()
+    // ✅ already-created service instance use karo
+    this.setupService = setupService;
   }
 
   async createSuperAdmin(req, res) {
     try {
       // STEP 1: Receive HTTP request
-      const body = req.body
+      const { name, email, password } = req.body;
 
-      // STEP 2: Extract name, email, password
-      const { name, email, password } = body
+      // STEP 2: Build DTO
+      const dto = { name, email, password };
 
-      // STEP 3: Create DTO (simple object)
-      const dto = {
-        name,
-        email,
-        password
-      }
+      // STEP 3: Call service
+      const result = await this.setupService.createSuperAdmin(dto);
 
-      // STEP 4: Call service
-      const result = await this.setupService.createSuperAdmin(dto)
-
-      // STEP 5: Send success response
-      return res.status(201).json(result)
+      // STEP 4: Send success response
+      return res.status(201).json({
+        success: true,
+        message: result.message
+      });
 
     } catch (error) {
-      // STEP 6: Handle error & send error response
+      // STEP 5: Error response
       return res.status(400).json({
+        success: false,
         message: error.message
-      })
+      });
     }
   }
 }
 
-module.exports = { SetupController }
+// ✅ CONTROLLER INSTANCE EXPORT
+module.exports = new SetupController();
