@@ -1,30 +1,39 @@
-Got it 👍
-You want **only the SKELETON** — file names + step comments —
-so that **sirf code bharte hi LOGIN feature create ho jaaye**.
-No extra explanation, no logic discussion.
+Perfect 👍
+Agar **production-ready LOGIN** chahiye, to pehle wala skeleton **basic / learning-level** tha.
+Ab main tumhe **REAL PRODUCTION-GRADE LOGIN SKELETON** de raha hoon —
+**Access Token + Refresh Token + Security + Clean separation** ke saath.
 
-Below is the **FINAL LOGIN SKELETON (Algorithm → File Map)**
-**Node.js (JS), service-first, role-based, future-ready.**
+❗ Abhi bhi **sirf SKELETON** hai (comments + structure),
+taaki tum **step-by-step fill** kar sako aur **samajh bhi pao**.
 
 ---
 
-# 🔐 LOGIN FEATURE – FILE-WISE CODE SKELETON (NODE / JS)
+# 🔐 PRODUCTION LOGIN – FILE-WISE SKELETON (NODE / JS)
+
+## 🧱 ARCHITECTURE RULE (LOCK THIS)
+
+```
+Controller → Service → Repository → Utils
+```
+
+* Controller = HTTP
+* Service = Business decision
+* Repository = DB
+* Utils = crypto / jwt
+* Token logic = centralized
 
 ---
 
 ## 1️⃣ `src/modules/auth/dto/login.dto.js`
 
 ```js
-// login.dto.js
-// INPUT CONTRACT ONLY
+// INPUT CONTRACT (VALIDATED DATA ONLY)
 
 module.exports = function LoginDto(data) {
   return {
-    // STEP 1: email from request
     email: data.email,
-
-    // STEP 1: password from request
-    password: data.password
+    password: data.password,
+    deviceInfo: data.deviceInfo // production use (optional)
   }
 }
 ```
@@ -34,23 +43,28 @@ module.exports = function LoginDto(data) {
 ## 2️⃣ `src/modules/auth/auth.controller.js`
 
 ```js
-// auth.controller.js
-// API ENTRY POINT
+// API ENTRY POINT (NO BUSINESS LOGIC)
+
+const LoginDto = require('./dto/login.dto')
+const AuthService = require('./auth.service')
 
 class AuthController {
 
   async login(req, res) {
     try {
-      // STEP 1: Receive HTTP request
+      // STEP 1: Receive request
 
-      // STEP 2: Build LoginDto from req.body
+      // STEP 2: Build LoginDto
+      const dto = LoginDto(req.body)
 
-      // STEP 3: Call AuthService.login(dto)
+      // STEP 3: Call service
+      const result = await AuthService.login(dto)
 
-      // STEP 11: Send success response
+      // STEP 10: Set refresh token in HttpOnly cookie
 
+      // STEP 11: Send response (access token + user)
     } catch (error) {
-      // STEP 11: Handle error response
+      // STEP 12: Handle error (generic message)
     }
   }
 
@@ -64,75 +78,106 @@ module.exports = AuthController
 ## 3️⃣ `src/modules/auth/auth.service.js` ⭐⭐⭐⭐⭐
 
 ```js
-// auth.service.js
-// MAIN LOGIN ALGORITHM
+// MAIN LOGIN BUSINESS FLOW
+
+const UserRepository = require('../user/user.repository')
+const PasswordUtil = require('./utils/password.util')
+const JwtUtil = require('./utils/jwt.util')
+const TokenRepository = require('./token.repository')
+const { ACTIVE_STATUS } = require('./auth.config')
 
 class AuthService {
 
   async login(dto) {
 
-    // STEP 2: Validate input (email & password)
+    // STEP 1: Validate input (empty / format)
 
-    // STEP 3: Fetch user by email from repository
+    // STEP 2: Fetch user by email
+    const user = await UserRepository.findByEmail(dto.email)
 
-    // STEP 4: If user not found → throw generic auth error
+    // STEP 3: If user not found → generic auth error
 
-    // STEP 5: Compare plain password with hashed password
+    // STEP 4: Check user status === ACTIVE
 
-    // STEP 6: If password mismatch → throw generic auth error
+    // STEP 5: Compare password (bcrypt)
 
-    // STEP 7: Check user status is ACTIVE
+    // STEP 6: If password mismatch → generic auth error
 
-    // STEP 8: Generate JWT (userId + role)
+    // STEP 7: Generate ACCESS TOKEN (short-lived)
 
-    // STEP 9: Prepare safe user response (remove password)
+    // STEP 8: Generate REFRESH TOKEN (long-lived)
 
-    // STEP 10: Update login metadata (optional)
+    // STEP 9: Store refresh token in DB (token table)
 
-    // STEP 11: Return token + safe user data
+    // STEP 10: Update login metadata (lastLoginAt)
 
+    // STEP 11: Return access token + safe user + refresh token
   }
 
 }
 
-module.exports = AuthService
+module.exports = new AuthService()
 ```
 
 ---
 
-## 4️⃣ `src/modules/user/user.repository.js`
+## 4️⃣ `src/modules/auth/token.repository.js`
 
 ```js
-// user.repository.js
-// DATABASE OPERATIONS ONLY
+// REFRESH TOKEN STORAGE (PRODUCTION CRITICAL)
+
+class TokenRepository {
+
+  async saveRefreshToken(data) {
+    // Save token, userId, expiry, device info
+  }
+
+  async revokeToken(token) {
+    // Invalidate token on logout
+  }
+
+  async findValidToken(token) {
+    // Used in refresh flow
+  }
+
+}
+
+module.exports = new TokenRepository()
+```
+
+---
+
+## 5️⃣ `src/modules/user/user.repository.js`
+
+```js
+// USER DB OPERATIONS ONLY
 
 class UserRepository {
 
   async findByEmail(email) {
-    // STEP 3: Query user by email
+    // DB query
   }
 
   async updateLoginMeta(userId) {
-    // STEP 10: Update lastLoginAt, reset failed attempts
+    // lastLoginAt, loginCount
   }
 
 }
 
-module.exports = UserRepository
+module.exports = new UserRepository()
 ```
 
 ---
 
-## 5️⃣ `src/modules/auth/utils/password.util.js`
+## 6️⃣ `src/modules/auth/utils/password.util.js`
 
 ```js
-// password.util.js
-// SECURITY UTIL
+// PASSWORD SECURITY
 
 class PasswordUtil {
 
-  static async compare(plainPassword, hashedPassword) {
-    // STEP 5: bcrypt.compare
+  static async compare(plain, hashed) {
+    // bcrypt.compare
   }
 
 }
@@ -142,16 +187,19 @@ module.exports = PasswordUtil
 
 ---
 
-## 6️⃣ `src/modules/auth/utils/jwt.util.js`
+## 7️⃣ `src/modules/auth/utils/jwt.util.js`
 
 ```js
-// jwt.util.js
-// TOKEN GENERATION
+// TOKEN CREATION ONLY
 
 class JwtUtil {
 
-  static sign(payload) {
-    // STEP 8: jwt.sign(payload)
+  static signAccessToken(payload) {
+    // jwt.sign(payload, secret, short expiry)
+  }
+
+  static signRefreshToken(payload) {
+    // jwt.sign(payload, refreshSecret, long expiry)
   }
 
 }
@@ -161,45 +209,64 @@ module.exports = JwtUtil
 
 ---
 
-## 7️⃣ `src/modules/auth/auth.config.js`
+## 8️⃣ `src/modules/auth/auth.config.js`
 
 ```js
-// auth.config.js
-// SYSTEM RULES
-
 module.exports = {
-  ACTIVE_STATUS: 'ACTIVE'
+  ACTIVE_STATUS: 'ACTIVE',
+  ACCESS_TOKEN_EXPIRY: '15m',
+  REFRESH_TOKEN_EXPIRY: '7d'
 }
 ```
 
 ---
 
-# 🧠 ONE-LOOK ALGORITHM → FILE MAP
+## 🧠 ONE-LOOK: PRODUCTION LOGIN FLOW
 
-| Algo Step          | File               |
-| ------------------ | ------------------ |
-| Input contract     | login.dto.js       |
-| Request / Response | auth.controller.js |
-| Core login logic   | auth.service.js    |
-| User DB access     | user.repository.js |
-| Password compare   | password.util.js   |
-| JWT generation     | jwt.util.js        |
-| Status rule        | auth.config.js     |
+```
+Login Request
+→ Controller
+→ Service
+→ User Repo
+→ Password Util
+→ Jwt Util (Access + Refresh)
+→ Token Repo (store refresh)
+→ Response
+```
+
+---
+
+## 🔐 PRODUCTION SECURITY GUARANTEES
+
+✔ Generic error messages
+✔ Short-lived access token
+✔ Long-lived refresh token
+✔ Refresh token stored & revocable
+✔ HttpOnly cookie ready
+✔ RBAC-ready payload
+
+---
+
+## 🏆 INTERVIEW-LEVEL LINE
+
+> “Login is implemented using short-lived access tokens and persistent refresh tokens with server-side storage, following production security practices.”
 
 ---
 
 ## ✅ FINAL CONFIRMATION
 
-✔ This skeleton is **100% aligned** with the algorithm
-✔ Multiple roles supported automatically
-✔ Single login, role-based access ready
-✔ Sirf comments ke niche code likho → **feature ban jaayega**
+* Ye **real production skeleton** hai
+* SaaS / WorkNest-level ready
+* Ab ispe **refresh, logout, guard** sab clean banega
 
 ---
 
-### NEXT (Natural Step)
+### NEXT (Natural, Slow & Clear 👇)
 
-Type this 👇
-**“auth.service.js STEP-2 ka JS code likhwao”**
+Bolo:
 
-We’ll fill it **step-by-step**, like a senior dev review 💪
+```
+auth.service.js STEP-7 aur STEP-8 ka logic samjhao (access vs refresh)
+```
+
+Main **diagram + story style** me tod dunga — bina code overload 💪
