@@ -1,0 +1,73 @@
+/* ============================= */
+/* PROFILE SIDEBAR               */
+/* ============================= */
+
+.profile-sidebar {
+  width: 260px;
+  height: 100vh;
+  background-color: var(--card-bg);
+  border-right: 1px solid var(--border-color);
+  padding: 24px 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/* ============================= */
+/* TITLE                         */
+/* ============================= */
+
+.profile-title {
+  color: var(--text-primary);
+  font-size: 18px;
+  margin-bottom: 20px;
+}
+
+/* ============================= */
+/* PROFILE INFO                  */
+/* ============================= */
+
+.profile-info {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.profile-info p {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.label {
+  color: var(--label-color);
+  font-size: 12px;
+  letter-spacing: 0.4px;
+}
+
+.value {
+  color: var(--text-primary);
+  font-size: 14px;
+  word-break: break-word;
+}
+
+/* ============================= */
+/* LOGOUT BUTTON                 */
+/* ============================= */
+
+.btn-logout {
+  margin-top: 30px;
+  padding: 10px;
+  background-color: transparent;
+  border: 1px solid var(--error-color);
+  color: var(--error-color);
+  border-radius: 8px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-logout:hover {
+  background-color: var(--error-color);
+  color: #fff;
+}

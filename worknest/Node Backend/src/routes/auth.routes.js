@@ -1,12 +1,19 @@
-const express = require('express')
-const router = express.Router()
-const { AuthController } = require('../module1/super-admin/auth/auth.controller')
+const router = require("express").Router();
 
-const authController = new AuthController()
+const AuthController = require("../modules/auth/auth.controller");
+const authMiddleware = require("../middlewares/auth.middleware");
+const roleMiddleware = require("../middlewares/role.middleware");
 
 router.post(
-  '/auth/login',
-  authController.login.bind(authController)
-)
+  "/login",
+  AuthController.login
+);
 
-module.exports = router
+router.post(
+  "/register",
+  authMiddleware,
+  roleMiddleware(90), // ADMIN & SUPER_ADMIN
+  AuthController.registerUser
+);
+
+module.exports = router;
