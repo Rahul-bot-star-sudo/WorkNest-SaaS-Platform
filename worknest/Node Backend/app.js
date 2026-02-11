@@ -1,22 +1,42 @@
-require('dotenv').config();
+require("dotenv").config();
 
-const express = require('express');
-const cors = require('cors');          // ✅ 1. cors import
-const app = express();
+const express = require("express");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
 
-/* ✅ 2. CORS middleware — YAHI DALNA HAI */
-app.use(cors({
-  origin: 'http://localhost:3001',     // React frontend
-  credentials: true
-}));
+const roleRoutes = require("./src/modules/role/role.routes");
+const userRoutes = require("./src/modules/user/user.routes");
+const authRoutes = require("./src/routes/auth.routes");
+const setupRoutes = require("./src/routes/setup.routes");
 
+const app = express();   // 🔥 पहले app बनाओ
+
+/* ✅ CORS */
+app.use(
+  cors({
+    origin: "http://localhost:3000",
+    credentials: true,
+  })
+);
+
+/* ✅ JSON parser */
 app.use(express.json());
 
-// routes
-app.use('/auth', require('./src/routes/auth.routes'));
-app.use('/setup', require('./src/routes/setup.routes'));
+/* ✅ Cookie parser */
+app.use(cookieParser());   // 🔥 यहाँ move करो
 
-const PORT = process.env.PORT || 3000;
+/* ✅ Routes */
+app.use("/api/roles", roleRoutes);
+app.use("/api/users", userRoutes);
+app.use("/auth", authRoutes);
+app.use("/setup", setupRoutes);
+
+/* ✅ Health check */
+app.get("/health", (req, res) => {
+  res.status(200).json({ status: "OK" });
+});
+
+const PORT = process.env.PORT || 4000;
 
 app.listen(PORT, () => {
   console.log(`🚀 Server running on port ${PORT}`);

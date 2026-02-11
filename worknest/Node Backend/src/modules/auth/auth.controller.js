@@ -67,7 +67,52 @@ class AuthController {
       });
     }
   }
+  // ================= REFRESH TOKEN =================
+async refreshToken(req, res) {
+
+  const refreshToken = req.cookies.refreshToken;
+
+  if (!refreshToken) {
+    return res.status(401).json({
+      success: false,
+      message: "No refresh token"
+    });
+  }
+
+  try {
+
+    const jwt = require("jsonwebtoken");
+
+    const decoded = jwt.verify(
+      refreshToken,
+      process.env.REFRESH_SECRET
+    );
+
+    const newAccessToken = jwt.sign(
+      {
+        userId: decoded.userId,
+        role: decoded.role,
+        priority: decoded.priority
+      },
+      process.env.ACCESS_SECRET,
+      { expiresIn: "15m" }
+    );
+
+    return res.status(200).json({
+      success: true,
+      accessToken: newAccessToken
+    });
+
+  } catch (err) {
+    return res.status(403).json({
+      success: false,
+      message: "Invalid refresh token"
+    });
+  }
+}
+
 
 }
+
 
 module.exports = new AuthController();

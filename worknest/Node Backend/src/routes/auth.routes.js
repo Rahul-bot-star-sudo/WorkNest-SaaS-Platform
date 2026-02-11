@@ -12,8 +12,13 @@ router.post(
 router.post(
   "/register",
   authMiddleware,
-  roleMiddleware(90), // ADMIN & SUPER_ADMIN
+  roleMiddleware(90),
   AuthController.registerUser
+);
+
+router.post(
+  "/refresh-token",
+  AuthController.refreshToken
 );
 
 module.exports = router;

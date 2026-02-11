@@ -1,5 +1,6 @@
 import { getUser } from "../utils/auth";
 import Profile from "../Components/Profile";
+import "./styles/dashboard.css";
 
 function Dashboard() {
   const user = getUser();
@@ -12,39 +13,41 @@ function Dashboard() {
   const priority = user.role.priority;
 
   return (
-    <div style={styles.container}>
-      {/* LEFT SIDE */}
+    <div className="dashboard-container">
+      
+      {/* LEFT SIDE PROFILE */}
       <Profile
         name={user.name}
         roleCode={roleCode}
         priority={priority}
       />
 
-      {/* RIGHT SIDE */}
-      <div style={styles.main}>
-        <h1>Welcome {user.name}</h1>
+      {/* RIGHT SIDE MAIN */}
+      <div className="dashboard-main">
+        <h1 className="dashboard-title">
+          Welcome {user.name}
+        </h1>
 
-        <p>
+        <p className="dashboard-role">
           Role: {roleCode} (Priority: {priority})
         </p>
 
-        {/* ROLE BASED CONTENT */}
         {priority >= 100 && (
-          <div>
+          <div className="dashboard-panel">
             <h2>Super Admin Panel</h2>
             <p>System level controls</p>
           </div>
         )}
 
         {priority >= 90 && priority < 100 && (
-          <div>
+          <div className="dashboard-panel">
             <h2>Admin Panel</h2>
             <p>User management</p>
           </div>
         )}
 
         {priority < 90 && (
-          <div>
+          <div className="dashboard-panel">
             <h2>User Dashboard</h2>
             <p>Your activity summary</p>
           </div>
@@ -53,15 +56,5 @@ function Dashboard() {
     </div>
   );
 }
-
-const styles = {
-  container: {
-    display: "flex",
-  },
-  main: {
-    flex: 1,
-    padding: "20px",
-  },
-};
 
 export default Dashboard;
