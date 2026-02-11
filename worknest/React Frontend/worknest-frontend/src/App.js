@@ -5,6 +5,7 @@ import DashboardLayout from "./layout/DashboardLayout";
 import DashboardHome from "./pages/Dashboard";
 import CreateUserPage from "./pages/CreateUserPage";
 import RegisterUser from "./pages/RegisterUser";
+import UsersPage from "./pages/UsersPage";
 
 import ProtectedRoute from "./auth/ProtectedRoute";
 import RoleRoute from "./auth/RoleRoute";
@@ -30,7 +31,12 @@ function App() {
           }
         >
           <Route index element={<DashboardHome />} />
+
           <Route path="create-user" element={<CreateUserPage />} />
+
+          {/* 🔥 ADD THIS */}
+          <Route path="users" element={<UsersPage />} />
+
         </Route>
 
         {/* Register (Role Based) */}

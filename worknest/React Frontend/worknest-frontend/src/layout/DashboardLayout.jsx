@@ -23,7 +23,9 @@ function DashboardLayout() {
           <Link to="/dashboard" style={{ color: "#fff" }}>
             Home
           </Link>
-
+<Link to="/dashboard/users" style={{ color: "#fff" }}>
+            Uset list
+          </Link>
           <Link to="/dashboard/create-user" style={{ color: "#fff" }}>
             Create User
           </Link>
