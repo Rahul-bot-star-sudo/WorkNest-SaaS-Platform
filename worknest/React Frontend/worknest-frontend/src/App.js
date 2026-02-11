@@ -1,7 +1,9 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-import Login from "./pages/Login";
-import Dashboard from "./pages/Dashboard";
+import LoginPage from "./pages/Login";
+import DashboardLayout from "./layout/DashboardLayout";
+import DashboardHome from "./pages/Dashboard";
+import CreateUserPage from "./pages/CreateUserPage";
 import RegisterUser from "./pages/RegisterUser";
 
 import ProtectedRoute from "./auth/ProtectedRoute";
@@ -11,23 +13,27 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        {/* default */}
+
+        {/* Default Redirect */}
         <Route path="/" element={<Navigate to="/login" replace />} />
 
-        {/* login */}
-        <Route path="/login" element={<Login />} />
+        {/* Login */}
+        <Route path="/login" element={<LoginPage />} />
 
-        {/* dashboard */}
+        {/* Dashboard Layout (Protected) */}
         <Route
           path="/dashboard"
           element={
             <ProtectedRoute>
-              <Dashboard />
+              <DashboardLayout />
             </ProtectedRoute>
           }
-        />
+        >
+          <Route index element={<DashboardHome />} />
+          <Route path="create-user" element={<CreateUserPage />} />
+        </Route>
 
-        {/* register user */}
+        {/* Register (Role Based) */}
         <Route
           path="/register"
           element={
@@ -38,6 +44,7 @@ function App() {
             </ProtectedRoute>
           }
         />
+
       </Routes>
     </BrowserRouter>
   );
