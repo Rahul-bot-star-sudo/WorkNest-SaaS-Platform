@@ -1,0 +1,85 @@
+/* ============================= */
+/* PAGE LAYOUT                   */
+/* ============================= */
+.workspace-page {
+  min-height: 100vh;
+  background-color: var(--bg-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Inter", sans-serif;
+}
+
+/* ============================= */
+/* CARD                          */
+/* ============================= */
+.workspace-card {
+  width: 600px;
+  background-color: var(--card-bg);
+  padding: 32px;
+  border-radius: 12px;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+}
+
+/* ============================= */
+/* HEADINGS                      */
+/* ============================= */
+.workspace-title {
+  color: var(--text-primary);
+  font-size: 24px;
+  margin-bottom: 6px;
+}
+
+.workspace-subtitle {
+  color: var(--text-secondary);
+  font-size: 14px;
+  margin-bottom: 24px;
+}
+
+/* ============================= */
+/* LIST                          */
+/* ============================= */
+.workspace-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.workspace-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 14px 16px;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  margin-bottom: 12px;
+  transition: background 0.2s ease;
+}
+
+.workspace-item:hover {
+  background-color: #322d2e;
+}
+
+.workspace-name {
+  color: var(--text-primary);
+  font-weight: 500;
+}
+
+.workspace-status {
+  padding: 6px 12px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+/* STATUS COLORS */
+.workspace-status.active {
+  background-color: var(--success-color);
+  color: #000;
+}
+
+.workspace-status.inactive {
+  background-color: var(--error-color);
+  color: #fff;
+}
