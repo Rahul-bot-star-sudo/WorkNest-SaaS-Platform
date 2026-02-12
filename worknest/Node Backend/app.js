@@ -3,6 +3,7 @@ require("dotenv").config();
 const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
+const workspaceRoutes = require("./src/modules/workspace/workspace.routes");
 
 const roleRoutes = require("./src/modules/role/role.routes");
 const userRoutes = require("./src/modules/user/user.routes");
@@ -10,6 +11,7 @@ const authRoutes = require("./src/routes/auth.routes");
 const setupRoutes = require("./src/routes/setup.routes");
 
 const app = express();   // 🔥 पहले app बनाओ
+console.log("🔥 APP FILE LOADED");
 
 /* ✅ CORS */
 app.use(
@@ -30,6 +32,7 @@ app.use("/api/roles", roleRoutes);
 app.use("/api/users", userRoutes);
 app.use("/auth", authRoutes);
 app.use("/setup", setupRoutes);
+app.use("/api/workspaces", workspaceRoutes);
 
 /* ✅ Health check */
 app.get("/health", (req, res) => {
