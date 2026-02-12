@@ -6,6 +6,8 @@ import DashboardHome from "./pages/Dashboard";
 import CreateUserPage from "./pages/CreateUserPage";
 import RegisterUser from "./pages/RegisterUser";
 import UsersPage from "./pages/UsersPage";
+import WorkspaceListPage from './pages/WorkspaceListPage';
+import CreateWorkspacePage from './pages/CreateWorkspacePage';
 
 import ProtectedRoute from "./auth/ProtectedRoute";
 import RoleRoute from "./auth/RoleRoute";
@@ -33,9 +35,11 @@ function App() {
           <Route index element={<DashboardHome />} />
 
           <Route path="create-user" element={<CreateUserPage />} />
-
-          {/* 🔥 ADD THIS */}
           <Route path="users" element={<UsersPage />} />
+
+          {/* Workspace Routes inside Layout */}
+          <Route path="workspaces" element={<WorkspaceListPage />} />
+          <Route path="workspaces/create" element={<CreateWorkspacePage />} />
 
         </Route>
 
