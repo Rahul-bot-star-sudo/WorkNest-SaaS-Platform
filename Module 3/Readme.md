@@ -1,3 +1,5 @@
+```ek bar story sunte hai user login karega agar role admin hai to vo workspace create kar sakega warna error masage show hoga workspace type database se drop down honge user list dropdown hoge usame serch user bhi honga vaise to user list ka tamplate vaha daldenge form submit hoga workspace create ho jayega admin workspace list dekh sakega```
+---
 Perfect Rahul 🔥
 Main tumhe **Workspace Management Module** ka proper professional README content de raha hoon — jo tum directly GitHub README me daal sakte ho.
 
