@@ -1,4 +1,5 @@
 const service = require("./workspace.service");
+const pool = require("../../config/db");
 
 exports.createWorkspace = async (req, res) => {
   try {
@@ -13,6 +14,7 @@ exports.createWorkspace = async (req, res) => {
     });
 
   } catch (error) {
+    
 
     // 🔥 PostgreSQL Unique Constraint Error
     if (error.code === "23505") {
@@ -126,5 +128,49 @@ exports.updateWorkspace = async (req, res) => {
     });
   }
 };
+exports.getMyWorkspaces = async (req, res) => {
+  try {
+    console.log("REQ.USER:", req.user);
 
+    const managerId = req.user.userId;   // abhi ye hi rakho
 
+    console.log("Manager ID Used:", managerId);
+
+    const result = await pool.query(
+      "SELECT * FROM workspaces WHERE manager_id = $1",
+      [managerId]
+    );
+
+    console.log("DB RESULT:", result.rows);
+
+    res.json({
+      success: true,
+      count: result.rows.length,
+      data: result.rows
+    });
+
+  } catch (error) {
+    console.log("ERROR:", error);
+    res.status(500).json({ message: error.message });
+  }
+};
+exports.updateProjectOwner = async (req, res) => {
+  try {
+
+    const updated = await service.updateProjectOwner(
+      req.params.id,
+      req.body.owner_id
+    );
+
+    res.json({
+      success: true,
+      data: updated
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
