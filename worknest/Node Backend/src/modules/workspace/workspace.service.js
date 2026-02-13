@@ -41,3 +41,16 @@ exports.updateWorkspace = async (id, data) => {
   return await repository.updateWorkspace(id, name, manager_id);
 };
 
+exports.updateProjectOwner = async (projectId, ownerId) => {
+
+  if (!ownerId) {
+    throw new Error("Owner ID required");
+  }
+
+  const result = await pool.query(
+    "UPDATE projects SET owner_id = $1 WHERE id = $2 RETURNING *",
+    [ownerId, projectId]
+  );
+
+  return result.rows[0];
+};

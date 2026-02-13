@@ -1,155 +1,739 @@
-/* ============================= */
-/* WORKSPACE PAGE LAYOUT         */
-/* ============================= */
+/* workspacelist.css - Modern UI/UX Design */
 
+/* CSS Variables for consistent theming */
+:root {
+  --primary: #6366f1;
+  --primary-dark: #4f46e5;
+  --primary-light: #818cf8;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #3b82f6;
+  --dark: #1e293b;
+  --light: #f8fafc;
+  --gray-100: #f1f5f9;
+  --gray-200: #e2e8f0;
+  --gray-300: #cbd5e1;
+  --gray-400: #94a3b8;
+  --gray-500: #64748b;
+  --gray-600: #475569;
+  --gray-700: #334155;
+  --gray-800: #1e293b;
+  --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+  --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+  --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1);
+  --shadow-xl: 0 20px 25px -5px rgb(0 0 0 / 0.1);
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 1rem;
+  --radius-xl: 1.5rem;
+}
+
+/* Base styles */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+}
+
+/* Workspace Page Container */
 .workspace-page {
   min-height: 100vh;
-  background-color: var(--bg-color);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Inter", sans-serif;
-  padding: 40px 20px;
+  padding: 2rem;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  animation: fadeIn 0.5s ease-out;
 }
 
-/* ============================= */
-/* CARD                          */
-/* ============================= */
-
+/* Main Card */
 .workspace-card {
-  width: 800px;
-  background-color: var(--card-bg);
-  padding: 32px;
-  border-radius: 14px;
-  border: 1px solid var(--border-color);
-  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+  max-width: 1200px;
+  margin: 0 auto;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  box-shadow: var(--shadow-xl);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  animation: slideInUp 0.5s ease-out;
+  position: relative;
+  overflow: hidden;
 }
 
-/* ============================= */
-/* HEADINGS                      */
-/* ============================= */
-
-.workspace-title {
-  color: var(--text-primary);
-  font-size: 26px;
-  margin-bottom: 6px;
+.workspace-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--info), var(--success));
+  animation: gradientShift 3s infinite;
 }
 
-.workspace-subtitle {
-  color: var(--text-secondary);
-  font-size: 14px;
-  margin-bottom: 28px;
-}
-
-/* ============================= */
-/* LIST                          */
-/* ============================= */
-
-.workspace-list {
-  list-style: none;
-  padding: 0;
-  margin: 0;
-}
-
-.workspace-item {
+/* Header Section */
+.workspace-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 18px;
-  margin-bottom: 16px;
-  border-radius: 10px;
-  border: 1px solid var(--border-color);
-  background-color: #2f2a2b;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.workspace-title {
+  font-size: 2rem;
+  font-weight: 800;
+  background: linear-gradient(135deg, var(--primary), var(--info));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.workspace-title::before {
+  content: '🏢';
+  font-size: 2rem;
+  -webkit-text-fill-color: initial;
+}
+
+/* Stats Badge */
+.workspace-stats {
+  background: linear-gradient(135deg, var(--primary), var(--info));
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 100px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: var(--shadow-md);
+}
+
+.workspace-stats span {
+  background: rgba(255, 255, 255, 0.2);
+  padding: 0.25rem 0.5rem;
+  border-radius: 100px;
+}
+
+/* Workspace List */
+.workspace-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Workspace Item */
+.workspace-item {
+  background: white;
+  border-radius: var(--radius-md);
+  padding: 1.25rem;
+  box-shadow: var(--shadow-sm);
+  border: 1px solid var(--gray-200);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  animation: slideInRight 0.3s ease-out;
+  position: relative;
+  overflow: hidden;
 }
 
 .workspace-item:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+  transform: translateX(8px) scale(1.02);
+  border-color: var(--primary-light);
+  box-shadow: var(--shadow-lg);
 }
 
-/* ============================= */
-/* LEFT SIDE                     */
-/* ============================= */
+.workspace-item::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(135deg, var(--primary), var(--info));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
 
+.workspace-item:hover::after {
+  opacity: 1;
+}
+
+/* Item Content Layout */
+.workspace-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Left Section */
 .workspace-left {
   display: flex;
   flex-direction: column;
-  gap: 6px;
+  gap: 0.5rem;
+  flex: 1;
 }
 
 .workspace-name {
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-primary);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gray-800);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.workspace-name::before {
+  content: '📁';
+  font-size: 1.25rem;
+  transition: transform 0.3s ease;
+}
+
+.workspace-item:hover .workspace-name::before {
+  transform: scale(1.2);
 }
 
 .workspace-manager {
-  font-size: 13px;
-  color: var(--label-color);
-}
-
-/* ============================= */
-/* ACTIONS                       */
-/* ============================= */
-
-.workspace-actions {
+  font-size: 0.875rem;
+  color: var(--gray-600);
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 0.25rem;
 }
 
-/* ============================= */
-/* STATUS BADGE                  */
-/* ============================= */
+.workspace-manager::before {
+  content: '👤';
+  font-size: 0.875rem;
+}
 
-.workspace-status {
-  padding: 6px 10px;
-  font-size: 12px;
-  border-radius: 20px;
+/* Manager Info with Avatar */
+.manager-info {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: var(--gray-100);
+  padding: 0.25rem 0.75rem;
+  border-radius: 100px;
+  font-size: 0.875rem;
+}
+
+.manager-avatar {
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--info));
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
   font-weight: 600;
 }
 
+/* Right Section - Actions */
+.workspace-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+/* Status Badge */
+.workspace-status {
+  padding: 0.35rem 1rem;
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  position: relative;
+  overflow: hidden;
+}
+
 .workspace-status.active {
-  background-color: rgba(127, 176, 105, 0.2);
-  color: var(--success-color);
+  background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+  color: #065f46;
+  border: 1px solid #6ee7b7;
 }
 
 .workspace-status.inactive {
-  background-color: rgba(178, 59, 59, 0.2);
-  color: var(--error-color);
+  background: linear-gradient(135deg, #fee2e2, #fecaca);
+  color: #991b1b;
+  border: 1px solid #fca5a5;
 }
 
-/* ============================= */
-/* BUTTONS                       */
-/* ============================= */
+.workspace-status::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+  animation: shimmer 2s infinite;
+}
 
+/* Buttons */
 .workspace-actions button {
-  padding: 8px 14px;
-  border-radius: 6px;
+  padding: 0.5rem 1rem;
   border: none;
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  font-weight: 600;
   cursor: pointer;
-  font-size: 13px;
-  font-weight: 500;
   transition: all 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Activate / Deactivate */
+.workspace-actions button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.workspace-actions button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+.workspace-actions button:active {
+  transform: scale(0.95);
+}
+
+/* Toggle Button */
 .workspace-actions button:first-of-type {
-  background-color: var(--primary-color);
-  color: #000;
+  background: linear-gradient(135deg, var(--primary), var(--info));
+  color: white;
+  box-shadow: 0 2px 4px rgba(99, 102, 241, 0.3);
 }
 
 .workspace-actions button:first-of-type:hover {
-  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(99, 102, 241, 0.4);
+}
+
+/* Edit Button */
+.workspace-actions button:nth-of-type(2) {
+  background: linear-gradient(135deg, var(--gray-200), var(--gray-300));
+  color: var(--gray-700);
+}
+
+.workspace-actions button:nth-of-type(2):hover {
+  background: linear-gradient(135deg, var(--gray-300), var(--gray-400));
+  transform: translateY(-2px);
 }
 
 /* Delete Button */
 .delete-btn {
-  background-color: var(--error-color);
-  color: #fff;
+  background: linear-gradient(135deg, var(--danger), #dc2626);
+  color: white !important;
+  box-shadow: 0 2px 4px rgba(239, 68, 68, 0.3);
 }
 
 .delete-btn:hover {
-  opacity: 0.85;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(239, 68, 68, 0.4);
+}
+
+/* Edit Mode Styles */
+.workspace-edit {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  padding: 1rem;
+  background: linear-gradient(135deg, var(--gray-100), white);
+  border-radius: var(--radius-md);
+  animation: scaleIn 0.3s ease-out;
+}
+
+.edit-row {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.edit-field {
+  flex: 1;
+  min-width: 200px;
+}
+
+.edit-field label {
+  display: block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--gray-600);
+  margin-bottom: 0.25rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.workspace-edit input,
+.workspace-edit select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-sm);
+  font-size: 0.875rem;
+  transition: all 0.2s;
+  background: white;
+}
+
+.workspace-edit input:focus,
+.workspace-edit select:focus {
+  outline: none;
+  border-color: var(--primary);
+  box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+}
+
+.workspace-edit input:hover,
+.workspace-edit select:hover {
+  border-color: var(--primary-light);
+}
+
+.edit-actions {
+  display: flex;
+  gap: 0.5rem;
+  justify-content: flex-end;
+}
+
+.edit-actions button {
+  padding: 0.5rem 1.5rem;
+  border: none;
+  border-radius: var(--radius-sm);
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.edit-actions button:first-child {
+  background: linear-gradient(135deg, var(--success), #34d399);
+  color: white;
+}
+
+.edit-actions button:last-child {
+  background: var(--gray-200);
+  color: var(--gray-700);
+}
+
+.edit-actions button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+/* Loading State */
+.loading-skeleton {
+  background: linear-gradient(90deg, var(--gray-200) 25%, var(--gray-100) 50%, var(--gray-200) 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s infinite;
+  border-radius: var(--radius-sm);
+  height: 60px;
+  margin-bottom: 1rem;
+}
+
+/* Empty State */
+.empty-state {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--gray-500);
+}
+
+.empty-state-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  animation: bounce 2s infinite;
+}
+
+.empty-state h3 {
+  font-size: 1.5rem;
+  color: var(--gray-700);
+  margin-bottom: 0.5rem;
+}
+
+.empty-state p {
+  margin-bottom: 2rem;
+}
+
+.empty-state button {
+  background: linear-gradient(135deg, var(--primary), var(--info));
+  color: white;
+  padding: 0.75rem 2rem;
+  border: none;
+  border-radius: 100px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.empty-state button:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-lg);
+}
+
+/* Tooltip */
+[data-tooltip] {
+  position: relative;
+  cursor: help;
+}
+
+[data-tooltip]:before {
+  content: attr(data-tooltip);
+  position: absolute;
+  bottom: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 0.5rem 1rem;
+  background: var(--gray-800);
+  color: white;
+  font-size: 0.75rem;
+  border-radius: var(--radius-sm);
+  white-space: nowrap;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.2s;
+  z-index: 10;
+}
+
+[data-tooltip]:hover:before {
+  opacity: 1;
+  visibility: visible;
+  bottom: 120%;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideInUp {
+  from {
+    transform: translateY(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInRight {
+  from {
+    transform: translateX(30px);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    left: -100%;
+  }
+  100% {
+    left: 100%;
+  }
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}
+
+@keyframes bounce {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-20px);
+  }
+}
+
+@keyframes pulse {
+  0%, 100% {
+    transform: scale(1);
+  }
+  50% {
+    transform: scale(1.05);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .workspace-page {
+    padding: 1rem;
+  }
+
+  .workspace-card {
+    padding: 1.5rem;
+  }
+
+  .workspace-header {
+    flex-direction: column;
+    gap: 1rem;
+    align-items: flex-start;
+  }
+
+  .workspace-title {
+    font-size: 1.5rem;
+  }
+
+  .workspace-content {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .workspace-left {
+    width: 100%;
+  }
+
+  .workspace-actions {
+    width: 100%;
+    justify-content: flex-start;
+  }
+
+  .edit-row {
+    flex-direction: column;
+  }
+
+  .edit-field {
+    width: 100%;
+  }
+
+  .edit-actions {
+    width: 100%;
+  }
+
+  .edit-actions button {
+    flex: 1;
+  }
+}
+
+@media (max-width: 480px) {
+  .workspace-page {
+    padding: 0.5rem;
+  }
+
+  .workspace-card {
+    padding: 1rem;
+  }
+
+  .workspace-actions {
+    flex-direction: column;
+  }
+
+  .workspace-actions button {
+    width: 100%;
+  }
+
+  .workspace-status {
+    align-self: flex-start;
+  }
+
+  .manager-info {
+    width: 100%;
+  }
+}
+
+/* Dark Mode Support */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --dark: #f8fafc;
+    --light: #1e293b;
+    --gray-100: #334155;
+    --gray-200: #475569;
+    --gray-300: #64748b;
+    --gray-400: #94a3b8;
+    --gray-500: #cbd5e1;
+    --gray-600: #e2e8f0;
+    --gray-700: #f1f5f9;
+    --gray-800: #f8fafc;
+  }
+
+  .workspace-card {
+    background: rgba(30, 41, 59, 0.95);
+  }
+
+  .workspace-item {
+    background: var(--gray-100);
+  }
+
+  .workspace-edit {
+    background: linear-gradient(135deg, var(--gray-200), var(--gray-100));
+  }
+
+  .workspace-edit input,
+  .workspace-edit select {
+    background: var(--gray-200);
+    color: white;
+    border-color: var(--gray-300);
+  }
+}
+
+/* Print Styles */
+@media print {
+  .workspace-page {
+    background: white;
+    padding: 0;
+  }
+
+  .workspace-card {
+    box-shadow: none;
+    border: 1px solid #ccc;
+  }
+
+  .workspace-actions {
+    display: none;
+  }
 }

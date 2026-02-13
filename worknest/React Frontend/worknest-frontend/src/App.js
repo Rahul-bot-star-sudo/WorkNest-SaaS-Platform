@@ -8,6 +8,7 @@ import RegisterUser from "./pages/RegisterUser";
 import UsersPage from "./pages/UsersPage";
 import WorkspaceListPage from './pages/WorkspaceListPage';
 import CreateWorkspacePage from './pages/CreateWorkspacePage';
+import WorkspaceProjects from "./pages/WorkspaceProjects";
 
 import ProtectedRoute from "./auth/ProtectedRoute";
 import RoleRoute from "./auth/RoleRoute";
@@ -16,6 +17,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
+
+<Route path="/workspace/:id" element={<WorkspaceProjects />} />
 
         {/* Default Redirect */}
         <Route path="/" element={<Navigate to="/login" replace />} />
