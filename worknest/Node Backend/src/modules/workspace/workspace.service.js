@@ -1,17 +1,17 @@
 const repository = require("./workspace.repository");
+exports.createWorkspace = async (data, loggedInUserId) => {
+  const { name, typeId, manager_id } = data;
 
-exports.createWorkspace = async (data, userId) => {
- const { name, typeId, userIds = [] } = data;
+  if (!name || !typeId || !manager_id) {
+    throw new Error("All fields are required");
+  }
 
   const workspace = await repository.insertWorkspace(
     name,
     typeId,
-    userId
+    manager_id,
+    loggedInUserId
   );
-
-  for (let userId of userIds) {
-    await repository.insertWorkspaceUser(workspace.id, userId);
-  }
 
   return workspace;
 };
@@ -23,3 +23,21 @@ exports.getWorkspaces = async () => {
 exports.getWorkspaceTypes = async () => {
   return await repository.fetchWorkspaceTypes();
 };
+
+exports.deleteWorkspace = async (id) => {
+  return await repository.deleteWorkspace(id);
+};
+
+exports.toggleWorkspaceStatus = async (id) => {
+  return await repository.toggleWorkspaceStatus(id);
+};
+exports.updateWorkspace = async (id, data) => {
+  const { name, manager_id } = data;
+
+  if (!name || !manager_id) {
+    throw new Error("Name and Manager are required");
+  }
+
+  return await repository.updateWorkspace(id, name, manager_id);
+};
+

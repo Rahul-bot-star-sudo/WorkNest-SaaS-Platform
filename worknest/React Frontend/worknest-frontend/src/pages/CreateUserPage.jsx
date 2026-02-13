@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { getDropdownRoles } from "../services/roleApi";
-import { createUser } from "../services/userApi";
-import "./styles/createUser.css";
+import { createUser } from "../services/user.api";
+
 
 function CreateUserPage() {
   const [roles, setRoles] = useState([]);
@@ -118,11 +118,15 @@ if (result.data?.success) {
               ))}
             </select>
           </div>
+          
+
 
           <button className="btn-primary" type="submit">
             Create User
           </button>
         </form>
+        
+        
       </div>
     </div>
   );

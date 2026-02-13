@@ -82,3 +82,34 @@ exports.getUsers = async (loggedInUser) => {
 
   return users;
 };
+exports.getUsers = async (loggedInUser, role, search) => {
+
+  const loggedInUserRole = await roleRepository.findByCode(
+    loggedInUser.role
+  );
+
+  if (!loggedInUserRole) {
+    const error = new Error("Logged-in role not found");
+    error.statusCode = 403;
+    throw error;
+  }
+
+  const users = await userRepository.findUsersWithFilter(
+    loggedInUserRole.priority,
+    role,
+    search
+  );
+
+  return users;
+};
+exports.updateUserRole = async (id, role) => {
+  return await userRepository.updateUserRole(id, role);
+};
+
+exports.toggleUserStatus = async (id) => {
+  return await userRepository.toggleUserStatus(id);
+};
+
+exports.deleteUser = async (id) => {
+  return await userRepository.deleteUser(id);
+};

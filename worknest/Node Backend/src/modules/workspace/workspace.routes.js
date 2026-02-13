@@ -25,4 +25,10 @@ router.get(
   controller.getWorkspaceTypes
 );
 
+router.delete("/:id", authMiddleware, controller.deleteWorkspace);
+
+router.patch("/:id/status", authMiddleware, controller.toggleWorkspaceStatus);
+
+router.put("/:id", authMiddleware, controller.updateWorkspace);
+
 module.exports = router;

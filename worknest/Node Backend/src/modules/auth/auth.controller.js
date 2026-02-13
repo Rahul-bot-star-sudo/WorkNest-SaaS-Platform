@@ -1,8 +1,10 @@
-// STEP 2: AUTH CONTROLLER
+// ================= AUTH CONTROLLER =================
 // HTTP handling only
 
 const LoginDto = require('./dto/login.dto');
 const AuthService = require('./auth.service');
+const jwt = require("jsonwebtoken");
+
 
 class AuthController {
 
@@ -12,23 +14,19 @@ class AuthController {
     console.log('REQ BODY IN CONTROLLER:', req.body);
 
     try {
-      // STEP 2.1: DTO build
+
       const dto = LoginDto(req.body);
 
-      console.log('CALLING AUTH SERVICE...');
-
-      // STEP 2.2: Service call
       const result = await AuthService.login(dto);
 
-      // STEP 2.3: Refresh token cookie
+      // Save refresh token in HTTP-only cookie
       res.cookie('refreshToken', result.refreshToken, {
         httpOnly: true,
-        secure: false, // localhost
+        secure: false, // change to true in production
         sameSite: 'lax',
-        maxAge: 7 * 24 * 60 * 60 * 1000
+        maxAge: 7 * 24 * 60 * 60 * 1000 // 7 days
       });
 
-      // STEP 2.4: Response
       return res.status(200).json({
         success: true,
         accessToken: result.accessToken,
@@ -48,11 +46,8 @@ class AuthController {
   // ================= REGISTER =================
   async registerUser(req, res) {
     console.log('REGISTER API HIT');
-    console.log('REQ BODY IN CONTROLLER:', req.body);
-    console.log('LOGGED IN USER:', req.user);
 
     try {
-      // TEMP response (sirf test ke liye)
       return res.status(201).json({
         success: true,
         message: 'Register user controller working'
@@ -67,52 +62,61 @@ class AuthController {
       });
     }
   }
+
   // ================= REFRESH TOKEN =================
-async refreshToken(req, res) {
+  async refreshToken(req, res) {
 
-  const refreshToken = req.cookies.refreshToken;
+    const refreshToken = req.cookies.refreshToken;
 
-  if (!refreshToken) {
-    return res.status(401).json({
-      success: false,
-      message: "No refresh token"
-    });
+    if (!refreshToken) {
+      return res.status(401).json({
+        success: false,
+        message: "No refresh token"
+      });
+    }
+
+    try {
+
+      // 1️⃣ Verify token signature
+      const decoded = jwt.verify(
+        refreshToken,
+        process.env.REFRESH_SECRET
+      );
+
+      // 2️⃣ Check token exists in DB
+      const user = await User.findById(decoded.userId);
+
+      if (!user || user.refreshToken !== refreshToken) {
+        return res.status(403).json({
+          success: false,
+          message: "Invalid refresh token"
+        });
+      }
+
+      // 3️⃣ Generate new access token
+      const newAccessToken = jwt.sign(
+        {
+          userId: user._id,
+          role: user.role,
+          priority: user.priority
+        },
+        process.env.ACCESS_SECRET,
+        { expiresIn: "15m" }
+      );
+
+      return res.status(200).json({
+        success: true,
+        accessToken: newAccessToken
+      });
+
+    } catch (err) {
+      return res.status(403).json({
+        success: false,
+        message: "Invalid or expired refresh token"
+      });
+    }
   }
 
-  try {
-
-    const jwt = require("jsonwebtoken");
-
-    const decoded = jwt.verify(
-      refreshToken,
-      process.env.REFRESH_SECRET
-    );
-
-    const newAccessToken = jwt.sign(
-      {
-        userId: decoded.userId,
-        role: decoded.role,
-        priority: decoded.priority
-      },
-      process.env.ACCESS_SECRET,
-      { expiresIn: "15m" }
-    );
-
-    return res.status(200).json({
-      success: true,
-      accessToken: newAccessToken
-    });
-
-  } catch (err) {
-    return res.status(403).json({
-      success: false,
-      message: "Invalid refresh token"
-    });
-  }
 }
-
-
-}
-
 
 module.exports = new AuthController();

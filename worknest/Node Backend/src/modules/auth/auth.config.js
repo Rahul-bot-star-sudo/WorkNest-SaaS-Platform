@@ -2,6 +2,6 @@
 
 module.exports = {
   ACTIVE_STATUS: 'ACTIVE',
-  ACCESS_TOKEN_EXPIRY: '15m',
+  ACCESS_TOKEN_EXPIRY: '2h',
   REFRESH_TOKEN_EXPIRY: '7d'
 }
