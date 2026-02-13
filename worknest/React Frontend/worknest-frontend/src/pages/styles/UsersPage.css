@@ -25,20 +25,89 @@
 .users-page {
   min-height: 100vh;
   background-color: var(--bg-color);
-  padding: 40px;
+  padding: 40px 20px;
   font-family: "Inter", sans-serif;
   color: var(--text-primary);
+  display: flex;
+  justify-content: center;
 }
 
 /* ============================= */
 /* CARD WRAPPER                  */
 /* ============================= */
 .users-card {
+  width: 100%;
+  max-width: 1200px;
   background-color: var(--card-bg);
   padding: 30px;
-  border-radius: 12px;
+  border-radius: 16px;
   border: 1px solid var(--border-color);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
+}
+
+.users-card h2 {
+  margin-bottom: 20px;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+/* ============================= */
+/* FILTER SECTION                */
+/* ============================= */
+.filters {
+  display: flex;
+  gap: 15px;
+  margin-bottom: 20px;
+  flex-wrap: wrap;
+}
+
+.filters select,
+.filters input {
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--border-color);
+  background-color: #1f1b1c;
+  color: var(--text-primary);
+  outline: none;
+  transition: 0.3s;
+  min-width: 180px;
+}
+
+.filters select:focus,
+.filters input:focus {
+  border-color: var(--secondary-color);
+}
+
+.filters button {
+  background-color: var(--primary-color);
+  border: none;
+  padding: 10px 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  color: #000;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.filters button:hover {
+  background-color: var(--primary-hover);
+}
+
+/* ============================= */
+/* RESULT COUNT                  */
+/* ============================= */
+.result-count {
+  margin-bottom: 10px;
+  color: var(--text-secondary);
+  font-size: 14px;
+}
+
+/* ============================= */
+/* TABLE WRAPPER (Responsive)    */
+/* ============================= */
+.users-table-wrapper {
+  overflow-x: auto;
+  border-radius: 12px;
 }
 
 /* ============================= */
@@ -47,22 +116,118 @@
 .users-table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: 20px;
+  min-width: 800px;
 }
 
 .users-table th {
   background-color: var(--primary-color);
   color: #000;
-  padding: 12px;
+  padding: 14px;
   text-align: left;
 }
 
 .users-table td {
-  padding: 12px;
+  padding: 14px;
   border-bottom: 1px solid var(--border-color);
   color: var(--text-secondary);
+  transition: 0.2s;
 }
 
 .users-table tr:hover {
   background-color: #2f2a2b;
+}
+
+/* ============================= */
+/* STATUS BADGES                 */
+/* ============================= */
+.status-active {
+  color: var(--success-color);
+  font-weight: 600;
+}
+
+.status-inactive {
+  color: var(--error-color);
+  font-weight: 600;
+}
+
+/* ============================= */
+/* ACTION BUTTONS                */
+/* ============================= */
+.users-table button {
+  padding: 6px 12px;
+  margin-right: 6px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.users-table button:first-child {
+  background-color: var(--secondary-color);
+  color: #000;
+}
+
+.users-table button:first-child:hover {
+  opacity: 0.8;
+}
+
+.delete-btn {
+  background-color: var(--error-color);
+  color: #fff;
+}
+
+.delete-btn:hover {
+  opacity: 0.8;
+}
+
+/* ============================= */
+/* EMPTY STATE                   */
+/* ============================= */
+.empty-state {
+  text-align: center;
+  padding: 30px;
+  color: var(--text-secondary);
+}
+
+/* ============================= */
+/* LOADER                        */
+/* ============================= */
+.loader-container {
+  display: flex;
+  justify-content: center;
+  padding: 50px;
+}
+
+.loader {
+  border: 5px solid #eee;
+  border-top: 5px solid var(--secondary-color);
+  border-radius: 50%;
+  width: 45px;
+  height: 45px;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  100% { transform: rotate(360deg); }
+}
+
+/* ============================= */
+/* RESPONSIVE                    */
+/* ============================= */
+@media (max-width: 768px) {
+  .users-card {
+    padding: 20px;
+  }
+
+  .filters {
+    flex-direction: column;
+  }
+
+  .filters select,
+  .filters input,
+  .filters button {
+    width: 100%;
+  }
 }

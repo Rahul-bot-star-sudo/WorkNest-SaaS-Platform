@@ -99,7 +99,7 @@ const styles = {
     padding: "6px 10px",
   },
   active: {
-    backgroundColor: "#2563eb",
+    background: "transparent",
     color: "white",
     border: "none",
     padding: "6px 10px",

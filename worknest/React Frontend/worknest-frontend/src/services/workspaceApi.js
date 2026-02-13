@@ -3,26 +3,38 @@ import { getToken } from "../utils/auth";
 
 const API = "http://localhost:4000/api/workspaces";
 
-export const createWorkspace = async (data) => {
-  return axios.post(API, data, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    },
-  });
+// Common headers
+const authHeader = () => ({
+  headers: {
+    Authorization: `Bearer ${getToken()}`,
+  },
+});
+
+// ✅ Create Workspace
+export const createWorkspace = (data) => {
+  return axios.post(API, data, authHeader());
 };
 
-export const getWorkspaces = async () => {
-  return axios.get(API, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    },
-  });
+// ✅ Get All Workspaces
+export const getWorkspaces = () => {
+  return axios.get(API, authHeader());
 };
 
-export const getWorkspaceTypes = async () => {
-  return axios.get(`${API}/types`, {
-    headers: {
-      Authorization: `Bearer ${getToken()}`,
-    },
-  });
+// ✅ Get Workspace Types
+export const getWorkspaceTypes = () => {
+  return axios.get(`${API}/types`, authHeader());
+};
+
+// ✅ Delete Workspace
+export const deleteWorkspace = (id) => {
+  return axios.delete(`${API}/${id}`, authHeader());
+};
+
+// ✅ Toggle Workspace Status
+export const toggleWorkspaceStatus = (id) => {
+  return axios.patch(`${API}/${id}/status`, {}, authHeader());
+};
+
+export const updateWorkspace = (id, data) => {
+  return axios.put(`${API}/${id}`, data, authHeader());
 };

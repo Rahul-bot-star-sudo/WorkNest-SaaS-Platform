@@ -1,6 +1,7 @@
 /* ============================= */
-/* PAGE LAYOUT                   */
+/* WORKSPACE PAGE LAYOUT         */
 /* ============================= */
+
 .workspace-page {
   min-height: 100vh;
   background-color: var(--bg-color);
@@ -8,38 +9,42 @@
   align-items: center;
   justify-content: center;
   font-family: "Inter", sans-serif;
+  padding: 40px 20px;
 }
 
 /* ============================= */
 /* CARD                          */
 /* ============================= */
+
 .workspace-card {
-  width: 600px;
+  width: 800px;
   background-color: var(--card-bg);
   padding: 32px;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 1px solid var(--border-color);
-  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 15px 45px rgba(0, 0, 0, 0.6);
 }
 
 /* ============================= */
 /* HEADINGS                      */
 /* ============================= */
+
 .workspace-title {
   color: var(--text-primary);
-  font-size: 24px;
+  font-size: 26px;
   margin-bottom: 6px;
 }
 
 .workspace-subtitle {
   color: var(--text-secondary);
   font-size: 14px;
-  margin-bottom: 24px;
+  margin-bottom: 28px;
 }
 
 /* ============================= */
 /* LIST                          */
 /* ============================= */
+
 .workspace-list {
   list-style: none;
   padding: 0;
@@ -50,36 +55,101 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 14px 16px;
+  padding: 18px;
+  margin-bottom: 16px;
+  border-radius: 10px;
   border: 1px solid var(--border-color);
-  border-radius: 8px;
-  margin-bottom: 12px;
-  transition: background 0.2s ease;
+  background-color: #2f2a2b;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .workspace-item:hover {
-  background-color: #322d2e;
+  transform: translateY(-3px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* ============================= */
+/* LEFT SIDE                     */
+/* ============================= */
+
+.workspace-left {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
 }
 
 .workspace-name {
+  font-size: 16px;
+  font-weight: 600;
   color: var(--text-primary);
-  font-weight: 500;
 }
 
+.workspace-manager {
+  font-size: 13px;
+  color: var(--label-color);
+}
+
+/* ============================= */
+/* ACTIONS                       */
+/* ============================= */
+
+.workspace-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* ============================= */
+/* STATUS BADGE                  */
+/* ============================= */
+
 .workspace-status {
-  padding: 6px 12px;
-  border-radius: 20px;
+  padding: 6px 10px;
   font-size: 12px;
+  border-radius: 20px;
   font-weight: 600;
 }
 
-/* STATUS COLORS */
 .workspace-status.active {
-  background-color: var(--success-color);
-  color: #000;
+  background-color: rgba(127, 176, 105, 0.2);
+  color: var(--success-color);
 }
 
 .workspace-status.inactive {
+  background-color: rgba(178, 59, 59, 0.2);
+  color: var(--error-color);
+}
+
+/* ============================= */
+/* BUTTONS                       */
+/* ============================= */
+
+.workspace-actions button {
+  padding: 8px 14px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+/* Activate / Deactivate */
+.workspace-actions button:first-of-type {
+  background-color: var(--primary-color);
+  color: #000;
+}
+
+.workspace-actions button:first-of-type:hover {
+  background-color: var(--primary-hover);
+}
+
+/* Delete Button */
+.delete-btn {
   background-color: var(--error-color);
   color: #fff;
+}
+
+.delete-btn:hover {
+  opacity: 0.85;
 }

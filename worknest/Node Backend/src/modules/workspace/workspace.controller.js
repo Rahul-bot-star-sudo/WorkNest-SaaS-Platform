@@ -68,3 +68,63 @@ exports.getWorkspaceTypes = async (req, res) => {
     });
   }
 };
+
+exports.deleteWorkspace = async (req, res) => {
+  try {
+    await service.deleteWorkspace(req.params.id);
+
+    return res.json({
+      success: true,
+      message: "Workspace deleted successfully"
+    });
+
+  } catch (error) {
+    console.error("Delete Workspace Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Error deleting workspace"
+    });
+  }
+};
+
+exports.toggleWorkspaceStatus = async (req, res) => {
+  try {
+    await service.toggleWorkspaceStatus(req.params.id);
+
+    return res.json({
+      success: true,
+      message: "Workspace status updated"
+    });
+
+  } catch (error) {
+    console.error("Toggle Status Error:", error);
+
+    return res.status(500).json({
+      success: false,
+      message: "Error updating status"
+    });
+  }
+};
+
+exports.updateWorkspace = async (req, res) => {
+  try {
+    const updated = await service.updateWorkspace(
+      req.params.id,
+      req.body
+    );
+
+    res.json({
+      success: true,
+      data: updated
+    });
+
+  } catch (error) {
+    res.status(400).json({
+      success: false,
+      message: error.message
+    });
+  }
+};
+
+
