@@ -35,4 +35,4 @@ class SystemRepository {
   }
 }
 
-module.exports = { SystemRepository }
+module.exports = new SystemRepository();
