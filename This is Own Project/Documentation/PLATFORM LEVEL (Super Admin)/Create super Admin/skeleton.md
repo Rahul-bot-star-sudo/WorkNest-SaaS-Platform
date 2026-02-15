@@ -263,3 +263,313 @@ Option B → Pehle `SuperAdminService` ka STEP 1 likho
 Option C → Pure feature ko transactional + secure version me convert kare
 
 Tum architect ho — decision lo 😎
+Correction first 👇
+❌ *“es map ki file ka skeleton banao skeps ke sath”*
+✅ **“Make a skeleton of these mapped files with steps.”**
+
+Perfect 🔥 Rahul
+Now I’ll give you a **clean production-ready skeleton structure** with step numbers aligned to your algorithm.
+
+⚠️ Only structure + minimal code outline (no heavy logic).
+
+---
+
+# 📂 PROJECT SKELETON (Step-by-Step Flow Based)
+
+```
+com.worknest
+│
+├── controller
+│   └── AdminAuthController.java        (STEP 1)
+│
+├── service
+│   ├── AdminAuthService.java           (STEP 2,3,4,5)
+│   └── JwtService.java                 (STEP 6)
+│
+├── repository
+│   └── UserRepository.java             (STEP 3)
+│
+├── entity
+│   ├── User.java                       (DB Model)
+│   └── Role.java                       (Role Enum)
+│
+├── dto
+│   ├── LoginRequest.java               (STEP 1)
+│   └── LoginResponse.java              (STEP 6)
+│
+├── config
+│   ├── SecurityConfig.java             (STEP 7)
+│   └── JwtAuthenticationFilter.java    (Request Validation)
+│
+└── exception
+    └── GlobalExceptionHandler.java
+```
+
+---
+
+# 🧠 STEP-WISE FILE SKELETON
+
+---
+
+## 🔹 STEP 1 — Controller
+
+### 📄 AdminAuthController.java
+
+```java
+@RestController
+@RequestMapping("/api/auth/admin")
+public class AdminAuthController {
+
+    private final AdminAuthService adminAuthService;
+
+    public AdminAuthController(AdminAuthService adminAuthService) {
+        this.adminAuthService = adminAuthService;
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<LoginResponse> login(
+            @RequestBody LoginRequest request) {
+
+        return ResponseEntity.ok(
+                adminAuthService.login(request)
+        );
+    }
+}
+```
+
+✔ Only receives request
+✔ Delegates to service
+
+---
+
+## 🔹 STEP 2 — Service Layer
+
+### 📄 AdminAuthService.java
+
+```java
+@Service
+public class AdminAuthService {
+
+    private final UserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final JwtService jwtService;
+
+    public LoginResponse login(LoginRequest request) {
+
+        // STEP 3 → Fetch User
+
+        // STEP 4 → Role Check
+
+        // STEP 5 → Password Verification
+
+        // STEP 6 → Generate Token
+
+        return new LoginResponse("TOKEN");
+    }
+}
+```
+
+✔ Business logic lives here
+
+---
+
+## 🔹 STEP 3 — Repository
+
+### 📄 UserRepository.java
+
+```java
+@Repository
+public interface UserRepository 
+        extends JpaRepository<User, Long> {
+
+    Optional<User> findByEmail(String email);
+}
+```
+
+✔ DB access
+
+---
+
+## 🔹 STEP 4 — Entity
+
+### 📄 User.java
+
+```java
+@Entity
+@Table(name = "users")
+public class User {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    private String email;
+    private String password;
+
+    @Enumerated(EnumType.STRING)
+    private Role role;
+}
+```
+
+---
+
+### 📄 Role.java
+
+```java
+public enum Role {
+    SUPER_ADMIN,
+    COMPANY_ADMIN,
+    WORKSPACE_MANAGER,
+    EMPLOYEE
+}
+```
+
+---
+
+## 🔹 STEP 5 — JWT Service
+
+### 📄 JwtService.java
+
+```java
+@Service
+public class JwtService {
+
+    public String generateToken(User user) {
+
+        // Build JWT
+        // Add role claim
+        // Set expiration
+        // Sign with secret key
+
+        return "generated.jwt.token";
+    }
+
+    public boolean validateToken(String token) {
+        // Validate signature
+        // Check expiration
+        return true;
+    }
+}
+```
+
+---
+
+## 🔹 STEP 6 — DTOs
+
+### 📄 LoginRequest.java
+
+```java
+public class LoginRequest {
+
+    private String email;
+    private String password;
+}
+```
+
+---
+
+### 📄 LoginResponse.java
+
+```java
+public class LoginResponse {
+
+    private String token;
+
+    public LoginResponse(String token) {
+        this.token = token;
+    }
+}
+```
+
+---
+
+## 🔹 STEP 7 — Security Config
+
+### 📄 SecurityConfig.java
+
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig {
+
+    @Bean
+    public SecurityFilterChain filterChain(HttpSecurity http) 
+            throws Exception {
+
+        http
+            .csrf().disable()
+            .authorizeHttpRequests(auth -> auth
+                .requestMatchers("/api/auth/admin/login").permitAll()
+                .requestMatchers("/api/admin/**")
+                .hasRole("SUPER_ADMIN")
+                .anyRequest().authenticated()
+            );
+
+        return http.build();
+    }
+}
+```
+
+---
+
+## 🔹 STEP 8 — JWT Filter
+
+### 📄 JwtAuthenticationFilter.java
+
+```java
+@Component
+public class JwtAuthenticationFilter 
+        extends OncePerRequestFilter {
+
+    @Override
+    protected void doFilterInternal(
+            HttpServletRequest request,
+            HttpServletResponse response,
+            FilterChain filterChain)
+            throws ServletException, IOException {
+
+        // Extract Authorization header
+        // Validate token
+        // Set SecurityContext
+        // Continue filter chain
+
+        filterChain.doFilter(request, response);
+    }
+}
+```
+
+---
+
+# 🔄 Complete Flow Mapping
+
+```
+1 → Controller
+2 → Service
+3 → Repository
+4 → Role Check
+5 → Password Check
+6 → JWT Generation
+7 → Security Config
+8 → JWT Filter Validation
+```
+
+---
+
+# 🔥 This Structure Gives You
+
+✔ Clean layered architecture
+✔ Separation of concerns
+✔ Interview-ready structure
+✔ Easy to scale
+✔ Easy to add refresh token later
+
+---
+
+If you want next level:
+
+* 🔥 Add Refresh Token skeleton
+* 🔥 Add Super Admin auto-creation skeleton
+* 🔥 Add Multi-tenant workspaceId integration
+* 🔥 Give complete folder hierarchy for WorkNest resume project
+
+Tell me your next move 🚀

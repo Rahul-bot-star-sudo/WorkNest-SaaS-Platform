@@ -240,3 +240,22 @@ If you want next:
 * Or DB schema design
 
 Batao next step kya rakhen 🚀
+Client
+   ↓
+AdminAuthController
+   ↓
+AdminAuthService
+   ↓
+UserRepository (DB)
+   ↓
+Password Check
+   ↓
+JwtService
+   ↓
+Return Token
+   ↓
+JwtAuthenticationFilter (Every Request)
+   ↓
+SecurityContextHolder
+   ↓
+Access Control via SecurityConfig
