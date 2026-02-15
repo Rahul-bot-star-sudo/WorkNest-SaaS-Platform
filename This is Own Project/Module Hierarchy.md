@@ -1,6 +1,374 @@
 ### consept hierarchy
 ---
 ```
+ENTERPRISE MANAGEMENT SYSTEM
+├── 🔐 CORE SECURITY & AUTHENTICATION (System Foundation)
+│   ├── SUPER ADMIN CREATION
+│   │   ├── What it does:
+│   │   │   ├── System bootstrap pe SUPER_ADMIN auto-create
+│   │   │   └── Default credentials setup
+│   │   ├── Tech Concepts:
+│   │   │   ├── ApplicationRunner/CommandLineRunner
+│   │   │   ├── BCryptPasswordEncoder
+│   │   │   └── Role Enum (SUPER_ADMIN, COMPANY_ADMIN, WORKSPACE_MANAGER, EMPLOYEE)
+│   │   └── What You Learn:
+│   │       ├── Application initialization
+│   │       ├── Password hashing
+│   │       └── Role-based design
+│   │
+│   └── JWT AUTHENTICATION
+│       ├── What it does:
+│       │   ├── Login API → JWT token generate
+│       │   ├── Token validation + Workspace context
+│       │   └── Role & workspace extract from token
+│       ├── Tech Concepts:
+│       │   ├── JWT with custom claims (workspaceId, role)
+│       │   ├── OncePerRequestFilter
+│       │   └── SecurityContextHolder
+│       └── What You Learn:
+│           ├── Token-based auth with custom claims
+│           ├── Multi-tenant context
+│           └── Stateless architecture
+│
+├── 👑 MODULE 1: COMPANY MANAGEMENT (Super Admin Only)
+│   ├── Feature: Company Registration
+│   │   ├── What it does:
+│   │   │   ├── Sirf SUPER_ADMIN hi new company create kare
+│   │   │   ├── COMPANY_ADMIN credentials auto-generate
+│   │   │   ├── Default workspace "General" auto-create
+│   │   │   └── Company status (ACTIVE/INACTIVE)
+│   │   ├── Tech Concepts:
+│   │   │   ├── @PreAuthorize("hasRole('SUPER_ADMIN')")
+│   │   │   ├── JWT role validation
+│   │   │   ├── @OneToOne with User (COMPANY_ADMIN)
+│   │   │   └── @OneToMany with Workspace (cascade)
+│   │   └── What You Learn:
+│   │       ├── Method-level security
+│   │       ├── Nested object creation
+│   │       └── Transaction management
+│   │
+│   └── Feature: Company Management
+│       ├── What it does:
+│       │   ├── View all companies (paginated)
+│       │   ├── Update company status
+│       │   ├── View all workspaces under company
+│       │   └── Search by name
+│       ├── Tech Concepts:
+│       │   ├── @PreAuthorize("hasRole('SUPER_ADMIN')")
+│       │   ├── Pageable interface
+│       │   └── Specification for search
+│       └── What You Learn:
+│           ├── Pagination & Sorting
+│           ├── Dynamic queries
+│           └── Multi-level data access
+│
+├── 🏢 MODULE 2: WORKSPACE MANAGEMENT (Company Admin)
+│   ├── Feature: Workspace Creation
+│   │   ├── What it does:
+│   │   │   ├── COMPANY_ADMIN multiple workspaces create kare
+│   │   │   │   ├── eg: "Development", "Marketing", "Sales", "HR"
+│   │   │   ├── Workspace Manager assign (WORKSPACE_MANAGER role)
+│   │   │   ├── Workspace type (DEPARTMENT/PROJECT_BASED/CLIENT)
+│   │   │   └── Workspace status (ACTIVE/INACTIVE)
+│   │   ├── API Endpoints:
+│   │   │   ├── POST /api/workspaces (Create workspace)
+│   │   │   ├── PUT /api/workspaces/{id}/manager (Assign manager)
+│   │   │   └── GET /api/workspaces (List all workspaces)
+│   │   ├── Tech Concepts:
+│   │   │   ├── @PreAuthorize("hasRole('COMPANY_ADMIN')")
+│   │   │   ├── @ManyToOne with Company
+│   │   │   ├── @OneToOne with User (Workspace Manager)
+│   │   │   └── WorkspaceMember entity for employees
+│   │   └── What You Learn:
+│   │       ├── Workspace-based isolation
+│   │       ├── Manager assignment pattern
+│   │       └── Hierarchical access control
+│   │
+│   └── Feature: Workspace Overview Dashboard
+│       ├── What it does:
+│       │   ├── All workspaces list with managers
+│       │   ├── Employee count per workspace
+│       │   ├── Active projects per workspace
+│       │   └── Workspace analytics
+│       ├── Tech Concepts:
+│       │   ├── @PreAuthorize("hasRole('COMPANY_ADMIN')")
+│       │   │   └── JPQL with GROUP BY workspace
+│       └── What You Learn:
+│           ├── Cross-workspace reporting
+│           ├── Data aggregation
+│           └── Admin dashboard
+│
+├── 👥 MODULE 3: EMPLOYEE MANAGEMENT (Company Admin + Workspace Manager)
+│   ├── Feature: Department/Role Management
+│   │   ├── What it does:
+│   │   │   ├── COMPANY_ADMIN: Create company-wide departments
+│   │   │   ├── WORKSPACE_MANAGER: Create workspace-specific roles
+│   │   │   └── Department/Role CRUD
+│   │   ├── Tech Concepts:
+│   │   │   ├── @PreAuthorize("hasAnyRole('COMPANY_ADMIN', 'WORKSPACE_MANAGER')")
+│   │   │   ├── @ManyToOne with Company/Workspace
+│   │   │   └── Hierarchical validation
+│   │   └── What You Learn:
+│   │       ├── Multi-level role hierarchy
+│   │       ├── Context-based validation
+│   │       └── Polymorphic relationships
+│   │
+│   └── Feature: Employee Onboarding & Assignment
+│       ├── What it does:
+│       │   ├── COMPANY_ADMIN: Add employees to company
+│       │   ├── WORKSPACE_MANAGER: 
+│       │   │   ├── Assign employees to workspace
+│       │   │   ├── Remove from workspace
+│       │   │   └── Set workspace-specific role
+│       │   └── Employee profile with workspace memberships
+│       ├── API Endpoints:
+│       │   ├── POST /api/employees (Company Admin only)
+│       │   ├── POST /api/workspaces/{id}/members (Workspace Manager)
+│       │   ├── DELETE /api/workspaces/{id}/members/{empId}
+│       │   └── GET /api/employees/workspace/{id} (Workspace members)
+│       ├── Tech Concepts:
+│       │   ├── @PreAuthorize with complex conditions
+│       │   ├── WorkspaceMember join table with role
+│       │   ├── @Query with workspace validation
+│       │   └── Entity graphs for eager loading
+│       └── What You Learn:
+│           ├── Many-to-Many with extra columns
+│           ├── Complex authorization logic
+│           ├── Custom permission evaluators
+│           └── N+1 problem and solutions
+│
+├── 📊 MODULE 4: PROJECT & TASK MANAGEMENT (Workspace-based)
+│   ├── Feature: Workspace Projects
+│   │   ├── What it does:
+│   │   │   ├── WORKSPACE_MANAGER: 
+│   │   │   │   ├── Create projects within workspace
+│   │   │   │   ├── Assign project leads
+│   │   │   │   └── Set project budget/deadline
+│   │   │   ├── Project Lead (EMPLOYEE with lead role):
+│   │   │   │   ├── Update project progress
+│   │   │   │   ├── Create tasks
+│   │   │   │   └── Assign team members
+│   │   │   └── Team Members: View assigned tasks
+│   │   ├── Data Model:
+│   │   │   ├── Project (workspace_id, manager_id, lead_id)
+│   │   │   ├── ProjectTeam (project_id, employee_id, role_in_project)
+│   │   │   └── Task (project_id, assignee_id, created_by)
+│   │   ├── Tech Concepts:
+│   │   │   ├── @PreAuthorize("@workspaceSecurity.isManager(#workspaceId)")
+│   │   │   ├── @PostAuthorize for return filtering
+│   │   │   └── Custom permission annotations
+│   │   └── What You Learn:
+│   │       ├── Method security with parameters
+│   │       ├── Custom security expressions
+│   │       └── Row-level security
+│   │
+│   └── Feature: Cross-Workspace Restrictions
+│       ├── What it does:
+│       │   ├── Employee from Workspace A cannot see Workspace B projects
+│       │   ├── Workspace Manager can only manage their workspace
+│       │   ├── Company Admin can see all workspaces
+│       │   └── Data isolation between different workspaces
+│       ├── Implementation:
+│       │   ├── Repository level: @Query with workspace_id = :workspaceId
+│       │   ├── Service level: Validate workspace access
+│       │   ├── Controller level: Extract workspace from JWT
+│       │   └── Filter level: WorkspaceContext filter
+│       └── What You Learn:
+│           ├── Multi-tenancy implementation
+│           ├── Data isolation patterns
+│           └── Defense in depth security
+│
+├── 📈 MODULE 5: ROLE-BASED DASHBOARDS
+│   ├── Feature: Company Admin Dashboard
+│   │   ├── What it shows:
+│   │   │   ├── All workspaces health
+│   │   │   ├── Manager performance metrics
+│   │   │   ├── Cross-workspace resource allocation
+│   │   │   └── Company-wide analytics
+│   │   └── Tech: Complex JPQL, Projections
+│   │
+│   ├── Feature: Workspace Manager Dashboard
+│   │   ├── What it shows:
+│   │   │   ├── Workspace members overview
+│   │   │   ├── Workspace projects status
+│   │   │   ├── Task completion rate
+│   │   │   └── Resource utilization
+│   │   └── Tech: Workspace-scoped queries
+│   │
+│   └── Feature: Employee Dashboard
+│       ├── What it shows:
+│       │   ├── My workspaces
+│       │   ├── My assigned projects
+│       │   ├── My tasks (across workspaces)
+│       │   └── Workspace switching
+│       └── Tech: Multi-workspace union queries
+│
+├── 🔄 MODULE 6: ADVANCED WORKSPACE FEATURES
+│   ├── Feature: Workspace Transfer
+│   │   ├── What it does:
+│   │   │   ├── Company Admin can transfer employees between workspaces
+│   │   │   ├── History of transfers maintained
+│   │   │   └── Reassign tasks on transfer
+│   │   └── Tech: Batch updates, Event listeners
+│   │
+│   ├── Feature: Manager Hierarchy
+│   │   ├── What it does:
+│   │   │   ├── Senior Manager over multiple workspaces
+│   │   │   ├── Junior Manager under senior
+│   │   │   ├── Temporary manager assignment (leave coverage)
+│   │   │   └── Manager approval workflows
+│   │   └── Tech: Self-referential relationships, Temporal data
+│   │
+│   └── Feature: Workspace Templates
+│       ├── What it does:
+│       │   ├── Company Admin creates workspace templates
+│       │   │   ├── Development template (Dev, QA, DevOps roles)
+│       │   │   ├── Marketing template (Content, SEO, Social)
+│       │   │   └── Sales template (Inside, Field, Support)
+│       │   ├── Quick workspace creation from template
+│       │   └── Template versioning
+│       └── Tech: JSON columns, Prototype pattern
+│
+└── 📁 DATABASE SCHEMA (Enhanced with Workspaces)
+
+```sql
+-- Core Tables
+users (
+    id BIGINT PK,
+    email VARCHAR UNIQUE,
+    password VARCHAR,
+    role ENUM(SUPER_ADMIN, COMPANY_ADMIN, WORKSPACE_MANAGER, EMPLOYEE),
+    created_at TIMESTAMP
+)
+
+companies (
+    id BIGINT PK,
+    name VARCHAR,
+    email VARCHAR,
+    phone VARCHAR,
+    address TEXT,
+    status ENUM(ACTIVE, INACTIVE),
+    created_by BIGINT FK (users.id)
+)
+
+-- Workspace Table (Multiple per company)
+workspaces (
+    id BIGINT PK,
+    name VARCHAR,
+    type ENUM(DEPARTMENT, PROJECT_BASED, CLIENT),
+    description TEXT,
+    company_id BIGINT FK (companies.id),
+    manager_id BIGINT FK (users.id),  -- WORKSPACE_MANAGER
+    status ENUM(ACTIVE, INACTIVE),
+    created_at TIMESTAMP,
+    settings JSON  -- Template-based settings
+)
+
+-- Junction table for workspace members with roles
+workspace_members (
+    workspace_id BIGINT FK (workspaces.id),
+    employee_id BIGINT FK (employees.id),
+    role_in_workspace VARCHAR,  -- e.g., 'SENIOR_DEV', 'TEAM_LEAD'
+    joined_date DATE,
+    assigned_by BIGINT FK (users.id),
+    PRIMARY KEY (workspace_id, employee_id)
+)
+
+employees (
+    id BIGINT PK,
+    user_id BIGINT FK (users.id) UNIQUE,  -- Login credentials
+    company_id BIGINT FK (companies.id),
+    
+    -- Personal Info
+    photo VARCHAR,
+    full_name VARCHAR,
+    email VARCHAR,
+    phone VARCHAR,
+    address TEXT,
+    
+    -- Professional Info
+    employee_id VARCHAR UNIQUE,
+    designation VARCHAR,
+    employment_type ENUM(FULL_TIME, PART_TIME, CONTRACT),
+    joining_date DATE,
+    
+    created_at TIMESTAMP
+)
+
+departments (
+    id BIGINT PK,
+    name VARCHAR,
+    company_id BIGINT FK (companies.id),
+    head_employee_id BIGINT FK (employees.id)
+)
+
+projects (
+    id BIGINT PK,
+    name VARCHAR,
+    description TEXT,
+    workspace_id BIGINT FK (workspaces.id),
+    manager_id BIGINT FK (users.id),  -- Workspace Manager
+    lead_id BIGINT FK (employees.id),  -- Project Lead
+    start_date DATE,
+    end_date DATE,
+    status ENUM(ACTIVE, COMPLETED, HOLD),
+    progress INT,
+    budget DECIMAL,
+    created_at TIMESTAMP
+)
+
+project_team (
+    project_id BIGINT FK (projects.id),
+    employee_id BIGINT FK (employees.id),
+    role_in_project VARCHAR,
+    assigned_date DATE,
+    PRIMARY KEY (project_id, employee_id)
+)
+
+tasks (
+    id BIGINT PK,
+    title VARCHAR,
+    description TEXT,
+    project_id BIGINT FK (projects.id),
+    workspace_id BIGINT FK (workspaces.id),  -- Denormalized for quick access
+    assignee_id BIGINT FK (employees.id),
+    created_by BIGINT FK (users.id),
+    due_date DATE,
+    priority ENUM(HIGH, MEDIUM, LOW),
+    status ENUM(TODO, DOING, DONE),
+    attachments TEXT,  -- JSON array of file paths
+    created_at TIMESTAMP,
+    updated_at TIMESTAMP
+)
+
+task_comments (
+    id BIGINT PK,
+    task_id BIGINT FK (tasks.id),
+    user_id BIGINT FK (users.id),
+    comment TEXT,
+    created_at TIMESTAMP
+)
+
+workspace_templates (
+    id BIGINT PK,
+    name VARCHAR,
+    company_id BIGINT FK (companies.id),
+    configuration JSON,  -- Default roles, project types
+    created_at TIMESTAMP
+)
+
+manager_hierarchy (
+    id BIGINT PK,
+    senior_manager_id BIGINT FK (users.id),
+    junior_manager_id BIGINT FK (users.id),
+    workspace_id BIGINT FK (workspaces.id),
+    valid_from DATE,
+    valid_to DATE,  -- NULL for permanent
+    status ENUM(ACTIVE, EXPIRED)
+)
+
+---
+
 1. System Initialization
    └── SUPER_ADMIN created
 
