@@ -1,18 +1,47 @@
 import { getUser, logout } from "../utils/auth";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ProfileSidebar.css";
 
 function ProfileSidebar() {
   const [showActivity, setShowActivity] = useState(false);
+  const [sidebarWidth, setSidebarWidth] = useState(320); // Default width
+  const [isResizing, setIsResizing] = useState(false);
   const navigate = useNavigate();
   const user = getUser();
+
+  // Handle sidebar resize
+  const startResizing = (e) => {
+    setIsResizing(true);
+    e.preventDefault();
+  };
+
+  const stopResizing = () => {
+    setIsResizing(false);
+  };
+
+  const resize = (e) => {
+    if (isResizing) {
+      const newWidth = e.clientX;
+      if (newWidth >= 240 && newWidth <= 480) { // Min 240px, Max 480px
+        setSidebarWidth(newWidth);
+      }
+    }
+  };
+
+  useEffect(() => {
+    window.addEventListener('mousemove', resize);
+    window.addEventListener('mouseup', stopResizing);
+    return () => {
+      window.removeEventListener('mousemove', resize);
+      window.removeEventListener('mouseup', stopResizing);
+    };
+  }, [isResizing]);
 
   if (!user) return null;
 
   const { name, email, role } = user;
 
-  // Get initials for avatar
   const getInitials = (name) => {
     return name
       .split(" ")
@@ -22,7 +51,6 @@ function ProfileSidebar() {
       .slice(0, 2);
   };
 
-  // Get priority color
   const getPriorityColor = () => {
     switch(role?.priority) {
       case 'HIGH': return { color: '#ef4444', width: '100%' };
@@ -44,8 +72,17 @@ function ProfileSidebar() {
   const priorityStyle = getPriorityColor();
 
   return (
-    <aside className="profile-sidebar">
-      {/* Profile Header with Avatar */}
+    <aside 
+      className="profile-sidebar" 
+      style={{ width: sidebarWidth }}
+    >
+      {/* Resize Handle */}
+      <div 
+        className="sidebar-resize-handle"
+        onMouseDown={startResizing}
+      />
+
+      {/* Profile Header */}
       <div className="profile-header">
         <div className="profile-avatar" onClick={handleEditProfile}>
           <div className="avatar-ring"></div>
@@ -58,7 +95,7 @@ function ProfileSidebar() {
         <h3 className="profile-title">Profile</h3>
       </div>
 
-      {/* Profile Info Section */}
+      {/* Profile Info */}
       <div className="profile-info">
         <div className="info-item">
           <span className="info-label">
@@ -99,7 +136,10 @@ function ProfileSidebar() {
               <div className="priority-bar">
                 <div 
                   className="priority-fill" 
-                  style={{ width: priorityStyle.width }}
+                  style={{ 
+                    width: priorityStyle.width,
+                    backgroundColor: priorityStyle.color 
+                  }}
                 />
               </div>
             </div>
@@ -123,9 +163,9 @@ function ProfileSidebar() {
         </div>
       </div>
 
-      {/* Edit Profile Button */}
+      {/* Edit Button */}
       <button className="btn-edit" onClick={handleEditProfile}>
-        <span className="btn-logout-icon">✏️</span>
+        <span className="btn-icon">✏️</span>
         Edit Profile
       </button>
 
@@ -134,10 +174,9 @@ function ProfileSidebar() {
         <div 
           className="timeline-title"
           onClick={() => setShowActivity(!showActivity)}
-          style={{ cursor: 'pointer' }}
         >
           <span>📋 Recent Activity</span>
-          <span style={{ fontSize: '0.8rem' }}>{showActivity ? '▼' : '▶'}</span>
+          <span>{showActivity ? '▼' : '▶'}</span>
         </div>
         
         {showActivity && (
@@ -160,9 +199,9 @@ function ProfileSidebar() {
 
       {/* Logout Button */}
       <button className="btn-logout" onClick={handleLogout}>
-        <span className="btn-logout-icon">🚪</span>
+        <span className="btn-icon">🚪</span>
         Logout
-        <span className="btn-logout-icon">→</span>
+        <span className="btn-icon">→</span>
       </button>
     </aside>
   );
