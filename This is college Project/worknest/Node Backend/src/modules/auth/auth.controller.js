@@ -10,9 +10,7 @@ class AuthController {
 
   // ================= LOGIN =================
   async login(req, res) {
-    console.log('LOGIN API HIT');
-    console.log('REQ BODY IN CONTROLLER:', req.body);
-
+  
     try {
 
       const dto = LoginDto(req.body);
@@ -45,8 +43,7 @@ class AuthController {
 
   // ================= REGISTER =================
   async registerUser(req, res) {
-    console.log('REGISTER API HIT');
-
+   
     try {
       return res.status(201).json({
         success: true,

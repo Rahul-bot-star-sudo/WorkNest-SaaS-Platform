@@ -2,9 +2,13 @@ import { useEffect, useState } from "react";
 import { getDropdownRoles } from "../services/roleApi";
 import { createUser } from "../services/user.api";
 import "./CreateUserPage.css"; // Naya CSS file
+import { getCompanies } from "../services/company.api";
 
 function CreateUserPage() {
   const [roles, setRoles] = useState([]);
+  const [companies, setCompanies] = useState([]);
+const [companyId, setCompanyId] = useState("");
+const user = JSON.parse(localStorage.getItem("user"));
   const [loading, setLoading] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [focusedField, setFocusedField] = useState(null);
@@ -14,25 +18,28 @@ function CreateUserPage() {
     password: "",
     role_code: "",
   });
+useEffect(() => {
+  async function fetchData() {
+    setLoading(true);
+    try {
+      const roleRes = await getDropdownRoles();
+      setRoles(roleRes.data.data || []);
 
-  useEffect(() => {
-    async function fetchRoles() {
-      setLoading(true);
-      try {
-        const result = await getDropdownRoles();
-        setRoles(result.data.data || []);
-      } catch (error) {
-        console.error("Failed to fetch roles:", error);
-        // Show toast notification here
-      } finally {
-        setLoading(false);
+      if (user?.role?.role_code === "SUPER_ADMIN") {
+        const companyRes = await getCompanies();
+        setCompanies(companyRes.data.companies || []);
       }
+
+    } catch (error) {
+      console.error("Failed to fetch data:", error);
+    } finally {
+      setLoading(false);
     }
+  }
 
-    fetchRoles();
-  }, []);
-
-  const handleInputChange = (e) => {
+  fetchData();
+}, []);
+ const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
@@ -55,7 +62,10 @@ function CreateUserPage() {
 
     setSubmitting(true);
     try {
-      const result = await createUser(formData);
+      const result = await createUser({
+  ...formData,
+  companyId
+});
       
       if (result.data?.success) {
         showNotification("User created successfully!", "success");
@@ -212,7 +222,22 @@ function CreateUserPage() {
                 </div>
               </label>
             </div>
-
+{user?.role?.role_code === "SUPER_ADMIN" && (
+  <div className="form-group">
+    <label>Select Company</label>
+    <select
+      value={companyId}
+      onChange={(e) => setCompanyId(e.target.value)}
+    >
+      <option value="">Select Company</option>
+      {companies.map((c) => (
+        <option key={c.id} value={c.id}>
+          {c.name}
+        </option>
+      ))}
+    </select>
+  </div>
+)}
             {/* Role Select Field */}
             <div className={`form-group magnetic-field ${focusedField === 'role' ? 'focused' : ''}`}>
               <label className="floating-label">

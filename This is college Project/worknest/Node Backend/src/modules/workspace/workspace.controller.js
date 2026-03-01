@@ -1,11 +1,12 @@
 const service = require("./workspace.service");
 const pool = require("../../config/db");
 
+// ✅ Create Workspace
 exports.createWorkspace = async (req, res) => {
   try {
     const workspace = await service.createWorkspace(
       req.body,
-      req.user.userId
+      req.user
     );
 
     return res.status(201).json({
@@ -14,9 +15,6 @@ exports.createWorkspace = async (req, res) => {
     });
 
   } catch (error) {
-    
-
-    // 🔥 PostgreSQL Unique Constraint Error
     if (error.code === "23505") {
       return res.status(400).json({
         success: false,
@@ -26,18 +24,19 @@ exports.createWorkspace = async (req, res) => {
 
     console.error("Workspace Error:", error);
 
-    return res.status(500).json({
+    return res.status(400).json({
       success: false,
-      message: "Error creating workspace"
+      message: error.message
     });
   }
 };
 
+// ✅ Get Workspaces
 exports.getWorkspaces = async (req, res) => {
   try {
-    const data = await service.getWorkspaces();
+    const data = await service.getWorkspaces(req.user);
 
-    return res.json({
+    return res.status(200).json({
       success: true,
       data
     });
@@ -47,73 +46,78 @@ exports.getWorkspaces = async (req, res) => {
 
     return res.status(500).json({
       success: false,
-      message: "Error fetching workspaces"
+      message: error.message
     });
   }
 };
 
+// ✅ Get Workspace Types
 exports.getWorkspaceTypes = async (req, res) => {
   try {
     const data = await service.getWorkspaceTypes();
 
-    return res.json({
+    res.json({
       success: true,
       data
     });
 
   } catch (error) {
-    console.error("Get Workspace Types Error:", error);
-
-    return res.status(500).json({
+    res.status(500).json({
       success: false,
-      message: "Error fetching workspace types"
+      message: error.message
     });
   }
 };
 
+// ✅ Delete Workspace
 exports.deleteWorkspace = async (req, res) => {
   try {
-    await service.deleteWorkspace(req.params.id);
+    await service.deleteWorkspace(
+      req.params.id,
+      req.user
+    );
 
-    return res.json({
+    res.json({
       success: true,
       message: "Workspace deleted successfully"
     });
 
   } catch (error) {
-    console.error("Delete Workspace Error:", error);
-
-    return res.status(500).json({
+    res.status(400).json({
       success: false,
-      message: "Error deleting workspace"
+      message: error.message
     });
   }
 };
 
+// ✅ Toggle Status
 exports.toggleWorkspaceStatus = async (req, res) => {
   try {
-    await service.toggleWorkspaceStatus(req.params.id);
+    await service.toggleWorkspaceStatus(
+      req.params.id,
+      req.user
+    );
 
-    return res.json({
+    res.json({
       success: true,
       message: "Workspace status updated"
     });
 
   } catch (error) {
-    console.error("Toggle Status Error:", error);
-
-    return res.status(500).json({
+    res.status(400).json({
       success: false,
-      message: "Error updating status"
+      message: error.message
     });
   }
 };
 
+// ✅ Update Workspace
 exports.updateWorkspace = async (req, res) => {
   try {
     const updated = await service.updateWorkspace(
       req.params.id,
-      req.body
+      req.body,
+      req.user
     );
 
     res.json({
@@ -128,43 +132,21 @@ exports.updateWorkspace = async (req, res) => {
     });
   }
 };
+
+// ✅ My Workspaces
 exports.getMyWorkspaces = async (req, res) => {
   try {
-    console.log("REQ.USER:", req.user);
-
-    const managerId = req.user.userId;   // abhi ye hi rakho
-
-    console.log("Manager ID Used:", managerId);
+    const managerId = req.user.userId;
 
     const result = await pool.query(
       "SELECT * FROM workspaces WHERE manager_id = $1",
       [managerId]
     );
 
-    console.log("DB RESULT:", result.rows);
-
     res.json({
       success: true,
       count: result.rows.length,
       data: result.rows
-    });
-
-  } catch (error) {
-    console.log("ERROR:", error);
-    res.status(500).json({ message: error.message });
-  }
-};
-exports.updateProjectOwner = async (req, res) => {
-  try {
-
-    const updated = await service.updateProjectOwner(
-      req.params.id,
-      req.body.owner_id
-    );
-
-    res.json({
-      success: true,
-      data: updated
     });
 
   } catch (error) {

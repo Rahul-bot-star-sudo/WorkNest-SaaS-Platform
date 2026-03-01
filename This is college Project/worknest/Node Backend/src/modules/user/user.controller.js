@@ -15,26 +15,9 @@ exports.createUser = async (req, res) => {
     });
   }
 };
-
-// 👇 Agar route me GET laga hai to ye hona hi chahiye
 exports.getUsers = async (req, res) => {
   try {
-    const users = await userService.getUsers(req.user);
-
-    return res.status(200).json({
-      success: true,
-      data: users,
-    });
-  } catch (error) {
-    return res.status(error.statusCode || 400).json({
-      success: false,
-      message: error.message,
-    });
-  }
-};
-exports.getUsers = async (req, res) => {
-  try {
-    const { role, search } = req.query; // 👈 NEW
+    const { role, search } = req.query;
 
     const users = await userService.getUsers(
       req.user,

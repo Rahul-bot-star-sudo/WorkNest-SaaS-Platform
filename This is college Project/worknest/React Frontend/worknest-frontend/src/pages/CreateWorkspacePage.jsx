@@ -39,23 +39,27 @@ function CreateWorkspacePage() {
   }, []);
 
   // 🔹 Load managers (role = MANAGER)
-  useEffect(() => {
-    const loadManagers = async () => {
-      setLoadingManagers(true);
-      try {
-        const data = await getUsersApi("MANAGER", "");
-        setManagers(data || []);
-      } catch (error) {
-        console.error("Error loading managers:", error);
-        showNotification("Failed to load managers", "error");
-      } finally {
-        setLoadingManagers(false);
-      }
-    };
+useEffect(() => {
+  const loadManagers = async () => {
+    setLoadingManagers(true);
+    try {
+      const managers = await getUsersApi("MANAGER", "");
 
-    loadManagers();
-  }, []);
+      console.log("Managers received:", managers); // Debug
 
+      // Since API already returns array
+      setManagers(managers);
+
+    } catch (error) {
+      console.error("Error loading managers:", error);
+      setManagers([]);
+    } finally {
+      setLoadingManagers(false);
+    }
+  };
+
+  loadManagers();
+}, []);
   // Mouse move effect for interactive elements
   useEffect(() => {
     const handleMouseMove = (e) => {

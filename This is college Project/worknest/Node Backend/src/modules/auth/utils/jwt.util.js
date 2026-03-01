@@ -29,6 +29,7 @@ class JwtUtil {
       { expiresIn: REFRESH_TOKEN_EXPIRY }
     );
   }
+  
 }
 
 module.exports = JwtUtil;

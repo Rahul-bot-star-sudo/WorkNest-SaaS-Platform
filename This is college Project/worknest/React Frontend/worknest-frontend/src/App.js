@@ -9,7 +9,8 @@ import UsersPage from "./pages/UsersPage";
 import WorkspaceListPage from './pages/WorkspaceListPage';
 import CreateWorkspacePage from './pages/CreateWorkspacePage';
 import WorkspaceProjects from "./pages/WorkspaceProjects";
-
+import CreateCompany from "./pages/CreateCompany";
+import CompanyList from "./pages/CompanyList";
 import ProtectedRoute from "./auth/ProtectedRoute";
 import RoleRoute from "./auth/RoleRoute";
 
@@ -33,8 +34,11 @@ function App() {
             <ProtectedRoute>
               <DashboardLayout />
             </ProtectedRoute>
+            
           }
         >
+          <Route path="create-company" element={<CreateCompany />} />
+  <Route path="companies" element={<CompanyList />} />
           <Route index element={<DashboardHome />} />
 
           <Route path="create-user" element={<CreateUserPage />} />
@@ -59,6 +63,7 @@ function App() {
         />
 
       </Routes>
+      
     </BrowserRouter>
   );
 }

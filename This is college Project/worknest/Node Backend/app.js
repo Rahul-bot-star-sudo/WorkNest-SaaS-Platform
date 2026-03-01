@@ -6,6 +6,7 @@ const cookieParser = require("cookie-parser");
 const workspaceRoutes = require("./src/modules/workspace/workspace.routes");
 const taskRoutes = require("./src/modules/task/task.routes");
 const activityRoutes = require("./src/modules/activity/activity.routes");
+const companyRoutes = require("./src/modules/company/company.routes");
 
 const roleRoutes = require("./src/modules/role/role.routes");
 const userRoutes = require("./src/modules/user/user.routes");
@@ -30,6 +31,7 @@ app.use(express.json());
 /* ✅ Cookie parser */
 app.use(cookieParser());   // 🔥 यहाँ move करो
 
+app.use("/api/companies", companyRoutes);
 /* ✅ Routes */
 app.use("/api/roles", roleRoutes);
 app.use("/api/users", userRoutes);

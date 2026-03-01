@@ -15,7 +15,7 @@ router.post(
 router.get(
   "/",
   authMiddleware,
-  allowRoles(["ADMIN"]),
+  allowRoles(["ADMIN","SUPER_ADMIN"]),
   controller.getWorkspaces
 );
 
@@ -34,14 +34,9 @@ router.put("/:id", authMiddleware, controller.updateWorkspace);
 router.get(
   "/my-workspaces",
   authMiddleware,
-  allowRoles(["MANAGER"]),
+  allowRoles(["MANAGER","SUPER_ADMIN","ADMIN"]),
   controller.getMyWorkspaces
 );
-router.patch(
-  "/:id/owner",
-  authMiddleware,
-  allowRoles(["MANAGER", "ADMIN"]),
-  controller.updateProjectOwner
-);
+
 
 module.exports = router;

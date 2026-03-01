@@ -77,6 +77,18 @@ function Navbar() {
 
   const navItems = [
     {
+  path: "/dashboard/create-company",
+  label: "Create Company",
+  icon: "🏢",
+  show: roleCode === "SUPER_ADMIN"
+},
+{
+  path: "/dashboard/companies",
+  label: "Companies",
+  icon: "📋",
+  show: roleCode === "SUPER_ADMIN"
+},
+    {
       path: "/dashboard",
       label: "Dashboard",
       icon: "📊",

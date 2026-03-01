@@ -3,13 +3,9 @@ const bcrypt = require('bcrypt');
 class PasswordUtil {
 
   static async compare(plain, hashed) {
-    console.log('PASSWORD UTIL CALLED');
-    console.log('PLAIN:', plain);
-    console.log('HASH:', hashed);
-
+ 
     const result = await bcrypt.compare(plain, hashed);
-    console.log('BCRYPT COMPARE RESULT:', result);
-
+   
     return result;
   }
 

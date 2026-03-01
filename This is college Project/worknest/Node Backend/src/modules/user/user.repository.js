@@ -3,27 +3,28 @@ const db = require("../../config/db");
 class UserRepository {
 
   async findByEmail(email) {
-    const result = await db.query(
-      `SELECT id, name, email, password, role,
-              last_login_at, login_count, created_at
-       FROM users
-       WHERE email = $1`,
-      [email]
-    );
+  const result = await db.query(
+    `SELECT id, name, email, password, role,
+            company_id,
+            last_login_at, login_count, created_at
+     FROM users
+     WHERE email = $1`,
+    [email]
+  );
 
-    return result.rows[0] || null;
-  }
+  return result.rows[0] || null;
+}
+  async create({ name, email, password, role, company_id, status }) {
 
-  async createUser({ name, email, password, role }) {
-    const result = await db.query(
-      `INSERT INTO users (name, email, password, role, status)
-       VALUES ($1, $2, $3, $4, $5)
-       RETURNING id, name, email, role, status, created_at`,
-      [name, email, password, role, "ACTIVE"]
-    );
+  const result = await db.query(
+  `INSERT INTO users (name, email, password, role, company_id, status)
+   VALUES ($1, $2, $3, $4, $5, $6)
+   RETURNING id, name, email, role, company_id, status, created_at`,
+  [name, email, password, role, company_id, status]
+);
 
-    return result.rows[0];
-  }
+  return result.rows[0];
+}
 
   async updateLoginMeta(userId) {
     await db.query(
@@ -50,17 +51,33 @@ class UserRepository {
 
     return result.rows;
   }
-  async findUsersWithFilter(priority, role, search) {
+  async findUsersWithFilter(priority, role, search, companyId, loggedInRole) {
 
   let query = `
-    SELECT u.id, u.name, u.email, u.role, r.priority
+    SELECT 
+      u.id,
+      u.name,
+      u.email,
+      u.role,
+      r.priority,
+      u.status,
+      c.name AS company_name
     FROM users u
     JOIN roles r ON u.role = r.role_code
+    JOIN companies c ON u.company_id = c.id
     WHERE r.priority < $1
   `;
 
   const values = [priority];
   let index = 2;
+
+  // 🔹 Company Isolation (Only if not SUPER_ADMIN)
+  // 🔹 Company Isolation (Only if not SUPER_ADMIN)
+if (loggedInRole !== "SUPER_ADMIN") {
+  query += ` AND u.company_id = $${index}`;
+  values.push(companyId);
+  index++;
+}
 
   // 🔹 Role filter
   if (role) {

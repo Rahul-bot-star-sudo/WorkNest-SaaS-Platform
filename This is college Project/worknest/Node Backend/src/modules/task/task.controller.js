@@ -1,22 +1,22 @@
 const service = require("./task.service");
 const activityService = require("../activity/activity.service");
 
+// ✅ Create Task
 exports.createTask = async (req, res) => {
   try {
 
     const task = await service.createTask(
       req.body,
-      req.user.userId
+      req.user   // ✅ FULL USER OBJECT
     );
 
-    // Log activity for task creation
+    // Log activity
     await activityService.logActivity(
       req.user.userId,
       `Created task "${task.title}"`,
       task.id
     );
 
-    // Log activity for initial task assignment (if assigned to someone)
     if (req.body.assigned_to) {
       await activityService.logActivity(
         req.user.userId,
@@ -32,18 +32,22 @@ exports.createTask = async (req, res) => {
 
   } catch (error) {
     console.error("Create Task Error:", error);
-    res.status(500).json({
+
+    res.status(400).json({
       success: false,
-      message: "Error creating task"
+      message: error.message
     });
   }
 };
 
+
+// ✅ Get Tasks By Project
 exports.getTasksByProject = async (req, res) => {
   try {
 
     const data = await service.getTasksByProject(
-      req.params.projectId
+      req.params.projectId,
+      req.user   // ✅ company filter
     );
 
     res.json({
@@ -54,22 +58,25 @@ exports.getTasksByProject = async (req, res) => {
 
   } catch (error) {
     console.error("Get Tasks Error:", error);
-    res.status(500).json({
+
+    res.status(400).json({
       success: false,
-      message: "Error fetching tasks"
+      message: error.message
     });
   }
 };
 
+
+// ✅ Update Task
 exports.updateTask = async (req, res) => {
   try {
 
     const updated = await service.updateTask(
       req.params.id,
-      req.body
+      req.body,
+      req.user   // ✅ company protection
     );
 
-    // Log activity for status change
     if (req.body.status) {
       await activityService.logActivity(
         req.user.userId,
@@ -78,7 +85,6 @@ exports.updateTask = async (req, res) => {
       );
     }
 
-    // Log activity for assignment change
     if (req.body.assigned_to) {
       await activityService.logActivity(
         req.user.userId,
@@ -87,20 +93,10 @@ exports.updateTask = async (req, res) => {
       );
     }
 
-    // Log general update if no specific field is being updated
-    if (!req.body.status && !req.body.assigned_to && req.body.priority) {
+    if (req.body.priority) {
       await activityService.logActivity(
         req.user.userId,
         `Updated task priority to ${req.body.priority}`,
-        req.params.id
-      );
-    }
-
-    // Fallback for other updates
-    if (!req.body.status && !req.body.assigned_to && !req.body.priority) {
-      await activityService.logActivity(
-        req.user.userId,
-        `Updated task`,
         req.params.id
       );
     }
@@ -112,25 +108,27 @@ exports.updateTask = async (req, res) => {
 
   } catch (error) {
     console.error("Update Task Error:", error);
-    res.status(500).json({
+
+    res.status(400).json({
       success: false,
-      message: "Error updating task"
+      message: error.message
     });
   }
 };
 
+
+// ✅ Delete Task
 exports.deleteTask = async (req, res) => {
   try {
-    
-    // First get task details to log the title
-    const task = await service.getTaskById(req.params.id);
-    
-    await service.deleteTask(req.params.id);
 
-    // Log activity for task deletion with task title
+    await service.deleteTask(
+      req.params.id,
+      req.user   // ✅ company protection
+    );
+
     await activityService.logActivity(
       req.user.userId,
-      `Deleted task "${task?.title || 'Unknown'}"`,
+      `Deleted task`,
       req.params.id
     );
 
@@ -141,17 +139,22 @@ exports.deleteTask = async (req, res) => {
 
   } catch (error) {
     console.error("Delete Task Error:", error);
-    res.status(500).json({
+
+    res.status(400).json({
       success: false,
-      message: "Error deleting task"
+      message: error.message
     });
   }
 };
 
+
+// ✅ Get My Tasks
 exports.getMyTasks = async (req, res) => {
   try {
 
-    const tasks = await service.getMyTasks(req.user.userId);
+    const tasks = await service.getMyTasks(
+      req.user   // ✅ company safe
+    );
 
     res.json({
       success: true,
@@ -161,15 +164,22 @@ exports.getMyTasks = async (req, res) => {
 
   } catch (error) {
     console.error("Get My Tasks Error:", error);
-    res.status(500).json({
+
+    res.status(400).json({
       success: false,
-      message: "Error fetching my tasks"
+      message: error.message
     });
   }
-};exports.getTaskSummary = async (req, res) => {
+};
+
+
+// ✅ Task Summary
+exports.getTaskSummary = async (req, res) => {
   try {
 
-    const summary = await service.getTaskSummary();
+    const summary = await service.getTaskSummary(
+      req.user   // ✅ company filter
+    );
 
     res.json({
       success: true,
@@ -177,12 +187,11 @@ exports.getMyTasks = async (req, res) => {
     });
 
   } catch (error) {
+    console.error("SUMMARY ERROR:", error);
 
-    console.error("SUMMARY ERROR:", error);  // 👈 ADD THIS
-
-    res.status(500).json({
+    res.status(400).json({
       success: false,
-      message: "Error fetching task summary"
+      message: error.message
     });
   }
 };

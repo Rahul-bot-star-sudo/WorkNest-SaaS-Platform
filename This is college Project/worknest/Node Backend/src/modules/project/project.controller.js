@@ -1,10 +1,12 @@
 const service = require("./project.service");
 
+// ✅ Create Project
 exports.createProject = async (req, res) => {
   try {
+
     const project = await service.createProject(
       req.body,
-      req.user.userId
+      req.user   // ✅ FULL USER OBJECT PASS KARNA HAI
     );
 
     res.status(201).json({
@@ -14,16 +16,22 @@ exports.createProject = async (req, res) => {
 
   } catch (error) {
     console.error("Create Project Error:", error);
-    res.status(500).json({
+
+    res.status(400).json({
       success: false,
-      message: "Error creating project"
+      message: error.message
     });
   }
 };
+
+
+// ✅ Get Projects By Workspace
 exports.getProjectsByWorkspace = async (req, res) => {
   try {
+
     const data = await service.getProjectsByWorkspace(
-      req.params.workspaceId
+      req.params.workspaceId,
+      req.user   // ✅ company filter ke liye zaroori
     );
 
     res.json({
@@ -34,17 +42,23 @@ exports.getProjectsByWorkspace = async (req, res) => {
 
   } catch (error) {
     console.error("Get Projects Error:", error);
-    res.status(500).json({
+
+    res.status(400).json({
       success: false,
-      message: "Error fetching projects"
+      message: error.message
     });
   }
 };
+
+
+// ✅ Update Project Status
 exports.updateProjectStatus = async (req, res) => {
   try {
+
     const updated = await service.updateProjectStatus(
       req.params.id,
-      req.body.status
+      req.body.status,
+      req.user   // ✅ company protection ke liye
     );
 
     res.json({
@@ -53,9 +67,9 @@ exports.updateProjectStatus = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({
+    res.status(400).json({
       success: false,
-      message: "Error updating status"
+      message: error.message
     });
   }
 };

@@ -7,15 +7,14 @@ const TokenRepository = require('./token.repository');
 class AuthService {
 
   async login(dto) {
-    console.log('AUTH SERVICE ENTERED');
-
+    
     if (!dto.email || !dto.password) {
       throw new Error('Invalid credentials');
     }
 
     const user = await UserRepository.findByEmail(dto.email);
 
-    if (!user) {
+   if (!user) {
       throw new Error('Invalid credentials');
     }
 
@@ -38,7 +37,8 @@ class AuthService {
     const accessToken = JwtUtil.signAccessToken({
   userId: user.id,
   role: role.role_code,
-  priority: role.priority   // 👈 ADD THIS LINE
+  priority: role.priority,
+  companyId: user.company_id   // 👈 ADD THIS
 });
 
 
@@ -58,14 +58,15 @@ class AuthService {
       accessToken,
       refreshToken,
       user: {
-        id: user.id,
-        name: user.name,
-        email: user.email,
-        role: {
-          role_code: role.role_code,
-          priority: role.priority
-        }
-      }
+  id: user.id,
+  name: user.name,
+  email: user.email,
+  companyId: user.company_id,   // 👈 ADD THIS
+  role: {
+    role_code: role.role_code,
+    priority: role.priority
+  }
+}
     };
   }
 
