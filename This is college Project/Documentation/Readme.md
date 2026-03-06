@@ -7,7 +7,21 @@
 4. Code + Async Docs
 5. Project Report
 ---
-
+```
+Feature
+↓
+Sequence Diagram
+↓
+Algorithm
+↓
+Layer Mapping
+↓
+Classes & Methods Design
+↓
+Implementation Steps
+↓
+Code
+```
 ### flow for creating a diagram 
 ---
 
