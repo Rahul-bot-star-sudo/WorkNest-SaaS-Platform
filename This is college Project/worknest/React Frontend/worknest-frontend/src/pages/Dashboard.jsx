@@ -399,7 +399,7 @@ function Dashboard() {
                   <div 
                     key={task.id} 
                     className={`task-item ${isOverdue ? 'overdue' : ''}`}
-                    onClick={() => navigate(`/task/${task.id}`)}
+                    onClick={() => navigate(`/dashboard/task/${task.id}`)}
                   >
                     <div className="task-status">
                       <span 
@@ -461,7 +461,7 @@ function Dashboard() {
                 <div 
                   key={task.id} 
                   className="deadline-item"
-                  onClick={() => navigate(`/task/${task.id}`)}
+                  onClick={() => navigate(`/dashboard/task/${task.id}`)}
                 >
                   <div className="deadline-content">
                     <div className="deadline-title">{task.title}</div>
@@ -563,7 +563,7 @@ function Dashboard() {
                     <div
                       key={ws.id}
                       className="workspace-item"
-                      onClick={() => navigate(`/workspace/${ws.id}`)}
+                      onClick={() => navigate(`/dashboard/workspace/${ws.id}`)}
                     >
                       <div className="workspace-name">{ws.name}</div>
                       <div className="workspace-stats">

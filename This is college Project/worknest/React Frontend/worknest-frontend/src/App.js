@@ -6,8 +6,8 @@ import DashboardHome from "./pages/Dashboard";
 import CreateUserPage from "./pages/CreateUserPage";
 import RegisterUser from "./pages/RegisterUser";
 import UsersPage from "./pages/UsersPage";
-import WorkspaceListPage from './pages/WorkspaceListPage';
-import CreateWorkspacePage from './pages/CreateWorkspacePage';
+import WorkspaceListPage from "./pages/WorkspaceListPage";
+import CreateWorkspacePage from "./pages/CreateWorkspacePage";
 import WorkspaceProjects from "./pages/WorkspaceProjects";
 import CreateCompany from "./pages/CreateCompany";
 import CompanyList from "./pages/CompanyList";
@@ -18,8 +18,6 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-
-<Route path="/workspace/:id" element={<WorkspaceProjects />} />
 
         {/* Default Redirect */}
         <Route path="/" element={<Navigate to="/login" replace />} />
@@ -34,19 +32,25 @@ function App() {
             <ProtectedRoute>
               <DashboardLayout />
             </ProtectedRoute>
-            
           }
         >
-          <Route path="create-company" element={<CreateCompany />} />
-  <Route path="companies" element={<CompanyList />} />
+          {/* Dashboard Home */}
           <Route index element={<DashboardHome />} />
 
+          {/* Company Routes */}
+          <Route path="create-company" element={<CreateCompany />} />
+          <Route path="companies" element={<CompanyList />} />
+
+          {/* User Routes */}
           <Route path="create-user" element={<CreateUserPage />} />
           <Route path="users" element={<UsersPage />} />
 
-          {/* Workspace Routes inside Layout */}
+          {/* Workspace Routes */}
           <Route path="workspaces" element={<WorkspaceListPage />} />
           <Route path="workspaces/create" element={<CreateWorkspacePage />} />
+
+          {/* 🔥 IMPORTANT — Workspace inside Dashboard */}
+          <Route path="workspace/:id" element={<WorkspaceProjects />} />
 
         </Route>
 
@@ -63,7 +67,6 @@ function App() {
         />
 
       </Routes>
-      
     </BrowserRouter>
   );
 }
