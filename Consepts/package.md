@@ -9,7 +9,7 @@
    * To Avoid Name Conflicts
      *  Two classes can have the same name if they are in different packages.
    *  To Make Code Easier to Maintain
-     *  When your project grows, packages help developers quickly find files.
+     * When your project grows, packages help developers quickly find files.
    *  To Control Access (Security)
      * Java packages help control who can access classes and methods using access modifiers.
    * Used by Frameworks (Spring Boot)
