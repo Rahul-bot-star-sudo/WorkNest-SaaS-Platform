@@ -1,5 +1,35 @@
+
+
 # 🧠 **UNIVERSAL 5-QUESTION CONCEPT TEMPLATE**
 ---
+
+## Short Notes
+
+---
+
+```
+Explain this concept for backend development learning.
+
+Concept: [WRITE YOUR TOPIC HERE]
+
+Make very SHORT study notes using this structure:
+
+1. What is it? (2–3 lines simple definition)
+2. Why is it used? (purpose)
+3. Where is it used in a Spring Boot project?
+4. Small code example (if applicable)
+5. Internal flow (step-by-step)
+6. Common mistake beginners make
+7. 3 active recall questions
+
+Rules:
+
+* Use simple English
+* Keep it short and beginner friendly
+* Focus on practical backend development
+* Avoid unnecessary theory
+
+```
 
 ## 1️⃣ **WHY (Problem)**
 
