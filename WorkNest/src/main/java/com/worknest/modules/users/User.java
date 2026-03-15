@@ -1,68 +1,77 @@
-package com.worknest.modules.superadmin;
+package com.worknest.modules.users;
+
+import com.worknest.modules.roles.Role;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 
 /*
-Algorithm Mapping
+ENTITY ROLE
 
-Step 6: Service creates SuperAdmin object
-Step 7: Repository saves object in PostgreSQL
-This class represents database table
+Step 10.5: Entity represents database table
+
+Fields → become table columns
 */
 
 @Entity
-public class SuperAdmin {
+@Table(name = "users")   // IMPORTANT FIX
+public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     private String name;
-
     private String email;
-
     private String password;
 
-    // getter for id
+    // Role relationship
+    @ManyToOne
+    @JoinColumn(name = "role_id")
+    private Role role;
+
     public Long getId() {
         return id;
     }
 
-    // setter for id
     public void setId(Long id) {
         this.id = id;
     }
 
-    // getter for name
     public String getName() {
         return name;
     }
 
-    // setter for name
     public void setName(String name) {
         this.name = name;
     }
 
-    // getter for email
     public String getEmail() {
         return email;
     }
 
-    // setter for email
     public void setEmail(String email) {
         this.email = email;
     }
 
-    // getter for password
     public String getPassword() {
         return password;
     }
 
-    // setter for password
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
     }
 }
