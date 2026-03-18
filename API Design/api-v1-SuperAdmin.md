@@ -1,5 +1,15 @@
 ### API Design (using OpenAPI YAML)
 ---
+
+```
+1. openapi + info   → basic metadata
+2. paths            → endpoints (API URLs)
+3. request/response → inside each endpoint
+4. components       → reusable schemas
+```
+
+---
+
 ```
 openapi: 3.0.0
 info:
