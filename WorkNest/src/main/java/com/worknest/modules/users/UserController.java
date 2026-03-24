@@ -1,45 +1,40 @@
 package com.worknest.modules.users;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-/*
-ALGORITHM FLOW
-
-Step 1: Client sends POST request from Postman
-Step 2: Spring routes request to controller
-Step 3: Controller converts JSON → SuperAdmin object
-Step 4: Controller calls service layer
-Step 12: Controller returns response to client
-*/
-
+// Controller Layer
 @RestController
-@RequestMapping("/superadmin")
+@RequestMapping("/super-admin")
 public class UserController {
 
     private final UserService service;
 
+    // Constructor Injection
     public UserController(UserService service) {
         this.service = service;
     }
 
-    @PostMapping
-    public ResponseEntity<?> create(@RequestBody User admin){
+    // POST → /super-admin/register
+    @PostMapping("/register")
+    public ResponseEntity<?> registerSuperAdmin(@RequestBody User admin) {
 
-        try{
-            // Step 4: Call service layer
+        try {
             User savedAdmin = service.createSuperAdmin(admin);
 
-            // Step 12: Return success response
-            return ResponseEntity.ok(savedAdmin);
+            // ✅ Return 201 CREATED (better than 200)
+            return ResponseEntity.status(HttpStatus.CREATED).body(savedAdmin);
 
-        }catch (Exception e){
+        } catch (Exception e) {
 
-            // Return proper error instead of 500
-            return ResponseEntity.badRequest().body(e.getMessage());
+            // ✅ Better error message
+            return ResponseEntity
+                    .status(HttpStatus.BAD_REQUEST)
+                    .body("Error: " + e.getMessage());
         }
     }
 }
