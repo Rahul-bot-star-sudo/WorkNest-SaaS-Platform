@@ -1,9 +1,9 @@
 package com.worknest.modules.auth.users;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
 
 // ==============================
 // STEP 1: Create User Entity
@@ -24,17 +24,17 @@ import jakarta.persistence.GenerationType;
 // 2. Link role with User using @Enumerated
 // ==============================
 
-@Entity
-public class User {
+@Entity // 2. Add @Entity annotation
+public class User { // 1. Create class User
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)// 4. Add @GeneratedValue
+    private Long id;// 3. Add id field
 
-    private String email;
+    private String email;// 5. Add email field
 
-    private String password;
+    private String password;// 6. Add password field
 
-    private Role role;
+    private Role role;// 7. Add role field
 
 }
