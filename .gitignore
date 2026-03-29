@@ -1,1 +1,19 @@
 /worknest-frontend/nbproject/private/
+# Ignore Java compiled files
+*.class
+
+# Ignore build folders
+/target/
+/build/
+/out/
+
+# IntelliJ files
+.idea/
+
+# Eclipse files
+.project
+.classpath
+.settings/
+
+# VS Code
+.vscode/
