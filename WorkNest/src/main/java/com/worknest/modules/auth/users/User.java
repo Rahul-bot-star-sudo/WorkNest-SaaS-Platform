@@ -1,10 +1,11 @@
 package com.worknest.modules.auth.users;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-
 // ==============================
 // STEP 1: Create User Entity
 // MICRO-STEPS:
@@ -35,6 +36,7 @@ public class User { // 1. Create class User
 
     private String password;// 6. Add password field
 
+    @Enumerated(EnumType.STRING) // 2. Link role with User using @Enumerated 
     private Role role;// 7. Add role field
 
 }

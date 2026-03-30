@@ -47,7 +47,7 @@
             <artifactId>spring-boot-starter-security</artifactId>
         </dependency>
 
-        <!-- MySQL Driver -->
+        <!-- PostgreSQL Driver -->
        <dependency>
     <groupId>org.postgresql</groupId>
     <artifactId>postgresql</artifactId>
