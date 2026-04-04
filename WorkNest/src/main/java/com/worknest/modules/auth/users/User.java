@@ -38,5 +38,24 @@ public class User { // 1. Create class User
 
     @Enumerated(EnumType.STRING) // 2. Link role with User using @Enumerated 
     private Role role;// 7. Add role field
+    
 
+    // ✅ Getter for password
+    public String getPassword() {
+        return password;
+    }
+
+    // ✅ Setter for password
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    // (optional but good) Getter + Setter for role
+    public Role getRole() {
+        return role;
+    }
+
+    public void setRole(Role role) {
+        this.role = role;
+    }
 }

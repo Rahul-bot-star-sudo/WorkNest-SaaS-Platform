@@ -9,5 +9,5 @@ package com.worknest.modules.auth.users;
 // ==============================
 
 public enum Role {
-    Super_Admin
+    SUPER_ADMIN
 }

@@ -24,7 +24,7 @@ public class RegisterRequest {// 1. Create class RegisterRequest
     }
 
     // getter for password
-    public string getPassword(){
+    public String getPassword(){
         return password;
     }
 
