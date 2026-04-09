@@ -1,13 +1,35 @@
 package com.worknest.modules.auth.users;
 
-// ==============================
-// STEP 2: Create Role Enum
-// MICRO-STEPS:
-// 1. Create enum Role   <-- CURRENT STEP
-// 2. Add SUPER_ADMIN
-// 3. Add other roles (optional)
-// ==============================
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
 
-public enum Role {
-    SUPER_ADMIN
+@Entity
+@Table(name = "roles")
+public class Role {
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
+    @Column(unique = true, nullable = false)
+    private String name;
+
+    // ✅ GETTER
+    public String getName() {
+        return name;
+    }
+
+    // ✅ SETTER
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    // optional but good
+    public Long getId() {
+        return id;
+    }
 }
