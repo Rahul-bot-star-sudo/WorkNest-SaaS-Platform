@@ -1,3 +1,4 @@
+```
 openapi: 3.0.1
 
 info:
@@ -81,3 +82,4 @@ components:
         message:
           type: string
           example: Invalid credentials
+```

@@ -1,0 +1,202 @@
+/* Register.css - Using CSS Variables from Theme System */
+
+.register-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--bg-main);
+  padding: var(--padding);
+}
+
+.register-card {
+  background-color: var(--bg-elevated);
+  border-radius: var(--border-radius);
+  padding: 2rem;
+  width: 100%;
+  max-width: 450px;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  border: 1px solid var(--border-light);
+}
+
+.register-card:hover {
+  box-shadow: var(--shadow-hover);
+}
+
+.register-title {
+  color: var(--text-primary);
+  font-size: 1.75rem;
+  font-weight: 600;
+  margin-bottom: 1.5rem;
+  text-align: center;
+  letter-spacing: -0.025em;
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.register-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.register-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--bg-main);
+  border: 1px solid var(--border-light);
+  border-radius: calc(var(--border-radius) - 4px);
+  color: var(--text-primary);
+  font-size: 1rem;
+  transition: all 0.2s ease;
+  outline: none;
+}
+
+.register-input:focus {
+  border-color: var(--primary-color);
+  box-shadow: 0 0 0 3px var(--focus-ring);
+  outline: none;
+}
+
+.register-input::placeholder {
+  color: var(--text-muted);
+}
+
+.register-button {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background-color: var(--primary-color);
+  color: white;
+  border: none;
+  border-radius: calc(var(--border-radius) - 4px);
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-top: 0.5rem;
+}
+
+.register-button:hover {
+  background-color: var(--primary-hover);
+  transform: translateY(-1px);
+}
+
+.register-button:active {
+  transform: translateY(0);
+}
+
+.register-message {
+  margin-top: 1.5rem;
+  padding: 1rem;
+  border-radius: calc(var(--border-radius) - 4px);
+  font-size: 0.875rem;
+  font-family: 'Courier New', monospace;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-x: auto;
+  max-height: 300px;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+}
+
+.register-message.success {
+  background-color: var(--primary-10);
+  color: var(--success-color);
+  border: 1px solid var(--success-color);
+}
+
+.register-message.error {
+  background-color: rgba(239, 68, 68, 0.1);
+  color: var(--error-color);
+  border: 1px solid var(--error-color);
+}
+
+/* Custom scrollbar for message pre */
+.register-message::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.register-message::-webkit-scrollbar-track {
+  background: var(--bg-subtle);
+  border-radius: 4px;
+}
+
+.register-message::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 4px;
+}
+
+.register-message::-webkit-scrollbar-thumb:hover {
+  background: var(--primary-color);
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .register-card {
+    padding: 1.5rem;
+    margin: 1rem;
+    max-width: 100%;
+  }
+  
+  .register-title {
+    font-size: 1.5rem;
+  }
+  
+  .register-input,
+  .register-button {
+    padding: 0.625rem 0.875rem;
+  }
+  
+  .register-message {
+    font-size: 0.75rem;
+    max-height: 250px;
+  }
+}
+
+/* Loading state (optional - add if needed) */
+.register-button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+}
+
+/* Animation for card entrance */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.register-card {
+  animation: slideUp 0.4s ease;
+}
+
+/* Accessibility - Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+  .register-card,
+  .register-button,
+  .register-message {
+    transition: none;
+    animation: none;
+  }
+  
+  .register-button:hover {
+    transform: none;
+  }
+}
+
+/* Focus visible for keyboard navigation */
+.register-button:focus-visible,
+.register-input:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+}

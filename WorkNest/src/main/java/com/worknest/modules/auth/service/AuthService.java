@@ -27,6 +27,8 @@ public class AuthService {
     }
 
     public UserResponseDTO registerSuperAdmin(RegisterRequest request) {
+// This part of the code in the `registerSuperAdmin` method of the `AuthService` class is responsible
+// for registering a new Super Admin user. Here's a breakdown of what each step is doing:
 
         // 1️⃣ Get role from DB
         Role superAdminRole = roleRepository.findByName("SUPER_ADMIN")
