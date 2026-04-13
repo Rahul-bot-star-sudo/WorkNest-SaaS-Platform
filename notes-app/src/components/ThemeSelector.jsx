@@ -19,11 +19,7 @@ function ThemeSelector() {
     'Advanced': ['hypnotic', 'void', 'godmode', 'multidim', 'disco'],
     'Gambling': ['casinoRoyale', 'lasVegas', 'pokerNight', 'slotMachine', 'blackjack', 'roulette', 'vegasStrip']
   };
-  const themeList = Object.entries(themes).map(([key, value]) => ({
-    id: key,
-    name: value.name,
-    icon: value.icon
-  }));
+ 
 
   return (
     <div className="theme-selector">

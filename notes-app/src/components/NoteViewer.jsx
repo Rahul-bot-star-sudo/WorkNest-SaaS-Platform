@@ -35,7 +35,8 @@ function NoteViewer({ subject, topic, note, searchTerm }) {
         // Highlight search term in content
         let highlightedText = text;
         if (searchTerm) {
-          const regex = new RegExp(`(${searchTerm.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'gi');
+         const escapedSearch = searchTerm.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
+const regex = new RegExp(`(${escapedSearch})`, 'gi');
           highlightedText = text.replace(regex, '==$1==');
         }
         setContent(highlightedText);
