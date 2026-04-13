@@ -4,156 +4,48 @@ const ThemeContext = createContext();
 
 // All your themes
 export const themes = {
-  zenith: {
-    name: 'Zenith',
-    icon: '✨',
-    dataTheme: 'zenith'
-  },
-  dark: {
-    name: 'Dark',
-    icon: '🌙',
-    dataTheme: 'dark'
-  },
-  green: {
-    name: 'Green',
-    icon: '🟢',
-    dataTheme: 'green'
-  },
-  golden: {
-    name: 'Golden',
-    icon: '🟡',
-    dataTheme: 'golden'
-  },
-  sage: {
-    name: 'Sage',
-    icon: '🌿',
-    dataTheme: 'sage'
-  },
-  ocean: {
-    name: 'Ocean',
-    icon: '🌊',
-    dataTheme: 'ocean'
-  },
-  galaxy: {
-    name: 'Galaxy',
-    icon: '🌌',
-    dataTheme: 'galaxy'
-  },
-  forest: {
-    name: 'Forest',
-    icon: '🌲',
-    dataTheme: 'forest'
-  },
-  lavender: {
-    name: 'Lavender',
-    icon: '🪻',
-    dataTheme: 'lavender'
-  },
-  peach: {
-    name: 'Peach',
-    icon: '🍑',
-    dataTheme: 'peach'
-  },
-  sunset: {
-    name: 'Sunset',
-    icon: '🌅',
-    dataTheme: 'sunset'
-  },
-  cotton: {
-    name: 'Cotton',
-    icon: '🌸',
-    dataTheme: 'cotton'
-  },
-  coffee: {
-    name: 'Coffee',
-    icon: '☕',
-    dataTheme: 'coffee'
-  },
-  royal: {
-    name: 'Royal',
-    icon: '👑',
-    dataTheme: 'royal'
-  },
-  github: {
-    name: 'GitHub',
-    icon: '🐙',
-    dataTheme: 'github'
-  },
-  tailwind: {
-    name: 'Tailwind',
-    icon: '🎨',
-    dataTheme: 'tailwind'
-  },
-  vscode: {
-    name: 'VS Code',
-    icon: '💻',
-    dataTheme: 'vscode'
-  },
-  vscodePlus: {
-    name: 'VS Code+',
-    icon: '🚀',
-    dataTheme: 'vscode-plus'
-  },
-  vscodeLight: {
-    name: 'VS Code Light',
-    icon: '☀️',
-    dataTheme: 'vscode-light'
-  },
-  vscodeBlue: {
-    name: 'VS Code Blue',
-    icon: '🔵',
-    dataTheme: 'vscode-blue'
-  },
-  addicted: {
-    name: 'Addicted',
-    icon: '💜',
-    dataTheme: 'addicted'
-  },
-  casino: {
-    name: 'Casino',
-    icon: '🎰',
-    dataTheme: 'casino'
-  },
-  gamer: {
-    name: 'Gamer',
-    icon: '🎮',
-    dataTheme: 'gamer'
-  },
-  neon: {
-    name: 'Neon',
-    icon: '💚',
-    dataTheme: 'neon'
-  },
-  psychedelic: {
-    name: 'Psychedelic',
-    icon: '🌈',
-    dataTheme: 'psychedelic'
-  },
-  hypnotic: {
-    name: 'Hypnotic',
-    icon: '🌀',
-    dataTheme: 'hypnotic'
-  },
-  void: {
-    name: 'Void',
-    icon: '🕳️',
-    dataTheme: 'void'
-  },
-  godmode: {
-    name: 'God Mode',
-    icon: '⚡',
-    dataTheme: 'godmode'
-  },
-  multidim: {
-    name: 'MultiDim',
-    icon: '🔮',
-    dataTheme: 'multidim'
-  },
-  disco: {
-    name: 'Disco',
-    icon: '🪩',
-    dataTheme: 'disco'
-  }
+  blue: { name: 'Blue', icon: '🔵', dataTheme: 'blue' },
+  light: { name: 'Light', icon: '☀️', dataTheme: 'light' },
+  green: { name: 'Green', icon: '🟢', dataTheme: 'green' },
+  ocean: { name: 'Ocean', icon: '🌊', dataTheme: 'ocean' },
+  forest: { name: 'Forest', icon: '🌲', dataTheme: 'forest' },
+  galaxy: { name: 'Galaxy', icon: '🌌', dataTheme: 'galaxy' },
+  sunset: { name: 'Sunset', icon: '🌅', dataTheme: 'sunset' },
+  golden: { name: 'Golden', icon: '🟡', dataTheme: 'golden' },
+  lavender: { name: 'Lavender', icon: '🪻', dataTheme: 'lavender' },
+  peach: { name: 'Peach', icon: '🍑', dataTheme: 'peach' },
+  sage: { name: 'Sage', icon: '🌿', dataTheme: 'sage' },
+  cotton: { name: 'Cotton', icon: '🌸', dataTheme: 'cotton' },
+  coffee: { name: 'Coffee', icon: '☕', dataTheme: 'coffee' },
+  royal: { name: 'Royal', icon: '👑', dataTheme: 'royal' },
+  zenith: { name: 'Zenith', icon: '✨', dataTheme: 'zenith' },
+  zenithDark: { name: 'Zenith Dark', icon: '🌙✨', dataTheme: 'zenith-dark' },
+  github: { name: 'GitHub', icon: '🐙', dataTheme: 'github' },
+  tailwind: { name: 'Tailwind', icon: '🎨', dataTheme: 'tailwind' },
+  vscode: { name: 'VS Code', icon: '💻', dataTheme: 'vscode' },
+  vscodePlus: { name: 'VS Code+', icon: '🚀', dataTheme: 'vscode-plus' },
+  vscodeLight: { name: 'VS Code Light', icon: '☀️💻', dataTheme: 'vscode-light' },
+  vscodeBlue: { name: 'VS Code Blue', icon: '🔵💻', dataTheme: 'vscode-blue' },
+  addicted: { name: 'Addicted', icon: '💜', dataTheme: 'addicted' },
+  casino: { name: 'Casino', icon: '🎰', dataTheme: 'casino' },
+  gamer: { name: 'Gamer', icon: '🎮', dataTheme: 'gamer' },
+  neon: { name: 'Neon', icon: '💚', dataTheme: 'neon' },
+  psychedelic: { name: 'Psychedelic', icon: '🌈', dataTheme: 'psychedelic' },
+  hypnotic: { name: 'Hypnotic', icon: '🌀', dataTheme: 'hypnotic' },
+  void: { name: 'Void', icon: '🕳️', dataTheme: 'void' },
+  godmode: { name: 'God Mode', icon: '⚡', dataTheme: 'godmode' },
+  multidim: { name: 'MultiDim', icon: '🔮', dataTheme: 'multidim' },
+  disco: { name: 'Disco', icon: '🪩', dataTheme: 'disco' },
+  // Add these to your themes object
+    
+casinoRoyale: { name: 'Casino Royale', icon: '🎰', dataTheme: 'casino-royale' },
+lasVegas: { name: 'Las Vegas', icon: '✨', dataTheme: 'las-vegas' },
+pokerNight: { name: 'Poker Night', icon: '🃏', dataTheme: 'poker-night' },
+slotMachine: { name: 'Slot Machine', icon: '🎰', dataTheme: 'slot-machine' },
+blackjack: { name: 'Blackjack', icon: '🃏', dataTheme: 'blackjack' },
+roulette: { name: 'Roulette', icon: '🎡', dataTheme: 'roulette' },
+vegasStrip: { name: 'Vegas Strip', icon: '🌃', dataTheme: 'vegas-strip' },
+  dark: { name: 'Dark', icon: '🌙', dataTheme: 'dark' },
 };
 
 export const useTheme = () => {

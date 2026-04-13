@@ -9,14 +9,16 @@ function ThemeSelector() {
 
   // Group themes for better organization
   const themeGroups = {
-    'Default': ['zenith', 'dark', 'light'],
-    'Nature': ['green', 'forest', 'sage', 'ocean'],
-    'Warm': ['golden', 'peach', 'sunset', 'coffee'],
-    'Cool': ['galaxy', 'lavender', 'cotton', 'royal'],
+    'Default': ['blue', 'dark', 'light', 'green', 'ocean'],
+    'Nature': ['forest', 'sage', 'lavender', 'peach'],
+    'Warm': ['sunset', 'golden', 'coffee'],
+    'Cool': ['galaxy', 'cotton', 'royal'],
+    'Zenith': ['zenith', 'zenithDark'],
     'VS Code': ['vscode', 'vscodePlus', 'vscodeLight', 'vscodeBlue'],
-    'Special': ['github', 'tailwind', 'addicted', 'casino', 'gamer', 'neon', 'psychedelic', 'hypnotic', 'void', 'godmode', 'multidim', 'disco']
+    'Special': ['github', 'tailwind', 'addicted', 'casino', 'gamer', 'neon', 'psychedelic'],
+    'Advanced': ['hypnotic', 'void', 'godmode', 'multidim', 'disco'],
+    'Gambling': ['casinoRoyale', 'lasVegas', 'pokerNight', 'slotMachine', 'blackjack', 'roulette', 'vegasStrip']
   };
-
   const themeList = Object.entries(themes).map(([key, value]) => ({
     id: key,
     name: value.name,
