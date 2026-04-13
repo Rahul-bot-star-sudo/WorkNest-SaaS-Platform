@@ -10,3 +10,12 @@ body {
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
 }
+/* Viewport meta for mobile */
+html {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* Prevent body scroll when sidebar is open on mobile */
+body.no-scroll {
+  overflow: hidden;
+}

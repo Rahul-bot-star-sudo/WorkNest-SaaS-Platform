@@ -9,8 +9,12 @@ function Sidebar({
   selectedTopic, 
   setSelectedTopic, 
   selectedNote, 
-  setSelectedNote 
-}) {
+  setSelectedNote,
+  searchTerm,
+  setSearchTerm,
+  isMobileOpen,
+  onMobileClose
+})  {
   const [searchTerm, setSearchTerm] = useState('');
   const [expandedTopics, setExpandedTopics] = useState({});
 
