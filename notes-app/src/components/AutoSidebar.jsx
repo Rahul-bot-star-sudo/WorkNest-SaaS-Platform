@@ -3,13 +3,15 @@ import { FiBook, FiFolder, FiFileText, FiSearch, FiRefreshCw, FiChevronRight, Fi
 import { scanNotesStructure } from '../utils/autoScanner';
 import '../styles/sidebar.css';
 
-function AutoSidebar({ 
+function Sidebar({ 
   selectedSubject, 
   setSelectedSubject, 
   selectedTopic, 
   setSelectedTopic, 
   selectedNote, 
-  setSelectedNote 
+  setSelectedNote,
+  searchTerm,
+  setSearchTerm
 }) {
   const [structure, setStructure] = useState({});
   const [loading, setLoading] = useState(true);

@@ -1020,3 +1020,118 @@ body {
     font-size: 1.2em;
   }
 }
+/* ========== SIMPLE MOBILE FIX ========== */
+
+/* Mobile Menu Button */
+.mobile-menu-btn {
+  position: fixed;
+  top: 10px;
+  left: 10px;
+  z-index: 9999;
+  background: #4f46e5;
+  border: none;
+  color: white;
+  width: 45px;
+  height: 45px;
+  border-radius: 10px;
+  font-size: 24px;
+  cursor: pointer;
+  display: none;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+}
+
+/* Mobile Sidebar */
+@media (max-width: 768px) {
+  /* Show mobile button */
+  .mobile-menu-btn {
+    display: block;
+  }
+  
+  /* Sidebar - hidden by default */
+  .sidebar {
+    position: fixed !important;
+    top: 0 !important;
+    left: -300px !important;
+    bottom: 0 !important;
+    width: 280px !important;
+    z-index: 10000 !important;
+    transition: left 0.3s ease !important;
+  }
+  
+  /* Sidebar open state */
+  .sidebar.open {
+    left: 0 !important;
+  }
+  
+  /* Main content - full width */
+  .main-content {
+    width: 100% !important;
+    margin-left: 0 !important;
+  }
+  
+  /* Content header */
+  .content-header {
+    padding: 12px 15px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+  }
+  
+  /* Breadcrumb */
+  .breadcrumb {
+    font-size: 12px !important;
+  }
+  
+  /* Note content */
+  .note-content {
+    padding: 15px !important;
+  }
+  
+  .markdown-wrapper {
+    padding: 20px !important;
+  }
+  
+  /* Headers smaller */
+  .markdown-h1 {
+    font-size: 1.8em !important;
+  }
+  .markdown-h2 {
+    font-size: 1.4em !important;
+  }
+  .markdown-h3 {
+    font-size: 1.2em !important;
+  }
+  
+  /* Tables scroll */
+  .table-container {
+    overflow-x: auto !important;
+  }
+  
+  /* Note header */
+  .note-header {
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+  
+  /* Theme dropdown full width */
+  .theme-dropdown {
+    position: fixed !important;
+    bottom: 0 !important;
+    top: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    border-radius: 20px 20px 0 0 !important;
+  }
+}
+
+/* Tablet */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 260px !important;
+  }
+  
+  .markdown-wrapper {
+    padding: 25px !important;
+  }
+}

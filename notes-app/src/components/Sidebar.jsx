@@ -11,11 +11,8 @@ function Sidebar({
   selectedNote, 
   setSelectedNote,
   searchTerm,
-  setSearchTerm,
-  isMobileOpen,
-  onMobileClose
-})  {
-  
+  setSearchTerm
+}) {
   const [expandedTopics, setExpandedTopics] = useState({});
 
   const subjects = getSubjects();
@@ -37,8 +34,18 @@ function Sidebar({
     note.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  // Highlight search term
+  const highlightText = (text, search) => {
+    if (!search) return text;
+    const parts = text.split(new RegExp(`(${search})`, 'gi'));
+    return parts.map((part, i) => 
+      part.toLowerCase() === search.toLowerCase() ? 
+        <mark key={i} className="search-highlight">{part}</mark> : part
+    );
+  };
+
   return (
-    <div className="sidebar">
+    <div className="sidebar-container">
       <div className="sidebar-header">
         <FiBook className="sidebar-icon" />
         <h2>Notes<span className="highlight">Hub</span></h2>
@@ -55,12 +62,21 @@ function Sidebar({
         <FiSearch className="search-icon" />
         <input
           type="text"
-          placeholder="Search notes..."
+          placeholder="Search notes... (Ctrl+K)"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
         />
+        {searchTerm && (
+          <button className="search-clear" onClick={() => setSearchTerm('')}>✕</button>
+        )}
       </div>
+
+      {searchTerm && (
+        <div className="search-results-info">
+          Found {filteredNotes.length} note(s) matching "{searchTerm}"
+        </div>
+      )}
 
       <div className="section">
         <h3 className="section-title">Subjects</h3>
@@ -86,34 +102,44 @@ function Sidebar({
       <div className="section">
         <h3 className="section-title">Topics & Notes</h3>
         <div className="topics-list">
-          {Object.entries(topics).map(([topicKey, topicData]) => (
-            <div key={topicKey} className="topic-item">
-              <button className="topic-header" onClick={() => toggleTopic(topicKey)}>
-                {expandedTopics[topicKey] ? <FiChevronDown /> : <FiChevronRight />}
-                <FiFolder />
-                <span>{topicData.name}</span>
-                <span className="note-count">({topicData.notes.length})</span>
-              </button>
-              
-              {expandedTopics[topicKey] && (
-                <div className="notes-list">
-                  {filteredNotes.map(note => (
-                    <button
-                      key={note}
-                      onClick={() => {
-                        setSelectedTopic(topicKey);
-                        setSelectedNote(note);
-                      }}
-                      className={`note-btn ${selectedTopic === topicKey && selectedNote === note ? 'active' : ''}`}
-                    >
-                      <FiFileText />
-                      <span>{note}</span>
-                    </button>
-                  ))}
-                </div>
-              )}
-            </div>
-          ))}
+          {Object.entries(topics).map(([topicKey, topicData]) => {
+            const hasMatchingNotes = topicData.notes.some(note => 
+              note.toLowerCase().includes(searchTerm.toLowerCase())
+            );
+            
+            if (searchTerm && !hasMatchingNotes) return null;
+            
+            return (
+              <div key={topicKey} className="topic-item">
+                <button className="topic-header" onClick={() => toggleTopic(topicKey)}>
+                  {expandedTopics[topicKey] ? <FiChevronDown /> : <FiChevronRight />}
+                  <FiFolder />
+                  <span>{topicData.name}</span>
+                  <span className="note-count">({topicData.notes.length})</span>
+                </button>
+                
+                {expandedTopics[topicKey] && (
+                  <div className="notes-list">
+                    {topicData.notes
+                      .filter(note => note.toLowerCase().includes(searchTerm.toLowerCase()))
+                      .map(note => (
+                        <button
+                          key={note}
+                          onClick={() => {
+                            setSelectedTopic(topicKey);
+                            setSelectedNote(note);
+                          }}
+                          className={`note-btn ${selectedTopic === topicKey && selectedNote === note ? 'active' : ''}`}
+                        >
+                          <FiFileText />
+                          <span>{highlightText(note, searchTerm)}</span>
+                        </button>
+                      ))}
+                  </div>
+                )}
+              </div>
+            );
+          })}
         </div>
       </div>
     </div>

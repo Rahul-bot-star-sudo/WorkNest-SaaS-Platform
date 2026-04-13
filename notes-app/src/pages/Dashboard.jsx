@@ -2,27 +2,27 @@ import { useState, useEffect } from 'react';
 import Sidebar from '../components/Sidebar';
 import NoteViewer from '../components/NoteViewer';
 import ThemeSelector from '../components/ThemeSelector';
-import MobileMenu from '../components/MobileMenu';
-import { FiChevronRight } from 'react-icons/fi';
+import { FiChevronRight, FiMenu, FiX } from 'react-icons/fi';
 
 function Dashboard() {
   const [selectedSubject, setSelectedSubject] = useState('');
   const [selectedTopic, setSelectedTopic] = useState('');
   const [selectedNote, setSelectedNote] = useState('');
   const [searchTerm, setSearchTerm] = useState('');
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [sidebarOpen, setSidebarOpen] = useState(false);
   const [isMobile, setIsMobile] = useState(window.innerWidth <= 768);
 
   // Check screen size
   useEffect(() => {
-    const handleResize = () => {
-      setIsMobile(window.innerWidth <= 768);
-      if (window.innerWidth > 768) {
-        setIsMobileMenuOpen(false);
+    const checkScreen = () => {
+      const mobile = window.innerWidth <= 768;
+      setIsMobile(mobile);
+      if (!mobile) {
+        setSidebarOpen(false);
       }
     };
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
+    window.addEventListener('resize', checkScreen);
+    return () => window.removeEventListener('resize', checkScreen);
   }, []);
 
   // Load saved state
@@ -42,14 +42,14 @@ function Dashboard() {
     if (selectedNote) localStorage.setItem('lastNote', selectedNote);
   }, [selectedSubject, selectedTopic, selectedNote]);
 
-  // Close mobile menu when note is selected
+  // Close sidebar when note selected on mobile
   useEffect(() => {
-    if (isMobile) {
-      setIsMobileMenuOpen(false);
+    if (isMobile && selectedNote) {
+      setSidebarOpen(false);
     }
   }, [selectedNote, isMobile]);
 
-  // Keyboard shortcut: Ctrl+K to focus search
+  // Keyboard shortcut
   useEffect(() => {
     const handleKeyDown = (e) => {
       if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
@@ -62,32 +62,42 @@ function Dashboard() {
     return () => document.removeEventListener('keydown', handleKeyDown);
   }, []);
 
-  const closeMobileMenu = () => {
-    setIsMobileMenuOpen(false);
-  };
-
   return (
     <div className="app">
       {/* Mobile Menu Button */}
-      <MobileMenu isOpen={isMobileMenuOpen} onToggle={() => setIsMobileMenuOpen(!isMobileMenuOpen)} />
+      <button className="mobile-menu-btn" onClick={() => setSidebarOpen(!sidebarOpen)}>
+        {sidebarOpen ? <FiX size={24} /> : <FiMenu size={24} />}
+      </button>
       
-      {/* Sidebar Overlay for Mobile */}
-      {isMobile && isMobileMenuOpen && (
-        <div className="sidebar-overlay open" onClick={closeMobileMenu} />
+      {/* Sidebar Overlay */}
+      {isMobile && sidebarOpen && (
+        <div 
+          style={{
+            position: 'fixed',
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            background: 'rgba(0,0,0,0.5)',
+            zIndex: 999,
+          }}
+          onClick={() => setSidebarOpen(false)}
+        />
       )}
       
-      <Sidebar
-        selectedSubject={selectedSubject}
-        setSelectedSubject={setSelectedSubject}
-        selectedTopic={selectedTopic}
-        setSelectedTopic={setSelectedTopic}
-        selectedNote={selectedNote}
-        setSelectedNote={setSelectedNote}
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        isMobileOpen={isMobileMenuOpen}
-        onMobileClose={closeMobileMenu}
-      />
+      {/* Sidebar */}
+      <div className={`sidebar ${sidebarOpen ? 'open' : ''}`}>
+        <Sidebar
+          selectedSubject={selectedSubject}
+          setSelectedSubject={setSelectedSubject}
+          selectedTopic={selectedTopic}
+          setSelectedTopic={setSelectedTopic}
+          selectedNote={selectedNote}
+          setSelectedNote={setSelectedNote}
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+        />
+      </div>
       
       <div className="main-content">
         <div className="content-header">
