@@ -1,0 +1,16 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import App from './App';
+import ThemeContextProvider from './context/ThemeContext';
+import './styles/global.css';
+import './styles/theme.css';  // Add this line
+import './index.css';
+
+const root = ReactDOM.createRoot(document.getElementById('root'));
+root.render(
+  <React.StrictMode>
+    <ThemeContextProvider>
+      <App />
+    </ThemeContextProvider>
+  </React.StrictMode>
+);

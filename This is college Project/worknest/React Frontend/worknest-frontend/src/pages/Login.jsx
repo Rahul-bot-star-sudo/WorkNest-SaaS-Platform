@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { loginApi } from "../services/authApi";
 import { saveAuth, getToken } from "../utils/auth";
 import "./styles/Login.css";
@@ -13,9 +13,13 @@ function Login() {
   const [rememberMe, setRememberMe] = useState(false);
   const navigate = useNavigate();
 
-  if (getToken()) {
-    return <Navigate to="/dashboard" replace />;
-  }
+  // ✅ FIXED: Move redirect to useEffect to prevent infinite loops
+  useEffect(() => {
+    const token = getToken();
+    if (token) {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [navigate]); // Only runs once when component mounts
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -41,10 +45,8 @@ function Login() {
       // Save auth with remember me preference
       saveAuth(res.data.accessToken, res.data.user, rememberMe);
       
-      // Success animation before redirect
-      setTimeout(() => {
-        navigate("/dashboard");
-      }, 500);
+      // Navigate to dashboard
+      navigate("/dashboard", { replace: true });
       
     } catch (err) {
       setError(err.response?.data?.message || "Login failed. Please check your credentials.");
@@ -53,6 +55,21 @@ function Login() {
       setIsLoading(false);
     }
   };
+
+  // ✅ Show loading while checking auth
+  const token = getToken();
+  if (token) {
+    return (
+      <div className="auth-page">
+        <div className="auth-card">
+          <div className="loading-container">
+            <div className="spinner"></div>
+            <p>Redirecting to dashboard...</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="auth-page">

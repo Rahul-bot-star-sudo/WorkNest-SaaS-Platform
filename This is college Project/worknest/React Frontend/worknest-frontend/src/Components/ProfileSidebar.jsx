@@ -1,48 +1,29 @@
-import { getUser, logout } from "../utils/auth";
+// ProfileSidebar.jsx - Fixed version
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./ProfileSidebar.css";
 
-function ProfileSidebar() {
-  const [showActivity, setShowActivity] = useState(false);
-  const [sidebarWidth, setSidebarWidth] = useState(320); // Default width
-  const [isResizing, setIsResizing] = useState(false);
+function ProfileSidebar({ isCollapsed, onItemClick }) {
   const navigate = useNavigate();
-  const user = getUser();
+  const [user, setUser] = useState(null);
+  const [roleCode, setRoleCode] = useState(null);
 
-  // Handle sidebar resize
-  const startResizing = (e) => {
-    setIsResizing(true);
-    e.preventDefault();
-  };
-
-  const stopResizing = () => {
-    setIsResizing(false);
-  };
-
-  const resize = (e) => {
-    if (isResizing) {
-      const newWidth = e.clientX;
-      if (newWidth >= 240 && newWidth <= 480) { // Min 240px, Max 480px
-        setSidebarWidth(newWidth);
-      }
-    }
-  };
-
+  // ✅ Load user data dynamically
   useEffect(() => {
-    window.addEventListener('mousemove', resize);
-    window.addEventListener('mouseup', stopResizing);
-    return () => {
-      window.removeEventListener('mousemove', resize);
-      window.removeEventListener('mouseup', stopResizing);
+    const loadUser = () => {
+      const userData = localStorage.getItem("user");
+      if (userData) {
+        const parsedUser = JSON.parse(userData);
+        setUser(parsedUser);
+        setRoleCode(parsedUser?.role?.role_code);
+      }
     };
-  }, [isResizing]);
-
-  if (!user) return null;
-
-  const { name, email, role } = user;
+    
+    loadUser();
+  }, []); // Reload when component mounts
 
   const getInitials = (name) => {
+    if (!name) return "U";
     return name
       .split(" ")
       .map(word => word[0])
@@ -51,159 +32,81 @@ function ProfileSidebar() {
       .slice(0, 2);
   };
 
-  const getPriorityColor = () => {
-    switch(role?.priority) {
-      case 'HIGH': return { color: '#ef4444', width: '100%' };
-      case 'MEDIUM': return { color: '#f59e0b', width: '66%' };
-      case 'LOW': return { color: '#10b981', width: '33%' };
-      default: return { color: '#64748b', width: '50%' };
-    }
-  };
+  const menuItems = [
+    { icon: "📊", label: "Dashboard", path: "/dashboard" },
+    { icon: "👥", label: "Users", path: "/dashboard/users", roles: ["SUPER_ADMIN", "ADMIN"] },
+    { icon: "🏢", label: "Workspaces", path: "/dashboard/workspaces", roles: ["SUPER_ADMIN", "ADMIN"] },
+    { icon: "🏭", label: "Companies", path: "/dashboard/companies", roles: ["SUPER_ADMIN"] },
+    { icon: "⚙️", label: "Settings", path: "/dashboard/settings" },
+    { icon: "❓", label: "Help", path: "/dashboard/help" },
+  ];
 
+  const filteredMenu = menuItems.filter(item => {
+    if (!item.roles) return true;
+    return item.roles.includes(roleCode);
+  });
+
+  // ✅ Fixed logout function
   const handleLogout = () => {
-    logout();
-    navigate("/login");
+    // Clear all storage
+    localStorage.clear();
+    sessionStorage.clear();
+    
+    // Clear cookies if any
+    document.cookie.split(";").forEach(function(c) {
+      document.cookie = c.replace(/^ +/, "").replace(/=.*/, "=;expires=" + new Date().toUTCString() + ";path=/");
+    });
+    
+    // Navigate to login with hard reload
+    window.location.href = "/login";
   };
 
-  const handleEditProfile = () => {
-    navigate("/dashboard/profile/edit");
+  const handleNavigation = (path) => {
+    onItemClick?.();
+    navigate(path);
   };
-
-  const priorityStyle = getPriorityColor();
 
   return (
-    <aside 
-      className="profile-sidebar" 
-      style={{ width: sidebarWidth }}
-    >
-      {/* Resize Handle */}
-      <div 
-        className="sidebar-resize-handle"
-        onMouseDown={startResizing}
-      />
-
+    <div className="profile-sidebar-wrapper">
       {/* Profile Header */}
-      <div className="profile-header">
-        <div className="profile-avatar" onClick={handleEditProfile}>
-          <div className="avatar-ring"></div>
-          <div className="avatar-image">
-            {getInitials(name)}
+      <div className="profile-header-section">
+        <div className="profile-avatar-large">
+          <div className="profile-avatar-circle">
+            {getInitials(user?.name)}
           </div>
-          <div className="avatar-status"></div>
-        </div>
-        
-        <h3 className="profile-title">Profile</h3>
-      </div>
-
-      {/* Profile Info */}
-      <div className="profile-info">
-        <div className="info-item">
-          <span className="info-label">
-            <span className="info-label-icon">👤</span>
-            Name
-          </span>
-          <span className="info-value">{name}</span>
-        </div>
-
-        <div className="info-item">
-          <span className="info-label">
-            <span className="info-label-icon">📧</span>
-            Email
-          </span>
-          <span className="info-value">{email}</span>
-        </div>
-
-        <div className="info-item">
-          <span className="info-label">
-            <span className="info-label-icon">🎭</span>
-            Role
-          </span>
-          <span className="info-value">
-            <span className="role-badge">{role?.role_code || 'N/A'}</span>
-          </span>
-        </div>
-
-        <div className="info-item">
-          <span className="info-label">
-            <span className="info-label-icon">📊</span>
-            Priority
-          </span>
-          <span className="info-value">
-            <div className="priority-indicator">
-              <span style={{ color: priorityStyle.color, fontWeight: 'bold' }}>
-                {role?.priority || 'N/A'}
-              </span>
-              <div className="priority-bar">
-                <div 
-                  className="priority-fill" 
-                  style={{ 
-                    width: priorityStyle.width,
-                    backgroundColor: priorityStyle.color 
-                  }}
-                />
-              </div>
+          {!isCollapsed && (
+            <div className="profile-details">
+              <div className="profile-display-name">{user?.name || "User"}</div>
+              <div className="profile-display-email">{user?.email || "user@example.com"}</div>
+              <div className="profile-role-badge">{roleCode || "EMPLOYEE"}</div>
             </div>
-          </span>
+          )}
         </div>
       </div>
 
-      {/* Stats Cards */}
-      <div className="profile-stats">
-        <div className="stat-card" onClick={() => navigate("/dashboard/tasks")}>
-          <div className="stat-value">12</div>
-          <div className="stat-label">Tasks</div>
-        </div>
-        <div className="stat-card" onClick={() => navigate("/dashboard/projects")}>
-          <div className="stat-value">3</div>
-          <div className="stat-label">Projects</div>
-        </div>
-        <div className="stat-card" onClick={() => navigate("/dashboard/workspaces")}>
-          <div className="stat-value">2</div>
-          <div className="stat-label">Workspaces</div>
-        </div>
+      {/* Navigation Menu */}
+      <div className="nav-menu-section">
+        {filteredMenu.map((item) => (
+          <div key={item.path} className="nav-item-custom">
+            <button
+              className="nav-link-custom"
+              onClick={() => handleNavigation(item.path)}
+            >
+              <span className="nav-icon-custom">{item.icon}</span>
+              {!isCollapsed && <span className="nav-label-custom">{item.label}</span>}
+            </button>
+          </div>
+        ))}
       </div>
 
-      {/* Edit Button */}
-      <button className="btn-edit" onClick={handleEditProfile}>
-        <span className="btn-icon">✏️</span>
-        Edit Profile
-      </button>
-
-      {/* Activity Timeline */}
-      <div className="activity-timeline">
-        <div 
-          className="timeline-title"
-          onClick={() => setShowActivity(!showActivity)}
-        >
-          <span>📋 Recent Activity</span>
-          <span>{showActivity ? '▼' : '▶'}</span>
-        </div>
-        
-        {showActivity && (
-          <>
-            <div className="timeline-item">
-              <span className="timeline-dot"></span>
-              <span>✅ Completed task</span>
-            </div>
-            <div className="timeline-item">
-              <span className="timeline-dot"></span>
-              <span>🏢 Joined workspace</span>
-            </div>
-            <div className="timeline-item">
-              <span className="timeline-dot"></span>
-              <span>📝 Created new task</span>
-            </div>
-          </>
-        )}
+      {/* Footer with Logout */}
+      <div className="profile-footer-section">
+        <button className="logout-btn-custom" onClick={handleLogout}>
+          <span className="logout-icon">🚪</span>
+          {!isCollapsed && <span className="logout-text">Logout</span>}
+        </button>
       </div>
-
-      {/* Logout Button */}
-      <button className="btn-logout" onClick={handleLogout}>
-        <span className="btn-icon">🚪</span>
-        Logout
-        <span className="btn-icon">→</span>
-      </button>
-    </aside>
+    </div>
   );
 }
 

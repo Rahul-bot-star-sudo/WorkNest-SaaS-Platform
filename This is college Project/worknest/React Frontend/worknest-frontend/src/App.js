@@ -1,5 +1,4 @@
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-
 import LoginPage from "./pages/Login";
 import DashboardLayout from "./layout/DashboardLayout";
 import DashboardHome from "./pages/Dashboard";
@@ -18,14 +17,10 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-
-        {/* Default Redirect */}
-        <Route path="/" element={<Navigate to="/login" replace />} />
-
-        {/* Login */}
+        {/* Public Routes */}
         <Route path="/login" element={<LoginPage />} />
-
-        {/* Dashboard Layout (Protected) */}
+        
+        {/* Protected Dashboard Routes */}
         <Route
           path="/dashboard"
           element={
@@ -34,27 +29,17 @@ function App() {
             </ProtectedRoute>
           }
         >
-          {/* Dashboard Home */}
           <Route index element={<DashboardHome />} />
-
-          {/* Company Routes */}
           <Route path="create-company" element={<CreateCompany />} />
           <Route path="companies" element={<CompanyList />} />
-
-          {/* User Routes */}
           <Route path="create-user" element={<CreateUserPage />} />
           <Route path="users" element={<UsersPage />} />
-
-          {/* Workspace Routes */}
           <Route path="workspaces" element={<WorkspaceListPage />} />
           <Route path="workspaces/create" element={<CreateWorkspacePage />} />
-
-          {/* 🔥 IMPORTANT — Workspace inside Dashboard */}
           <Route path="workspace/:id" element={<WorkspaceProjects />} />
-
         </Route>
 
-        {/* Register (Role Based) */}
+        {/* Register Route */}
         <Route
           path="/register"
           element={
@@ -66,6 +51,9 @@ function App() {
           }
         />
 
+        {/* Default Redirect */}
+        <Route path="/" element={<Navigate to="/login" replace />} />
+        <Route path="*" element={<Navigate to="/login" replace />} />
       </Routes>
     </BrowserRouter>
   );

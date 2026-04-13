@@ -1,0 +1,93 @@
+{
+  "DSA": {
+    "name": "DSA",
+    "topics": {
+      "Short Notes": {
+        "name": "Short Notes",
+        "notes": [
+          "array",
+          "Heap",
+          "stack"
+        ]
+      },
+      "sliding window": {
+        "name": "sliding window",
+        "notes": [
+          "quetions",
+          "sliding windo pattern"
+        ]
+      }
+    }
+  },
+  "JAVA": {
+    "name": "JAVA",
+    "topics": {
+      "Short Notes": {
+        "name": "Short Notes",
+        "notes": [
+          "Abstraction",
+          "Access Modifiers",
+          "class",
+          "Collection",
+          "Command Line Argument",
+          "constructor",
+          "DataType",
+          "Incapsulation",
+          "Inheritance",
+          "Interface",
+          "Methods",
+          "Multi-Threading",
+          "object",
+          "packages",
+          "polymorphism",
+          "variable"
+        ]
+      }
+    }
+  },
+  "LLD": {
+    "name": "LLD",
+    "topics": {
+      "Short notes": {
+        "name": "Short notes",
+        "notes": [
+          "RestAPI",
+          "Singolton pattern"
+        ]
+      }
+    }
+  },
+  "React": {
+    "name": "REACT",
+    "topics": {
+      "create-react-app": {
+        "name": "create react app",
+        "notes": [
+          "Readme"
+        ]
+      }
+    }
+  },
+  "SpringBoot": {
+    "name": "SPRINGBOOT",
+    "topics": {
+      "short notes": {
+        "name": "short notes",
+        "notes": [
+          "@ComponentScan",
+          "@Configuration",
+          "@EnableAutoConfiguration",
+          "@RequestMapping",
+          "@RestController",
+          "@SpringBootApplication",
+          "ApplicationContext",
+          "Bean",
+          "DI",
+          "IoC",
+          "SecurityFilterChain",
+          "Server Tomcat"
+        ]
+      }
+    }
+  }
+}

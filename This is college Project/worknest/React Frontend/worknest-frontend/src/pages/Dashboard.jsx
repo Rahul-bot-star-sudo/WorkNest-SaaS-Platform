@@ -14,15 +14,20 @@ function Dashboard() {
   const [upcomingDeadlines, setUpcomingDeadlines] = useState([]);
   const [teamUpdates, setTeamUpdates] = useState([]);
   const [selectedTimeRange, setSelectedTimeRange] = useState('week');
-  const [loading, setLoading] = useState({
-    tasks: true,
-    workspaces: true,
-    summary: true,
-    activities: true
-  });
+  const [loading, setLoading] = useState(true); // Single loading state
+  const [error, setError] = useState(null);
 
   const user = getUser();
   const navigate = useNavigate();
+
+  // ✅ Check if user exists immediately
+  useEffect(() => {
+    if (!user || !getToken()) {
+      console.log("No user or token found, redirecting to login");
+      navigate("/login", { replace: true });
+      return;
+    }
+  }, [user, navigate]);
 
   const roleCode = user?.role?.role_code;
   const priority = user?.role?.priority;
@@ -30,179 +35,144 @@ function Dashboard() {
   const isManager = roleCode === "MANAGER";
   const isAdmin = roleCode === "ADMIN" || roleCode === "SUPER_ADMIN";
 
+  // ✅ Fetch all data with error handling
+  const fetchAllData = async () => {
+    setLoading(true);
+    setError(null);
+    
+    try {
+      await Promise.allSettled([
+        fetchMyTasks(),
+        fetchSummary(),
+        fetchRecentActivities(),
+        ...((isManager || isAdmin) ? [fetchWorkspaces(), fetchTeamUpdates()] : [])
+      ]);
+    } catch (error) {
+      console.error("Error fetching data:", error);
+      setError("Some data couldn't be loaded. Please refresh the page.");
+    } finally {
+      setLoading(false);
+    }
+  };
+
   // Fetch my tasks
   const fetchMyTasks = async () => {
-    setLoading(prev => ({ ...prev, tasks: true }));
     try {
+      const token = getToken();
+      if (!token) return;
+      
       const res = await axios.get(
         "http://localhost:4000/api/tasks/my-tasks",
         {
-          headers: {
-            Authorization: `Bearer ${getToken()}`
-          }
+          headers: { Authorization: `Bearer ${token}` }
         }
       );
-      setMyTasks(res.data.data);
       
-      // Calculate upcoming deadlines
-      const now = new Date();
-      const upcoming = res.data.data
-        .filter(task => task.status !== "DONE" && task.due_date)
-        .map(task => ({
-          ...task,
-          daysLeft: Math.ceil((new Date(task.due_date) - now) / (1000 * 60 * 60 * 24))
-        }))
-        .filter(task => task.daysLeft <= 7 && task.daysLeft >= 0)
-        .sort((a, b) => a.daysLeft - b.daysLeft)
-        .slice(0, 5);
-      
-      setUpcomingDeadlines(upcoming);
+      if (res.data && res.data.data) {
+        setMyTasks(res.data.data);
+        
+        // Calculate upcoming deadlines
+        const now = new Date();
+        const upcoming = res.data.data
+          .filter(task => task.status !== "DONE" && task.due_date)
+          .map(task => ({
+            ...task,
+            daysLeft: Math.ceil((new Date(task.due_date) - now) / (1000 * 60 * 60 * 24))
+          }))
+          .filter(task => task.daysLeft <= 7 && task.daysLeft >= 0)
+          .sort((a, b) => a.daysLeft - b.daysLeft)
+          .slice(0, 5);
+        
+        setUpcomingDeadlines(upcoming);
+      }
     } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(prev => ({ ...prev, tasks: false }));
+      console.log("Error fetching tasks:", error);
+      setMyTasks([]);
     }
   };
 
   // Fetch workspaces
   const fetchWorkspaces = async () => {
-    setLoading(prev => ({ ...prev, workspaces: true }));
     try {
       const res = await getMyWorkspaces();
-      if (res.data && res.data.success) {
+      if (res?.data?.success) {
         setWorkspaces(res.data.data || []);
         setCount(res.data.count || 0);
       }
     } catch (error) {
-      console.log("Workspace Fetch Error:", error.response?.data || error);
-    } finally {
-      setLoading(prev => ({ ...prev, workspaces: false }));
+      console.log("Workspace Fetch Error:", error);
+      setWorkspaces([]);
+      setCount(0);
     }
   };
 
   // Fetch task summary
   const fetchSummary = async () => {
-    setLoading(prev => ({ ...prev, summary: true }));
     try {
+      const token = getToken();
+      if (!token) return;
+      
       const res = await axios.get(
         "http://localhost:4000/api/tasks/summary",
-        {
-          headers: {
-            Authorization: `Bearer ${getToken()}`
-          }
-        }
+        { headers: { Authorization: `Bearer ${token}` } }
       );
       setSummary(res.data.data);
     } catch (error) {
-      console.log(error);
-    } finally {
-      setLoading(prev => ({ ...prev, summary: false }));
+      console.log("Error fetching summary:", error);
+      setSummary(null);
     }
   };
 
-  // Fetch recent activities
+  // Fetch recent activities (mock data for now)
   const fetchRecentActivities = async () => {
-    setLoading(prev => ({ ...prev, activities: true }));
     try {
       const activities = [
-        {
-          id: 1,
-          message: 'Completed task "Update documentation"',
-          time: '5 minutes ago',
-          user: user.name
-        },
-        {
-          id: 2,
-          message: 'Joined workspace "Project Alpha"',
-          time: '1 hour ago',
-          user: user.name
-        },
-        {
-          id: 3,
-          message: 'Created new task "Review PR"',
-          time: '3 hours ago',
-          user: user.name
-        },
-        {
-          id: 4,
-          message: 'Changed task status to In Progress',
-          time: '5 hours ago',
-          user: user.name
-        }
+        { id: 1, message: 'Welcome to your dashboard!', time: 'Just now', user: user?.name },
+        { id: 2, message: 'Start by creating your first task', time: 'Recently', user: user?.name },
+        { id: 3, message: 'Check your pending tasks', time: 'Recently', user: user?.name }
       ];
       setRecentActivities(activities);
     } catch (error) {
       console.log(error);
-    } finally {
-      setLoading(prev => ({ ...prev, activities: false }));
+      setRecentActivities([]);
     }
   };
 
   // Fetch team updates (for managers/admins)
   const fetchTeamUpdates = async () => {
-    if (!isManager && !isAdmin) return;
-    
     try {
       const updates = [
-        {
-          id: 1,
-          teamMember: 'John Doe',
-          action: 'completed 3 tasks',
-          time: '10 minutes ago',
-          initials: 'JD'
-        },
-        {
-          id: 2,
-          teamMember: 'Jane Smith',
-          action: 'joined Project X',
-          time: '30 minutes ago',
-          initials: 'JS'
-        },
-        {
-          id: 3,
-          teamMember: 'Mike Johnson',
-          action: 'created 2 tasks',
-          time: '1 hour ago',
-          initials: 'MJ'
-        }
+        { id: 1, teamMember: 'Team Member', action: 'active', time: 'Recently', initials: 'TM' }
       ];
       setTeamUpdates(updates);
     } catch (error) {
       console.log(error);
+      setTeamUpdates([]);
     }
   };
 
   useEffect(() => {
-    if (!user) return;
-
-    fetchMyTasks();
-    fetchSummary();
-    fetchRecentActivities();
-    
-    if (isManager || isAdmin) {
-      fetchWorkspaces();
-      fetchTeamUpdates();
+    if (user && getToken()) {
+      fetchAllData();
     }
   }, []);
 
   // Handle status change
   const handleStatusChange = async (taskId, newStatus, taskPriority) => {
     try {
+      const token = getToken();
+      if (!token) return;
+      
       await axios.patch(
         `http://localhost:4000/api/tasks/${taskId}`,
-        {
-          status: newStatus,
-          priority: taskPriority
-        },
-        {
-          headers: {
-            Authorization: `Bearer ${getToken()}`
-          }
-        }
+        { status: newStatus, priority: taskPriority },
+        { headers: { Authorization: `Bearer ${token}` } }
       );
-      await Promise.all([fetchMyTasks(), fetchSummary(), fetchRecentActivities()]);
+      
+      // Refresh data after status change
+      await Promise.allSettled([fetchMyTasks(), fetchSummary(), fetchRecentActivities()]);
     } catch (error) {
-      console.log(error);
+      console.log("Error updating task:", error);
     }
   };
 
@@ -219,10 +189,10 @@ function Dashboard() {
   // Get status color
   const getStatusColor = (status) => {
     switch(status) {
-      case 'DONE': return 'var(--success)';
-      case 'IN_PROGRESS': return 'var(--warning)';
-      case 'TODO': return 'var(--info)';
-      default: return 'var(--gray-400)';
+      case 'DONE': return 'var(--success-color)';
+      case 'IN_PROGRESS': return 'var(--warning-color)';
+      case 'TODO': return 'var(--info-color)';
+      default: return 'var(--text-muted)';
     }
   };
 
@@ -232,13 +202,39 @@ function Dashboard() {
     return Math.round((summary.completed / summary.total) * 100);
   };
 
+  // ✅ Show loading state
+  if (loading) {
+    return (
+      <div className="dashboard-loading">
+        <div className="loading-spinner"></div>
+        <p>Loading dashboard...</p>
+      </div>
+    );
+  }
+
+  // ✅ Show error state
+  if (error) {
+    return (
+      <div className="dashboard-error">
+        <div className="error-state">
+          <h3>Something went wrong</h3>
+          <p>{error}</p>
+          <button className="btn-primary" onClick={() => window.location.reload()}>
+            Refresh Page
+          </button>
+        </div>
+      </div>
+    );
+  }
+
+  // ✅ Show no user state
   if (!user) {
     return (
       <div className="dashboard-error">
         <div className="error-state">
-          <h3>No user found</h3>
+          <h3>Session Expired</h3>
           <p>Please login again to continue</p>
-          <button className="btn-primary" onClick={() => navigate('/login')}>
+          <button className="btn-primary" onClick={() => navigate('/login', { replace: true })}>
             Go to Login
           </button>
         </div>
@@ -252,10 +248,10 @@ function Dashboard() {
       <div className="dashboard-header">
         <div className="header-content">
           <h1 className="page-title">
-            Welcome back, {user.name}
+            Welcome back, {user?.name || 'User'}!
           </h1>
           <div className="user-badges">
-            <span className="role-badge">{roleCode}</span>
+            <span className="role-badge">{roleCode || 'USER'}</span>
             {priority && (
               <span className={`priority-badge ${getPriorityClass(priority)}`}>
                 {priority} Priority
@@ -297,13 +293,7 @@ function Dashboard() {
           </div>
         </div>
         
-        {loading.summary ? (
-          <div className="stats-grid loading">
-            {[1,2,3,4].map(i => (
-              <div key={i} className="stat-card-skeleton" />
-            ))}
-          </div>
-        ) : summary ? (
+        {summary ? (
           <>
             <div className="stats-grid">
               <div className="stat-card total">
@@ -372,13 +362,7 @@ function Dashboard() {
             </button>
           </div>
 
-          {loading.tasks ? (
-            <div className="tasks-loading">
-              {[1,2,3].map(i => (
-                <div key={i} className="task-skeleton" />
-              ))}
-            </div>
-          ) : myTasks.length === 0 ? (
+          {myTasks.length === 0 ? (
             <div className="empty-state small">
               <p>No tasks assigned</p>
               <button 
@@ -484,48 +468,23 @@ function Dashboard() {
             <h3>Recent Activity</h3>
           </div>
 
-          {loading.activities ? (
-            <div className="activities-loading">
-              {[1,2,3].map(i => (
-                <div key={i} className="activity-skeleton" />
-              ))}
-            </div>
-          ) : (
-            <div className="activities-list">
-              {recentActivities.map(activity => (
+          <div className="activities-list">
+            {recentActivities.length === 0 ? (
+              <div className="empty-state small">
+                <p>No recent activity</p>
+              </div>
+            ) : (
+              recentActivities.map(activity => (
                 <div key={activity.id} className="activity-item">
                   <div className="activity-content">
                     <p className="activity-message">{activity.message}</p>
                     <span className="activity-time">{activity.time}</span>
                   </div>
                 </div>
-              ))}
-            </div>
-          )}
+              ))
+            )}
+          </div>
         </section>
-
-        {/* Team Updates (for managers/admins) */}
-        {(isManager || isAdmin) && (
-          <section className="content-card">
-            <div className="card-header">
-              <h3>Team Updates</h3>
-            </div>
-
-            <div className="team-list">
-              {teamUpdates.map(update => (
-                <div key={update.id} className="team-item">
-                  <div className="team-avatar">{update.initials}</div>
-                  <div className="team-content">
-                    <p className="team-message">
-                      <strong>{update.teamMember}</strong> {update.action}
-                    </p>
-                    <span className="team-time">{update.time}</span>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-        )}
 
         {/* Workspaces (for managers/admins) */}
         {(isManager || isAdmin) && (
@@ -540,13 +499,7 @@ function Dashboard() {
               </button>
             </div>
             
-            {loading.workspaces ? (
-              <div className="workspaces-loading">
-                {[1,2,3].map(i => (
-                  <div key={i} className="workspace-skeleton" />
-                ))}
-              </div>
-            ) : workspaces.length === 0 ? (
+            {workspaces.length === 0 ? (
               <div className="empty-state small">
                 <p>No workspaces assigned</p>
                 <button 

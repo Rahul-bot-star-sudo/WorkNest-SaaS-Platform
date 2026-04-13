@@ -1,10 +1,19 @@
+// auth/RoleRoute.jsx
 import { Navigate } from "react-router-dom";
-import { getUser } from "../utils/auth";
 
-function RoleRoute({ allowedRoles, children }) {
-  const user = getUser();
+function RoleRoute({ children, allowedRoles = [] }) {
+  const token = localStorage.getItem("token");
+  const user = JSON.parse(localStorage.getItem("user") || "{}");
+  const userRole = user?.role?.role_code;
 
-  if (!allowedRoles.includes(user.role)) {
+  // First check if authenticated
+  if (!token) {
+    return <Navigate to="/login" replace />;
+  }
+
+  // Then check role permissions
+  if (allowedRoles.length > 0 && !allowedRoles.includes(userRole)) {
+    // User doesn't have permission - redirect to dashboard
     return <Navigate to="/dashboard" replace />;
   }
 

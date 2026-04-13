@@ -1,38 +1,63 @@
-.App {
-  text-align: center;
-}
+/* App.css - Professional Styling for App Component */
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
+.app-wrapper {
   min-height: 100vh;
+  background-color: var(--bg-main);
+  position: relative;
+}
+
+/* Optional: Smooth transition for theme changes */
+.app-wrapper * {
+  transition: background-color 0.2s ease, 
+              border-color 0.2s ease,
+              color 0.2s ease,
+              box-shadow 0.2s ease;
+}
+
+/* Loading state for routes (if needed) */
+.route-loading {
   display: flex;
-  flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  min-height: 100vh;
+  background-color: var(--bg-main);
 }
 
-.App-link {
-  color: #61dafb;
+.route-loading::after {
+  content: '';
+  width: 40px;
+  height: 40px;
+  border: 3px solid var(--border-light);
+  border-top-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
+@keyframes spin {
   to {
     transform: rotate(360deg);
+  }
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .app-wrapper {
+    overflow-x: hidden;
+  }
+}
+
+/* Print styles */
+@media print {
+  .app-wrapper {
+    background-color: white;
+  }
+}
+
+/* Accessibility - Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  .app-wrapper *,
+  .route-loading::after {
+    animation: none;
+    transition: none;
   }
 }
