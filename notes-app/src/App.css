@@ -1135,3 +1135,299 @@ body {
     padding: 25px !important;
   }
 }
+
+/* ========== SIMPLE MOBILE RESPONSIVE ========== */
+
+/* Mobile Devices (max-width: 768px) */
+@media (max-width: 768px) {
+  
+  /* Sidebar - Fixed width for mobile */
+  .sidebar {
+    width: 260px !important;
+  }
+  
+  /* Main content - Full width */
+  .main-content {
+    width: 100% !important;
+  }
+  
+  /* Content Header - Smaller padding */
+  .content-header {
+    padding: 12px 15px !important;
+  }
+  
+  /* Breadcrumb - Smaller font */
+  .breadcrumb {
+    font-size: 12px !important;
+    flex-wrap: wrap !important;
+  }
+  
+  .breadcrumb-item {
+    font-size: 12px !important;
+  }
+  
+  /* Content Body - Smaller padding */
+  .content-body {
+    padding: 12px !important;
+  }
+  
+  /* Markdown Container */
+  .markdown-wrapper {
+    padding: 15px !important;
+  }
+  
+  /* Headers - Smaller for mobile */
+  .markdown-h1 {
+    font-size: 1.6em !important;
+  }
+  
+  .markdown-h2 {
+    font-size: 1.3em !important;
+  }
+  
+  .markdown-h3 {
+    font-size: 1.1em !important;
+  }
+  
+  .markdown-h4 {
+    font-size: 1em !important;
+  }
+  
+  /* Paragraph - Readable font size */
+  .markdown-p {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+  
+  /* Code blocks - Scrollable */
+  .code-block-wrapper {
+    font-size: 12px !important;
+  }
+  
+  pre {
+    font-size: 11px !important;
+    padding: 10px !important;
+  }
+  
+  /* Inline code */
+  .inline-code {
+    font-size: 13px !important;
+    padding: 2px 4px !important;
+  }
+  
+  /* Tables - Scroll horizontally */
+  .table-container {
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  .markdown-table {
+    font-size: 12px !important;
+    min-width: 500px !important;
+  }
+  
+  .markdown-table th,
+  .markdown-table td {
+    padding: 8px 10px !important;
+  }
+  
+  /* Blockquotes */
+  .markdown-blockquote {
+    padding: 10px 15px !important;
+    font-size: 13px !important;
+  }
+  
+  /* Lists */
+  .markdown-ul li,
+  .markdown-ol li {
+    font-size: 14px !important;
+    margin: 6px 0 !important;
+  }
+  
+  /* Images */
+  .markdown-image {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+  
+  /* Note Header */
+  .note-header {
+    padding: 12px 15px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
+  }
+  
+  .note-breadcrumb {
+    font-size: 12px !important;
+  }
+  
+  .note-meta {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+  }
+  
+  .meta-item, .meta-btn {
+    font-size: 11px !important;
+    padding: 5px 10px !important;
+  }
+  
+  /* Theme Selector Dropdown - Better for mobile */
+  .theme-dropdown {
+    position: fixed !important;
+    bottom: 0 !important;
+    top: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    border-radius: 20px 20px 0 0 !important;
+    max-height: 60vh !important;
+  }
+  
+  .theme-group-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  
+  /* Loading spinner */
+  .loading-spinner {
+    width: 35px !important;
+    height: 35px !important;
+  }
+  
+  /* Search input - Prevent zoom on iOS */
+  .search-input {
+    font-size: 16px !important;
+  }
+  
+  /* Toast messages */
+  .error-toast {
+    bottom: 15px !important;
+    right: 15px !important;
+    left: 15px !important;
+    font-size: 13px !important;
+  }
+}
+
+/* Small Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .markdown-wrapper {
+    padding: 12px !important;
+  }
+  
+  .markdown-h1 {
+    font-size: 1.4em !important;
+  }
+  
+  .markdown-h2 {
+    font-size: 1.2em !important;
+  }
+  
+  .markdown-p {
+    font-size: 13px !important;
+  }
+  
+  .content-header {
+    padding: 10px 12px !important;
+  }
+  
+  .note-content {
+    padding: 10px !important;
+  }
+  
+  .meta-item, .meta-btn {
+    font-size: 10px !important;
+    padding: 4px 8px !important;
+  }
+  
+  .breadcrumb {
+    font-size: 10px !important;
+  }
+}
+
+/* Tablet (769px - 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 280px !important;
+  }
+  
+  .markdown-wrapper {
+    padding: 25px !important;
+  }
+  
+  .markdown-h1 {
+    font-size: 2em !important;
+  }
+  
+  .markdown-h2 {
+    font-size: 1.6em !important;
+  }
+  
+  .content-body {
+    padding: 20px !important;
+  }
+}
+
+/* Landscape mode on mobile */
+@media (max-width: 768px) and (orientation: landscape) {
+  .sidebar {
+    width: 260px !important;
+  }
+  
+  .content-header {
+    padding: 8px 12px !important;
+  }
+  
+  .note-content {
+    padding: 10px !important;
+  }
+  
+  .markdown-wrapper {
+    padding: 12px !important;
+  }
+  
+  .note-header {
+    padding: 8px 12px !important;
+  }
+}
+
+/* Touch-friendly improvements for mobile */
+@media (max-width: 768px) {
+  button, 
+  .subject-btn, 
+  .topic-header, 
+  .note-btn,
+  .meta-btn,
+  .refresh-btn {
+    min-height: 40px !important;
+  }
+  
+  /* Better scrolling */
+  .sidebar, .content-body {
+    -webkit-overflow-scrolling: touch !important;
+  }
+  
+  /* Disable hover effects on mobile (use active instead) */
+  .subject-btn:hover {
+    transform: none !important;
+  }
+  
+  .subject-btn:active {
+    transform: scale(0.97) !important;
+  }
+  
+  .note-btn:hover {
+    transform: none !important;
+  }
+  
+  .note-btn:active {
+    transform: scale(0.97) !important;
+  }
+  
+  /* Better text selection */
+  .markdown-p, .markdown-li {
+    user-select: text !important;
+    -webkit-user-select: text !important;
+  }
+}
