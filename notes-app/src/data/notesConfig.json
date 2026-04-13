@@ -60,6 +60,19 @@
   "React": {
     "name": "REACT",
     "topics": {
+      "13-04-2026": {
+        "name": "13 04 2026",
+        "notes": [
+          "Async Await",
+          "destructing",
+          "evant",
+          "function",
+          "if-else",
+          "object",
+          "react hook",
+          "variable"
+        ]
+      },
       "create-react-app": {
         "name": "create react app",
         "notes": [

@@ -36,6 +36,8 @@ function Navbar() {
           <option value="vscode-plus">⚡ VS Code Dark+ (Enhanced)</option>
           <option value="vscode-light">☀️ VS Code Light (Classic)</option>
           <option value="vscode-blue">🔵 VS Code Blue (Alt)</option>
+           <option value="casino-royale"> casino-royale</option>
+ 
         </optgroup>
         
         <optgroup label="Original Themes">
