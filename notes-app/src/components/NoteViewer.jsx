@@ -40,7 +40,7 @@ const regex = new RegExp(`(${escapedSearch})`, 'gi');
           highlightedText = text.replace(regex, '==$1==');
         }
         setContent(highlightedText);
-        const cleanText = text.replace(/[#*`\[\]()!]/g, '').replace(/\n/g, ' ');
+        const cleanText = text.replace(/[#*`[\]()!]/g, '').replace(/\n/g, ' ');
         const words = cleanText.split(/\s+/).filter(w => w.length > 0).length;
         setWordCount(words);
         setLoading(false);
