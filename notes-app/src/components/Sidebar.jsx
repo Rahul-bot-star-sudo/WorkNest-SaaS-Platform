@@ -15,7 +15,7 @@ function Sidebar({
   isMobileOpen,
   onMobileClose
 })  {
-  const [searchTerm, setSearchTerm] = useState('');
+  
   const [expandedTopics, setExpandedTopics] = useState({});
 
   const subjects = getSubjects();
