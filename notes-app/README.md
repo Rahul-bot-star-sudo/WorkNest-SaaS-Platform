@@ -220,8 +220,8 @@ MIT License - feel free to use this project for learning or production!
 
 Have questions? Want to collaborate? Feel free to reach out!
 
-**GitHub**: [@yourusername](https://github.com/yourusername)
-**LinkedIn**: [Your Name](https://linkedin.com/in/yourprofile)
+**GitHub**: [Rahul Shinde](https://github.com/Rahul-bot-star-sudo)
+**LinkedIn**: [Rahul Shinde](https://www.linkedin.com/in/rahulshinde077/)
 
 ---
 
