@@ -1,7 +1,6 @@
-
 /* ============================================
-   CASINO ROYALE THEME - PREMIUM EDITION V3.0
-   Ultra-Luxury Casino Experience
+   CASINO ROYALE THEME - PREMIUM EDITION V4.0
+   Ultra-Luxury Casino Experience - Enhanced
    ============================================ */
 
 [data-theme="casino-royale"] {
@@ -28,9 +27,9 @@
   /* ===== TEXT COLORS ===== */
   --text-primary: #FFFFFF;
   --text-secondary: #FFD700;
-  --text-muted: #DAA520;
+  --text-muted: #F0C000; /* Enhanced for better contrast */
   --text-sidebar: #FFFFFF;
-  --text-disabled: #666666;
+  --text-disabled: #888888; /* Improved from #666 */
   
   /* ===== BORDER COLORS ===== */
   --border-color: #FFD700;
@@ -48,15 +47,15 @@
   --search-border: rgba(255, 215, 0, 0.3);
   --search-icon: rgba(255, 215, 0, 0.6);
   --section-border: rgba(255, 215, 0, 0.15);
-  --section-title: rgba(255, 215, 0, 0.7);
+  --section-title: #FFE44D; /* Brighter for better readability */
   
   /* ===== BUTTON COLORS ===== */
   --subject-btn-bg: rgba(255, 255, 255, 0.1);
   --subject-btn-hover: rgba(255, 255, 255, 0.2);
   --topic-header-bg: rgba(255, 255, 255, 0.05);
   --topic-header-hover: rgba(255, 215, 0, 0.15);
-  --note-count: rgba(255, 215, 0, 0.6);
-  --note-btn-color: rgba(255, 255, 255, 0.8);
+  --note-count: #F0C000; /* Brighter */
+  --note-btn-color: rgba(255, 255, 255, 0.85);
   --note-btn-hover: rgba(255, 215, 0, 0.15);
   
   /* ===== ALPHA VARIANTS ===== */
@@ -85,6 +84,11 @@
   --gradient-gold: linear-gradient(135deg, #FFD700, #DAA520, #B8860B);
   --gradient-dark: linear-gradient(135deg, #1A1A1A, #0D0D0D);
   --gradient-glow: radial-gradient(circle at center, rgba(255, 215, 0, 0.1), transparent);
+  
+  /* ===== FONT ===== */
+  font-family: 'Inter var', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  font-weight: 400 700;
+  font-stretch: 75% 125%;
 }
 
 /* ============================================
@@ -108,6 +112,69 @@
   z-index: -1;
 }
 
+/* Diamond Pattern Background */
+[data-theme="casino-royale"] body::after {
+  content: '';
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-image: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 40px,
+    rgba(255, 215, 0, 0.02) 40px,
+    rgba(255, 215, 0, 0.02) 80px
+  );
+  pointer-events: none;
+  z-index: -1;
+}
+
+/* ============================================
+   ACCESSIBILITY - FOCUS STATES
+   ============================================ */
+
+[data-theme="casino-royale"] .subject-btn:focus-visible,
+[data-theme="casino-royale"] .topic-header:focus-visible,
+[data-theme="casino-royale"] .note-btn:focus-visible,
+[data-theme="casino-royale"] .refresh-btn:focus-visible,
+[data-theme="casino-royale"] .theme-selector-btn:focus-visible,
+[data-theme="casino-royale"] .mobile-menu-btn:focus-visible {
+  outline: 3px solid #FFD700;
+  outline-offset: 3px;
+  position: relative;
+  z-index: 1;
+}
+
+[data-theme="casino-royale"] .search-input:focus-visible {
+  outline: 2px solid #FFD700;
+  outline-offset: 2px;
+}
+
+/* Custom Selection Color */
+[data-theme="casino-royale"] ::selection {
+  background: rgba(255, 215, 0, 0.3);
+  color: #FFD700;
+  text-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
+}
+
+[data-theme="casino-royale"] ::-moz-selection {
+  background: rgba(255, 215, 0, 0.3);
+  color: #FFD700;
+}
+
+/* ============================================
+   PERFORMANCE OPTIMIZATIONS
+   ============================================ */
+
+[data-theme="casino-royale"] .subject-btn,
+[data-theme="casino-royale"] .topic-header,
+[data-theme="casino-royale"] .note-btn,
+[data-theme="casino-royale"] .note-card {
+  will-change: transform;
+}
+
 /* ============================================
    SUBJECT BUTTONS - Ultra Premium
    ============================================ */
@@ -122,6 +189,7 @@
   backdrop-filter: blur(10px);
   letter-spacing: 0.5px;
   font-weight: 500;
+  cursor: pointer;
 }
 
 [data-theme="casino-royale"] .subject-btn::before {
@@ -213,12 +281,13 @@
    NOTE BUTTONS - Glassmorphism Style
    ============================================ */
 [data-theme="casino-royale"] .note-btn {
-  color: rgba(255, 255, 255, 0.85);
+  color: var(--note-btn-color);
   border-radius: var(--border-radius-sm);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   backdrop-filter: blur(5px);
   border: 1px solid transparent;
+  cursor: pointer;
 }
 
 [data-theme="casino-royale"] .note-btn:hover {
@@ -236,11 +305,62 @@
   box-shadow: var(--shadow);
   border-color: transparent;
   transform: scale(1.02);
+  position: relative;
+  overflow: visible;
+}
+
+[data-theme="casino-royale"] .note-btn.active::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(135deg, #FFD700, #DAA520, #B8860B);
+  border-radius: calc(var(--border-radius-sm) + 2px);
+  z-index: -1;
+  opacity: 0.6;
+  filter: blur(8px);
+  animation: borderPulse 1.5s infinite;
 }
 
 [data-theme="casino-royale"] .note-btn.active svg {
   color: #0A0A0A;
   filter: drop-shadow(0 1px 1px rgba(255,255,255,0.3));
+}
+
+/* ============================================
+   NOTE CARDS - Premium with 3D Effect
+   ============================================ */
+[data-theme="casino-royale"] .note-card {
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  perspective: 1000px;
+}
+
+[data-theme="casino-royale"] .note-card::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent, 
+    rgba(255, 215, 0, 0.08), 
+    rgba(255, 215, 0, 0.03),
+    transparent);
+  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="casino-royale"] .note-card:hover::after {
+  left: 100%;
+}
+
+[data-theme="casino-royale"] .note-card:hover {
+  transform: rotateY(2deg) scale(1.02);
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* ============================================
@@ -280,6 +400,7 @@
   display: inline-block;
   letter-spacing: 1px;
   position: relative;
+  font-size: clamp(1.1rem, 4vw, 1.5rem);
 }
 
 [data-theme="casino-royale"] .sidebar-header h2::after {
@@ -306,6 +427,7 @@
 
 [data-theme="casino-royale"] .refresh-btn {
   transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  cursor: pointer;
 }
 
 [data-theme="casino-royale"] .refresh-btn:hover {
@@ -315,7 +437,7 @@
 
 /* Section Title - Elegant */
 [data-theme="casino-royale"] .section-title {
-  color: rgba(255, 215, 0, 0.85);
+  color: var(--section-title);
   letter-spacing: 2px;
   position: relative;
   display: inline-block;
@@ -345,9 +467,17 @@
    MARKDOWN STYLES - Premium Typography
    ============================================ */
 
-/* Headers */
-[data-theme="casino-royale"] .markdown-h1,
+/* Headers with Fluid Typography */
+[data-theme="casino-royale"] .markdown-h1 {
+  font-size: clamp(1.75rem, 5vw, 2.5rem);
+  border-bottom-color: #FFD700;
+  color: #FFFFFF;
+  position: relative;
+  letter-spacing: -0.5px;
+}
+
 [data-theme="casino-royale"] .markdown-h2 {
+  font-size: clamp(1.5rem, 4vw, 2rem);
   border-bottom-color: #FFD700;
   color: #FFFFFF;
   position: relative;
@@ -393,11 +523,11 @@
   opacity: 0.7;
 }
 
-/* Paragraphs */
+/* Paragraphs with Fluid Typography */
 [data-theme="casino-royale"] .markdown-p {
   color: #E8E8E8;
   line-height: 1.8;
-  font-size: 1rem;
+  font-size: clamp(0.9rem, 2.5vw, 1rem);
   letter-spacing: 0.2px;
 }
 
@@ -550,6 +680,7 @@
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   padding: 6px;
   border-radius: 6px;
+  cursor: pointer;
 }
 
 [data-theme="casino-royale"] .copy-code-btn:hover {
@@ -577,6 +708,89 @@
 }
 
 /* ============================================
+   LOADING STATES - Enhanced Shimmer
+   ============================================ */
+
+[data-theme="casino-royale"] .loading-spinner {
+  border: 3px solid rgba(255, 215, 0, 0.15);
+  border-top: 3px solid #FFD700;
+  border-right: 3px solid #DAA520;
+  border-radius: 50%;
+  animation: casinoSpin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  box-shadow: var(--shadow-glow);
+}
+
+@keyframes casinoSpin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* Enhanced Loading Skeleton with Shimmer */
+[data-theme="casino-royale"] .skeleton {
+  background: linear-gradient(
+    90deg,
+    #1A1A1A 0%,
+    #2A2A2A 20%,
+    #3A3A3A 40%,
+    #2A2A2A 60%,
+    #1A1A1A 100%
+  );
+  background-size: 300% 100%;
+  animation: skeletonShimmer 1.8s ease-in-out infinite;
+  border-radius: var(--border-radius-sm);
+}
+
+@keyframes skeletonShimmer {
+  0% { background-position: 300% 0; }
+  100% { background-position: -300% 0; }
+}
+
+/* ============================================
+   EMPTY STATES - Casino Themed
+   ============================================ */
+[data-theme="casino-royale"] .empty-state {
+  text-align: center;
+  padding: 60px 20px;
+  background: rgba(255, 215, 0, 0.03);
+  border-radius: var(--border-radius-lg);
+  border: 1px dashed rgba(255, 215, 0, 0.3);
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="casino-royale"] .empty-state::before {
+  content: '🎰';
+  font-size: 48px;
+  opacity: 0.3;
+  display: block;
+  margin-bottom: 16px;
+  animation: slotMachine 2s infinite;
+}
+
+@keyframes slotMachine {
+  0%, 100% { content: '🎰'; transform: rotate(0deg); }
+  25% { content: '💎'; transform: rotate(10deg); }
+  50% { content: '🃏'; transform: rotate(0deg); }
+  75% { content: '🎲'; transform: rotate(-10deg); }
+}
+
+/* ============================================
+   PROGRESS BAR - Reading Indicator
+   ============================================ */
+[data-theme="casino-royale"] .progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #FFD700, #DAA520);
+  transform-origin: 0%;
+  transform: scaleX(0);
+  z-index: 10000;
+  box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+/* ============================================
    SCROLLBAR - Premium Gold
    ============================================ */
 [data-theme="casino-royale"] ::-webkit-scrollbar {
@@ -601,36 +815,6 @@
 }
 
 /* ============================================
-   LOADING SPINNER - Premium Casino Wheel
-   ============================================ */
-[data-theme="casino-royale"] .loading-spinner {
-  border: 3px solid rgba(255, 215, 0, 0.15);
-  border-top: 3px solid #FFD700;
-  border-right: 3px solid #DAA520;
-  border-radius: 50%;
-  animation: casinoSpin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-  box-shadow: var(--shadow-glow);
-}
-
-@keyframes casinoSpin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
-}
-
-/* Loading Skeleton */
-[data-theme="casino-royale"] .skeleton {
-  background: linear-gradient(90deg, #1A1A1A 25%, #2A2A2A 50%, #1A1A1A 75%);
-  background-size: 200% 100%;
-  animation: skeletonLoading 1.5s ease-in-out infinite;
-  border-radius: var(--border-radius-sm);
-}
-
-@keyframes skeletonLoading {
-  0% { background-position: 200% 0; }
-  100% { background-position: -200% 0; }
-}
-
-/* ============================================
    ANIMATIONS - Luxury Collection
    ============================================ */
 
@@ -645,6 +829,12 @@
   100% {
     box-shadow: 0 0 0 0 rgba(255, 215, 0, 0);
   }
+}
+
+/* Border Pulse Animation */
+@keyframes borderPulse {
+  0%, 100% { opacity: 0.4; filter: blur(6px); }
+  50% { opacity: 0.8; filter: blur(10px); }
 }
 
 /* Shine Animation for Cards */
@@ -674,31 +864,6 @@
   animation: goldPulse 2s infinite;
 }
 
-[data-theme="casino-royale"] .note-card {
-  position: relative;
-  overflow: hidden;
-  transition: all 0.3s ease;
-}
-
-[data-theme="casino-royale"] .note-card::after {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, 
-    transparent, 
-    rgba(255, 215, 0, 0.08), 
-    rgba(255, 215, 0, 0.03),
-    transparent);
-  transition: left 0.6s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-[data-theme="casino-royale"] .note-card:hover::after {
-  left: 100%;
-}
-
 /* ============================================
    BUTTONS & INTERACTIONS - Premium
    ============================================ */
@@ -709,6 +874,7 @@
   border: 1px solid rgba(255, 215, 0, 0.3);
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   backdrop-filter: blur(8px);
+  cursor: pointer;
 }
 
 [data-theme="casino-royale"] .theme-selector-btn:hover {
@@ -723,6 +889,7 @@
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 215, 0, 0.3);
   transition: all 0.3s ease;
+  cursor: pointer;
 }
 
 [data-theme="casino-royale"] .mobile-menu-btn:hover {
@@ -730,16 +897,6 @@
   border-color: #FFD700;
   color: #FFD700;
   transform: scale(1.05);
-}
-
-/* Refresh Button */
-[data-theme="casino-royale"] .refresh-btn {
-  transition: all 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-[data-theme="casino-royale"] .refresh-btn:hover {
-  transform: rotate(180deg) scale(1.1);
-  color: #FFD700;
 }
 
 /* ============================================
@@ -792,9 +949,20 @@
     transform: translateX(3px);
   }
   
+  [data-theme="casino-royale"] .note-card:hover {
+    transform: rotateY(1deg) scale(1.01);
+  }
+  
   [data-theme="casino-royale"] .markdown-h1::after,
   [data-theme="casino-royale"] .markdown-h2::after {
     width: 50px;
+  }
+  
+  /* Better touch targets on mobile */
+  [data-theme="casino-royale"] .subject-btn,
+  [data-theme="casino-royale"] .topic-header,
+  [data-theme="casino-royale"] .note-btn {
+    min-height: 44px;
   }
 }
 
@@ -802,6 +970,10 @@
 @media (min-width: 769px) and (max-width: 1024px) {
   [data-theme="casino-royale"] .markdown-wrapper:hover {
     transform: translateY(-2px);
+  }
+  
+  [data-theme="casino-royale"] .note-card:hover {
+    transform: rotateY(1deg) scale(1.01);
   }
 }
 
@@ -815,9 +987,11 @@
   [data-theme="casino-royale"] .markdown-wrapper,
   [data-theme="casino-royale"] .code-block-wrapper,
   [data-theme="casino-royale"] .refresh-btn,
-  [data-theme="casino-royale"] .theme-selector-btn {
+  [data-theme="casino-royale"] .theme-selector-btn,
+  [data-theme="casino-royale"] .note-card {
     transition: none;
     animation: none;
+    transform: none;
   }
   
   [data-theme="casino-royale"] .subject-btn.active {
@@ -832,7 +1006,17 @@
   
   [data-theme="casino-royale"] .markdown-h1::after,
   [data-theme="casino-royale"] .markdown-h2::after,
-  [data-theme="casino-royale"] .section-title::after {
+  [data-theme="casino-royale"] .section-title::after,
+  [data-theme="casino-royale"] .empty-state::before {
+    animation: none;
+  }
+  
+  [data-theme="casino-royale"] .skeleton {
+    animation: none;
+    background: #2A2A2A;
+  }
+  
+  [data-theme="casino-royale"] .note-btn.active::before {
     animation: none;
   }
 }
@@ -847,6 +1031,8 @@
     --text-primary: #000000;
     --text-secondary: #333333;
     --text-muted: #666666;
+    --section-title: #333333;
+    --note-count: #666666;
   }
   
   [data-theme="casino-royale"] .markdown-wrapper {
@@ -854,6 +1040,7 @@
     box-shadow: none;
     backdrop-filter: none;
     background: white;
+    transform: none;
   }
   
   [data-theme="casino-royale"] .subject-btn.active {
@@ -861,18 +1048,39 @@
     box-shadow: none;
     background: #F0F0F0;
     color: black;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  
+  [data-theme="casino-royale"] .note-btn.active {
+    background: #FFD700 !important;
+    color: #000000 !important;
+    border: 1px solid #000000 !important;
+    print-color-adjust: exact;
+    -webkit-print-color-adjust: exact;
+  }
+  
+  [data-theme="casino-royale"] .note-btn.active::before {
+    display: none;
   }
   
   [data-theme="casino-royale"] .code-block-wrapper {
     border: 1px solid #CCC;
     box-shadow: none;
+    transform: none;
   }
   
   [data-theme="casino-royale"] .markdown-link::after {
     display: none;
   }
   
-  [data-theme="casino-royale"] .sidebar-header h2::after {
+  [data-theme="casino-royale"] .sidebar-header h2::after,
+  [data-theme="casino-royale"] body::after,
+  [data-theme="casino-royale"] body::before {
+    display: none;
+  }
+  
+  [data-theme="casino-royale"] .progress-bar {
     display: none;
   }
 }
@@ -902,5 +1110,65 @@
   
   [data-theme="casino-royale"] .markdown-blockquote {
     border-left-width: 6px;
+  }
+  
+  [data-theme="casino-royale"] .note-btn.active {
+    outline: 2px solid #FFD700;
+  }
+}
+
+/* ============================================
+   CUSTOM CURSOR (Optional - Add sparingly)
+   ============================================ */
+[data-theme="casino-royale"] a,
+[data-theme="casino-royale"] button,
+[data-theme="casino-royale"] .subject-btn,
+[data-theme="casino-royale"] .note-btn,
+[data-theme="casino-royale"] .topic-header {
+  cursor: pointer;
+}
+
+/* Sparkle effect class (requires JS for full effect) */
+[data-theme="casino-royale"] .click-sparkle {
+  position: absolute;
+  pointer-events: none;
+  width: 4px;
+  height: 4px;
+  background: #FFD700;
+  border-radius: 50%;
+  animation: sparkle 0.6s ease-out forwards;
+}
+
+@keyframes sparkle {
+  0% {
+    transform: scale(0);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(20);
+    opacity: 0;
+  }
+}
+
+/* ============================================
+   ADDITIONAL UTILITIES
+   ============================================ */
+
+/* Smooth scrolling */
+[data-theme="casino-royale"] html {
+  scroll-behavior: smooth;
+}
+
+/* Focus visible polyfill support */
+[data-theme="casino-royale"] .js-focus-visible :focus:not(.focus-visible) {
+  outline: none;
+}
+
+/* Backdrop blur fallback for older browsers */
+@supports not (backdrop-filter: blur(12px)) {
+  [data-theme="casino-royale"] .markdown-wrapper,
+  [data-theme="casino-royale"] .search-input,
+  [data-theme="casino-royale"] .subject-btn {
+    background: #1A1A1A;
   }
 }

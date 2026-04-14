@@ -1,350 +1,279 @@
 /* ============================================
-   NOTEVIEWER.JS COMPONENT STYLES
-   Uses theme variables - No hardcoded colors
+   NOTE VIEWER - CASINO ROYALE PREMIUM THEME
    ============================================ */
 
-/* ----- Main Container ----- */
-.note-viewer-container {
-  flex: 1;
+/* Main Container */
+[data-theme="casino-royale"] .note-viewer-container {
   display: flex;
   flex-direction: column;
-  background-color: var(--bg-main);
-  border-radius: var(--border-radius);
-  overflow: hidden;
+  height: 100%;
+  background: var(--bg-main);
   position: relative;
-  min-height: 0;
-}
-
-/* ----- Note Header ----- */
-.note-header {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  gap: 16px;
-  padding: 20px 24px;
-  background-color: var(--bg-elevated);
-  border-bottom: 1px solid var(--border-light);
-}
-
-/* ----- Note Breadcrumb ----- */
-.note-breadcrumb {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  flex-wrap: wrap;
-}
-
-.breadcrumb-icon {
-  color: var(--text-muted);
-  font-size: 18px;
-}
-
-.note-breadcrumb .breadcrumb-item {
-  color: var(--text-muted);
-  font-size: 0.875rem;
-  font-weight: 500;
-}
-
-.note-breadcrumb .breadcrumb-item.active {
-  color: var(--accent-color);
-  font-weight: 600;
-}
-
-.note-breadcrumb .breadcrumb-sep {
-  color: var(--text-muted);
-  font-size: 14px;
-}
-
-/* ----- Note Meta (Stats + Buttons) ----- */
-.note-meta {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  flex-wrap: wrap;
-}
-
-.meta-item {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  color: var(--text-muted);
-  font-size: 0.75rem;
-  background-color: var(--bg-subtle);
-  padding: 6px 12px;
-  border-radius: 20px;
-}
-
-.search-badge {
-  background-color: var(--primary-10);
-  color: var(--accent-color);
-}
-
-.meta-btn {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  background-color: var(--bg-subtle);
-  border: 1px solid var(--border-light);
-  color: var(--text-secondary);
-  font-size: 0.75rem;
-  padding: 6px 12px;
-  border-radius: 20px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.meta-btn:hover {
-  background-color: var(--accent-color);
-  color: white;
-  border-color: var(--accent-color);
-}
-
-/* ----- Note Content Area ----- */
-.note-content {
-  flex: 1;
-  padding: 24px;
-  overflow-y: auto;
-  background-color: var(--bg-main);
-}
-
-/* ----- Markdown Wrapper ----- */
-.markdown-wrapper {
-  max-width: 100%;
-  word-wrap: break-word;
-  line-height: 1.6;
-  color: var(--text-primary);
-}
-
-/* ----- Headings ----- */
-.markdown-h1 {
-  font-size: 2rem;
-  font-weight: 700;
-  margin-top: 1.5em;
-  margin-bottom: 0.5em;
-  padding-bottom: 0.3em;
-  border-bottom: 2px solid var(--border-light);
-  color: var(--text-primary);
-}
-
-.markdown-h2 {
-  font-size: 1.5rem;
-  font-weight: 600;
-  margin-top: 1.2em;
-  margin-bottom: 0.4em;
-  padding-bottom: 0.2em;
-  border-bottom: 1px solid var(--border-light);
-  color: var(--text-primary);
-}
-
-.markdown-h3 {
-  font-size: 1.25rem;
-  font-weight: 600;
-  margin-top: 1em;
-  margin-bottom: 0.3em;
-  color: var(--text-primary);
-}
-
-.markdown-h4 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-top: 0.8em;
-  margin-bottom: 0.2em;
-  color: var(--text-secondary);
-}
-
-/* ----- Header Anchor Link ----- */
-.header-anchor {
-  color: var(--accent-color);
-  text-decoration: none;
-  font-size: 0.8em;
-  margin-right: 8px;
-  opacity: 0;
-  transition: opacity 0.2s ease;
-}
-
-.markdown-h1:hover .header-anchor,
-.markdown-h2:hover .header-anchor,
-.markdown-h3:hover .header-anchor {
-  opacity: 1;
-}
-
-/* ----- Paragraph ----- */
-.markdown-p {
-  margin: 1em 0;
-  color: var(--text-secondary);
-  line-height: 1.7;
-}
-
-/* ----- Blockquote ----- */
-.markdown-blockquote {
-  margin: 1em 0;
-  padding: 0.5em 1em;
-  border-left: 4px solid var(--accent-color);
-  background-color: var(--bg-subtle);
-  color: var(--text-muted);
-  font-style: italic;
-}
-
-/* ----- Links ----- */
-.markdown-link {
-  color: var(--accent-color);
-  text-decoration: none;
-  border-bottom: 1px solid transparent;
-  transition: border-color 0.2s ease;
-}
-
-.markdown-link:hover {
-  border-bottom-color: var(--accent-color);
-}
-
-/* ----- Images ----- */
-.markdown-image {
-  max-width: 100%;
-  height: auto;
-  border-radius: var(--border-radius);
-  margin: 1em 0;
-}
-
-/* ----- Tables ----- */
-.table-container {
-  overflow-x: auto;
-  margin: 1em 0;
-}
-
-.markdown-table {
-  width: 100%;
-  border-collapse: collapse;
-  font-size: 0.875rem;
-}
-
-.markdown-table th,
-.markdown-table td {
-  border: 1px solid var(--border-light);
-  padding: 10px 12px;
-  text-align: left;
-}
-
-.markdown-table th {
-  background-color: var(--bg-subtle);
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-.markdown-table td {
-  color: var(--text-secondary);
-}
-
-.markdown-table tr:hover {
-  background-color: var(--bg-subtle);
-}
-
-/* ----- Lists ----- */
-.markdown-ul,
-.markdown-ol {
-  margin: 1em 0;
-  padding-left: 1.5em;
-  color: var(--text-secondary);
-}
-
-.markdown-ul li,
-.markdown-ol li {
-  margin: 0.3em 0;
-}
-
-/* ----- Horizontal Rule ----- */
-.markdown-hr {
-  margin: 2em 0;
-  border: none;
-  height: 1px;
-  background: linear-gradient(90deg, transparent, var(--border-color), transparent);
-}
-
-/* ----- Code Blocks ----- */
-.code-block-wrapper {
-  margin: 1em 0;
-  border-radius: var(--border-radius);
   overflow: hidden;
-  background-color: var(--code-bg);
-  border: 1px solid var(--border-light);
 }
 
-.code-header {
+/* Loading State */
+[data-theme="casino-royale"] .loading-container {
   display: flex;
+  flex-direction: column;
   align-items: center;
-  justify-content: space-between;
-  padding: 8px 12px;
-  background-color: var(--code-header-bg);
-  border-bottom: 1px solid var(--border-light);
+  justify-content: center;
+  height: 100%;
+  min-height: 400px;
+  gap: 1rem;
 }
 
-.code-language {
-  font-size: 0.7rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  color: var(--text-muted);
+[data-theme="casino-royale"] .loading-container p {
+  color: var(--text-secondary);
+  font-size: 1rem;
   letter-spacing: 0.5px;
+  animation: pulse 1.5s ease-in-out infinite;
 }
 
-.copy-code-btn {
-  background-color: transparent;
-  border: none;
-  color: var(--text-muted);
-  font-size: 0.7rem;
-  cursor: pointer;
-  padding: 4px 8px;
-  border-radius: 4px;
-  transition: all 0.2s ease;
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }
 
-.copy-code-btn:hover {
-  background-color: var(--bg-subtle);
-  color: var(--accent-color);
+/* Loading Spinner */
+[data-theme="casino-royale"] .loading-spinner {
+  width: 48px;
+  height: 48px;
+  border: 3px solid var(--loading-spinner-border);
+  border-top: 3px solid var(--loading-spinner-top);
+  border-right: 3px solid var(--primary-dark);
+  border-radius: 50%;
+  animation: casinoSpin 0.8s cubic-bezier(0.4, 0, 0.2, 1) infinite;
+  box-shadow: var(--shadow-glow);
 }
 
-/* Syntax Highlighter wrapper */
-.code-block-wrapper pre {
-  margin: 0 !important;
-  padding: 16px !important;
-  background-color: var(--code-bg) !important;
-  overflow-x: auto;
+/* Note Header */
+[data-theme="casino-royale"] .note-header {
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.95), rgba(13, 13, 13, 0.95));
+  backdrop-filter: blur(12px);
+  border-bottom: 1px solid rgba(255, 215, 0, 0.2);
+  padding: 1rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1rem;
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
-/* ----- Inline Code ----- */
-.inline-code {
-  background-color: var(--code-bg);
-  color: var(--accent-color);
-  padding: 2px 6px;
-  border-radius: 4px;
-  font-family: 'SF Mono', Monaco, 'Cascadia Code', monospace;
-  font-size: 0.85em;
-}
-
-/* ----- Search Highlight ----- */
-.search-highlight-mark {
-  background-color: var(--warning-color);
-  color: var(--bg-primary);
-  padding: 0 2px;
-  border-radius: 3px;
-  font-weight: 500;
-}
-
-/* ----- Error Toast ----- */
-.error-toast {
-  position: fixed;
-  bottom: 24px;
-  right: 24px;
+/* Breadcrumb Navigation */
+[data-theme="casino-royale"] .note-breadcrumb {
   display: flex;
   align-items: center;
-  gap: 10px;
-  background-color: var(--error-bg);
-  color: var(--error-color);
-  padding: 12px 20px;
-  border-radius: var(--border-radius);
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  font-size: 0.9rem;
+}
+
+[data-theme="casino-royale"] .breadcrumb-icon {
+  color: var(--primary-color);
+  font-size: 1.1rem;
+}
+
+[data-theme="casino-royale"] .breadcrumb-item {
+  color: var(--text-muted);
+  transition: all 0.3s ease;
+  text-transform: capitalize;
+}
+
+[data-theme="casino-royale"] .breadcrumb-item.active {
+  color: var(--primary-color);
+  font-weight: 600;
+  text-shadow: 0 0 8px rgba(255, 215, 0, 0.3);
+}
+
+[data-theme="casino-royale"] .breadcrumb-sep {
+  color: var(--primary-color);
+  font-size: 0.8rem;
+  opacity: 0.6;
+}
+
+/* Note Meta Information */
+[data-theme="casino-royale"] .note-meta {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+[data-theme="casino-royale"] .meta-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 215, 0, 0.15);
+}
+
+[data-theme="casino-royale"] .meta-item svg {
+  color: var(--primary-color);
+  font-size: 0.9rem;
+}
+
+[data-theme="casino-royale"] .search-badge {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.15), rgba(255, 215, 0, 0.05));
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+}
+
+[data-theme="casino-royale"] .search-badge svg {
+  animation: searchPulse 1.5s ease-in-out infinite;
+}
+
+@keyframes searchPulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; transform: scale(1.1); }
+}
+
+/* Meta Buttons */
+[data-theme="casino-royale"] .meta-btn {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 0.8rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 215, 0, 0.2);
+  border-radius: 20px;
+  color: var(--text-secondary);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+[data-theme="casino-royale"] .meta-btn:hover {
+  background: rgba(255, 215, 0, 0.15);
+  border-color: var(--primary-color);
+  color: var(--primary-color);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-glow);
+}
+
+[data-theme="casino-royale"] .meta-btn svg {
+  transition: all 0.3s ease;
+}
+
+[data-theme="casino-royale"] .meta-btn:hover svg {
+  transform: scale(1.1);
+}
+
+/* Note Content Area */
+[data-theme="casino-royale"] .note-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1.5rem;
+  position: relative;
+}
+
+/* Custom Scrollbar for Note Content */
+[data-theme="casino-royale"] .note-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+[data-theme="casino-royale"] .note-content::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+[data-theme="casino-royale"] .note-content::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+  border-radius: 10px;
+  transition: all 0.3s ease;
+}
+
+[data-theme="casino-royale"] .note-content::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--primary-light), var(--primary-color));
+}
+
+/* Markdown Wrapper */
+[data-theme="casino-royale"] .markdown-wrapper {
+  max-width: 1000px;
+  margin: 0 auto;
+  background: linear-gradient(135deg, rgba(26, 26, 26, 0.8), rgba(26, 26, 26, 0.6));
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 215, 0, 0.12);
+  border-radius: var(--border-radius-lg);
+  padding: 2rem;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+}
+
+[data-theme="casino-royale"] .markdown-wrapper::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: var(--gradient-gold);
+  transform: scaleX(0);
+  transition: transform 0.4s ease;
+}
+
+[data-theme="casino-royale"] .markdown-wrapper:hover::before {
+  transform: scaleX(1);
+}
+
+[data-theme="casino-royale"] .markdown-wrapper:hover {
+  border-color: rgba(255, 215, 0, 0.35);
+  box-shadow: 0 12px 40px rgba(255, 215, 0, 0.12);
+  transform: translateY(-4px);
+}
+
+/* Search Highlight Marks */
+[data-theme="casino-royale"] .search-highlight-mark {
+  background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.15));
+  color: var(--primary-color);
+  padding: 0.1rem 0.2rem;
+  border-radius: 4px;
+  font-weight: 600;
+  animation: highlightGlow 0.6s ease-out;
+  border: 1px solid rgba(255, 215, 0, 0.4);
+}
+
+@keyframes highlightGlow {
+  0% {
+    background: rgba(255, 215, 0, 0.5);
+    box-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+  }
+  100% {
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.3), rgba(255, 215, 0, 0.15));
+    box-shadow: none;
+  }
+}
+
+/* Error Toast */
+[data-theme="casino-royale"] .error-toast {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  background: linear-gradient(135deg, rgba(255, 65, 54, 0.95), rgba(255, 65, 54, 0.85));
+  backdrop-filter: blur(12px);
   border: 1px solid var(--error-color);
-  font-size: 0.875rem;
+  color: white;
+  padding: 1rem 1.5rem;
+  border-radius: var(--border-radius-sm);
   z-index: 1000;
-  animation: slideInRight 0.3s ease;
+  animation: slideInRight 0.3s ease-out, fadeOut 0.3s ease-out 4.7s forwards;
+  box-shadow: 0 8px 32px rgba(255, 65, 54, 0.3);
+}
+
+[data-theme="casino-royale"] .error-toast svg {
+  font-size: 1.2rem;
+  animation: shake 0.5s ease-out;
 }
 
 @keyframes slideInRight {
@@ -358,98 +287,244 @@
   }
 }
 
-/* ----- Loading State (inside NoteViewer) ----- */
-.note-viewer-container .loading-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  min-height: 300px;
-  background-color: var(--bg-main);
+@keyframes fadeOut {
+  to {
+    opacity: 0;
+    visibility: hidden;
+  }
 }
 
-/* ----- Responsive ----- */
+@keyframes shake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  75% { transform: translateX(5px); }
+}
+
+/* Header Anchor Links */
+[data-theme="casino-royale"] .header-anchor {
+  opacity: 0;
+  margin-right: 0.5rem;
+  color: var(--primary-color);
+  text-decoration: none;
+  font-size: 0.8em;
+  transition: opacity 0.2s ease;
+  display: inline-block;
+}
+
+[data-theme="casino-royale"] h1:hover .header-anchor,
+[data-theme="casino-royale"] h2:hover .header-anchor,
+[data-theme="casino-royale"] h3:hover .header-anchor {
+  opacity: 1;
+}
+
+[data-theme="casino-royale"] .header-anchor:hover {
+  transform: scale(1.1);
+}
+
+/* Table Container for Responsive Tables */
+[data-theme="casino-royale"] .table-container {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  border-radius: var(--border-radius-sm);
+  background: rgba(0, 0, 0, 0.2);
+}
+
+/* Markdown Images */
+[data-theme="casino-royale"] .markdown-image {
+  max-width: 100%;
+  height: auto;
+  border-radius: var(--border-radius);
+  margin: 1rem 0;
+  box-shadow: var(--shadow);
+  transition: all 0.3s ease;
+  border: 1px solid rgba(255, 215, 0, 0.2);
+}
+
+[data-theme="casino-royale"] .markdown-image:hover {
+  transform: scale(1.02);
+  box-shadow: var(--shadow-glow);
+  border-color: var(--primary-color);
+}
+
+/* Horizontal Rule */
+[data-theme="casino-royale"] .markdown-hr {
+  border: none;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--primary-color), transparent);
+  margin: 2rem 0;
+}
+
+/* Fullscreen Mode */
+[data-theme="casino-royale"] .note-viewer-container:fullscreen {
+  background: var(--bg-main);
+}
+
+[data-theme="casino-royale"] .note-viewer-container:fullscreen .markdown-wrapper {
+  max-width: 90%;
+  margin: 2rem auto;
+}
+
+/* Responsive Design */
 @media (max-width: 768px) {
-  .note-header {
-    padding: 12px 16px;
+  [data-theme="casino-royale"] .note-header {
     flex-direction: column;
     align-items: flex-start;
+    padding: 1rem;
   }
   
-  .note-meta {
+  [data-theme="casino-royale"] .note-meta {
     width: 100%;
     justify-content: flex-start;
   }
   
-  .note-content {
-    padding: 16px;
+  [data-theme="casino-royale"] .markdown-wrapper {
+    padding: 1rem;
   }
   
-  .markdown-h1 {
-    font-size: 1.5rem;
+  [data-theme="casino-royale"] .note-content {
+    padding: 1rem;
   }
   
-  .markdown-h2 {
-    font-size: 1.25rem;
+  [data-theme="casino-royale"] .error-toast {
+    bottom: 1rem;
+    right: 1rem;
+    left: 1rem;
+    padding: 0.75rem 1rem;
   }
   
-  .markdown-h3 {
-    font-size: 1.1rem;
-  }
-  
-  .meta-item span,
-  .meta-btn span {
+  [data-theme="casino-royale"] .meta-item span {
     display: none;
   }
   
-  .meta-item,
-  .meta-btn {
-    padding: 6px 10px;
+  [data-theme="casino-royale"] .meta-item {
+    padding: 0.4rem;
   }
   
-  .error-toast {
-    bottom: 16px;
-    right: 16px;
-    left: 16px;
-    text-align: center;
-    justify-content: center;
+  [data-theme="casino-royale"] .meta-btn span {
+    display: none;
+  }
+  
+  [data-theme="casino-royale"] .meta-btn {
+    padding: 0.4rem;
   }
 }
 
-/* ----- Fullscreen Mode ----- */
-.note-viewer-container:fullscreen {
-  background-color: var(--bg-main);
-  padding: 20px;
-  overflow-y: auto;
+/* Tablet Optimization */
+@media (min-width: 769px) and (max-width: 1024px) {
+  [data-theme="casino-royale"] .markdown-wrapper {
+    padding: 1.5rem;
+  }
+  
+  [data-theme="casino-royale"] .note-content {
+    padding: 1.25rem;
+  }
 }
 
-.note-viewer-container:fullscreen .note-header {
-  position: sticky;
-  top: 0;
-  z-index: 10;
-  background-color: var(--bg-elevated);
+/* Reduced Motion Support */
+@media (prefers-reduced-motion: reduce) {
+  [data-theme="casino-royale"] .meta-btn,
+  [data-theme="casino-royale"] .markdown-wrapper,
+  [data-theme="casino-royale"] .error-toast,
+  [data-theme="casino-royale"] .search-highlight-mark {
+    animation: none;
+    transition: none;
+  }
+  
+  [data-theme="casino-royale"] .error-toast {
+    animation: none;
+    opacity: 1;
+  }
+  
+  [data-theme="casino-royale"] .search-badge svg {
+    animation: none;
+  }
 }
 
-/* ----- Print Styles ----- */
+/* Print Styles */
 @media print {
-  .note-header,
-  .meta-btn,
-  .error-toast,
-  .copy-code-btn {
+  [data-theme="casino-royale"] .note-header,
+  [data-theme="casino-royale"] .meta-btn,
+  [data-theme="casino-royale"] .error-toast {
     display: none;
   }
   
-  .note-content {
+  [data-theme="casino-royale"] .markdown-wrapper {
+    padding: 0;
+    background: white;
+    border: none;
+    box-shadow: none;
+    transform: none;
+  }
+  
+  [data-theme="casino-royale"] .note-content {
     padding: 0;
   }
   
-  .markdown-wrapper {
+  [data-theme="casino-royale"] .search-highlight-mark {
+    background: none;
     color: black;
+    font-weight: bold;
+    border: none;
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  [data-theme="casino-royale"] .markdown-wrapper {
+    border: 2px solid var(--primary-color);
   }
   
-  .inline-code {
-    background-color: #f0f0f0;
-    color: black;
+  [data-theme="casino-royale"] .search-highlight-mark {
+    outline: 2px solid var(--primary-color);
+    background: transparent;
   }
+  
+  [data-theme="casino-royale"] .meta-btn {
+    border-width: 2px;
+  }
+}
+
+/* Animation for content fade-in */
+@keyframes contentFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+[data-theme="casino-royale"] .markdown-wrapper {
+  animation: contentFadeIn 0.4s ease-out;
+}
+
+/* Loading skeleton animation enhancement */
+@keyframes shimmer {
+  0% {
+    background-position: -1000px 0;
+  }
+  100% {
+    background-position: 1000px 0;
+  }
+}
+
+/* Focus styles for accessibility */
+[data-theme="casino-royale"] .meta-btn:focus-visible,
+[data-theme="casino-royale"] .header-anchor:focus-visible {
+  outline: 2px solid var(--primary-color);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Selection styling */
+[data-theme="casino-royale"] .markdown-wrapper ::selection {
+  background: rgba(255, 215, 0, 0.3);
+  color: var(--text-primary);
+}
+
+[data-theme="casino-royale"] .markdown-wrapper ::-moz-selection {
+  background: rgba(255, 215, 0, 0.3);
+  color: var(--text-primary);
 }
