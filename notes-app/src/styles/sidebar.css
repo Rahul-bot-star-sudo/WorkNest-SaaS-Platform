@@ -1,421 +1,219 @@
 /* ============================================
-   SIDEBAR CSS - Complete Theme Support
-   All colors use CSS variables from themes
+   SIDEBAR - MODERN MINIMAL VERSION
    ============================================ */
 
-/* Sidebar Container */
-.sidebar {
-  width: 320px;
-  background: var(--bg-sidebar);
-  color: var(--text-sidebar);
+/* ----- Sidebar Container ----- */
+.sidebar-container {
   display: flex;
   flex-direction: column;
+  height: 100%;
+  background: linear-gradient(180deg, var(--bg-sidebar) 0%, var(--bg-sidebar-dark, #0f0f1a) 100%);
+  color: var(--text-sidebar);
   overflow-y: auto;
-  border-right: 1px solid var(--sidebar-border);
-  transition: all 0.3s ease;
+  overflow-x: hidden;
 }
 
-/* Sidebar Header */
+/* ----- Sidebar Header ----- */
 .sidebar-header {
-  padding: 24px 20px;
   display: flex;
   align-items: center;
   gap: 12px;
+  padding: 20px 20px;
   border-bottom: 1px solid var(--sidebar-header-border);
 }
 
 .sidebar-icon {
   font-size: 28px;
   color: var(--accent-color);
-  transition: transform 0.3s ease;
-}
-
-.sidebar-icon:hover {
-  transform: scale(1.1);
 }
 
 .sidebar-header h2 {
   flex: 1;
-  font-size: 22px;
+  font-size: 1.3rem;
   font-weight: 700;
+  letter-spacing: -0.3px;
+  color: var(--text-sidebar);
   margin: 0;
-  letter-spacing: -0.5px;
 }
 
 .sidebar-header .highlight {
-  color: var(--accent-color);
-  position: relative;
+  background: linear-gradient(135deg, var(--accent-color), var(--accent-hover));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
 }
 
-.sidebar-header .highlight::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--accent-color);
-  border-radius: 2px;
-}
-
-/* Refresh Button */
 .refresh-btn {
-  background: var(--subject-btn-bg);
+  background: rgba(255,255,255,0.08);
   border: none;
   color: var(--text-sidebar);
-  padding: 8px 10px;
   cursor: pointer;
+  padding: 8px;
   border-radius: 10px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
 }
 
 .refresh-btn:hover {
-  background: var(--subject-btn-hover);
-  transform: rotate(90deg);
+  background: var(--accent-color);
+  transform: rotate(180deg);
+  color: white;
 }
 
-/* Search Container */
-.search-container {
-  padding: 20px;
+/* ----- Search Container ----- */
+.sidebar-container .search-container {
   position: relative;
+  padding: 16px 20px;
   border-bottom: 1px solid var(--section-border);
 }
 
-.search-icon {
+.sidebar-container .search-icon {
   position: absolute;
-  left: 32px;
+  left: 28px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--search-icon);
-  font-size: 16px;
-  pointer-events: none;
+  font-size: 14px;
 }
 
-.search-input {
+.sidebar-container .search-input {
   width: 100%;
-  padding: 12px 12px 12px 40px;
-  background: var(--search-bg);
-  border: 1px solid var(--search-border);
+  padding: 10px 12px 10px 36px;
+  background: rgba(255,255,255,0.08);
+  border: 1px solid transparent;
   border-radius: 12px;
   color: var(--text-sidebar);
-  font-size: 14px;
-  transition: all 0.3s ease;
+  font-size: 0.85rem;
+  transition: all 0.2s ease;
 }
 
-.search-input:focus {
-  outline: none;
+.sidebar-container .search-input:focus {
+  background: rgba(255,255,255,0.12);
   border-color: var(--accent-color);
-  background: var(--subject-btn-hover);
-  box-shadow: 0 0 0 3px var(--primary-10);
+  outline: none;
 }
 
-.search-input::placeholder {
+.sidebar-container .search-input::placeholder {
   color: var(--search-icon);
-  font-size: 13px;
 }
 
-/* Sections */
-.section {
-  padding: 20px;
-  border-bottom: 1px solid var(--section-border);
-}
-
+/* ----- Section Title ----- */
 .section-title {
-  font-size: 12px;
+  padding: 0 20px;
+  margin: 16px 0 8px 0;
+  font-size: 0.7rem;
   text-transform: uppercase;
-  letter-spacing: 1.5px;
+  letter-spacing: 1px;
   color: var(--section-title);
-  margin-bottom: 16px;
   font-weight: 600;
 }
 
-/* Subjects Grid */
+/* ----- Subject Button (Chip Style) ----- */
 .subjects-grid {
   display: flex;
-  gap: 10px;
   flex-wrap: wrap;
-}
-
-.subject-btn {
-  padding: 8px 18px;
-  background: var(--subject-btn-bg);
-  border: 1px solid transparent;
-  color: var(--text-sidebar);
-  cursor: pointer;
-  border-radius: 30px;
-  font-size: 13px;
-  font-weight: 500;
-  transition: all 0.3s ease;
-}
-
-.subject-btn:hover {
-  background: var(--subject-btn-hover);
-  transform: translateY(-2px);
-  border-color: var(--accent-color);
-}
-
-.subject-btn.active {
-  background: var(--accent-color);
-  box-shadow: 0 4px 12px var(--primary-20);
-  border-color: var(--accent-color);
-}
-
-/* Topics List */
-.topics-list {
-  display: flex;
-  flex-direction: column;
   gap: 8px;
+  padding: 0 20px;
 }
 
-.topic-item {
-  margin-bottom: 4px;
-}
-
-.topic-header {
-  width: 100%;
-  display: flex;
+.sidebar-container .subject-btn {
+  display: inline-flex;
   align-items: center;
-  gap: 12px;
-  padding: 12px 14px;
-  background: var(--topic-header-bg);
+  padding: 6px 14px;
+  background: rgba(255,255,255,0.08);
   border: none;
+  border-radius: 30px;
   color: var(--text-sidebar);
-  cursor: pointer;
-  border-radius: 12px;
-  font-size: 14px;
+  font-size: 0.8rem;
   font-weight: 500;
-  transition: all 0.3s ease;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.topic-header:hover {
-  background: var(--topic-header-hover);
-  transform: translateX(4px);
+.sidebar-container .subject-btn:hover {
+  background: rgba(255,255,255,0.15);
+  transform: translateY(-2px);
 }
 
-.topic-header svg {
-  font-size: 16px;
-  transition: transform 0.3s ease;
+.sidebar-container .subject-btn.active {
+  background: var(--accent-color);
+  color: var(--bg-sidebar);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
 }
 
-.topic-header:hover svg {
-  color: var(--accent-color);
-}
-
-.note-count {
-  margin-left: auto;
-  font-size: 11px;
-  color: var(--note-count);
-  background: var(--primary-10);
-  padding: 2px 8px;
-  border-radius: 20px;
-}
-
-/* Notes List */
-.notes-list {
-  margin-left: 35px;
-  margin-top: 8px;
+/* ----- Topic Header (Clean) ----- */
+.topics-list {
+  padding: 0 12px;
   display: flex;
   flex-direction: column;
   gap: 4px;
 }
 
-.note-btn {
-  width: 100%;
+.topic-header {
   display: flex;
   align-items: center;
-  gap: 12px;
-  padding: 10px 14px;
+  gap: 10px;
+  width: 100%;
+  padding: 10px 12px;
   background: transparent;
   border: none;
-  color: var(--note-btn-color);
-  cursor: pointer;
   border-radius: 10px;
-  font-size: 13px;
-  transition: all 0.3s ease;
-  position: relative;
+  color: var(--text-sidebar);
+  font-size: 0.85rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
-.note-btn::before {
-  content: '';
-  position: absolute;
-  left: 0;
-  top: 50%;
-  transform: translateY(-50%);
-  width: 3px;
-  height: 0;
-  background: var(--accent-color);
-  border-radius: 3px;
-  transition: height 0.3s ease;
+.topic-header:hover {
+  background: rgba(255,255,255,0.06);
+}
+
+/* ----- Note Button (Compact) ----- */
+.notes-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  margin-left: 24px;
+  padding-left: 8px;
+  border-left: 1px solid rgba(255,255,255,0.1);
+}
+
+.note-btn {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  padding: 6px 12px;
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  color: rgba(255,255,255,0.7);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
 }
 
 .note-btn:hover {
-  background: var(--note-btn-hover);
-  transform: translateX(8px);
-}
-
-.note-btn:hover::before {
-  height: 20px;
+  background: rgba(255,255,255,0.06);
+  color: white;
+  transform: translateX(2px);
 }
 
 .note-btn.active {
-  background: var(--success-color);
-  color: white;
+  background: rgba(var(--accent-color-rgb, 99,102,241), 0.15);
+  color: var(--accent-color);
 }
 
-.note-btn.active::before {
-  height: 20px;
-  background: white;
+/* ----- Scrollbar ----- */
+.sidebar-container::-webkit-scrollbar {
+  width: 3px;
 }
 
-.note-btn svg {
-  font-size: 14px;
-  flex-shrink: 0;
+.sidebar-container::-webkit-scrollbar-track {
+  background: transparent;
 }
 
-.note-btn span {
-  flex: 1;
-  text-align: left;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-/* Scrollbar for Sidebar */
-.sidebar::-webkit-scrollbar {
-  width: 6px;
-}
-
-.sidebar::-webkit-scrollbar-track {
-  background: var(--sidebar-border);
-  border-radius: 3px;
-}
-
-.sidebar::-webkit-scrollbar-thumb {
-  background: var(--note-count);
-  border-radius: 3px;
-  transition: background 0.3s ease;
-}
-
-.sidebar::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-color);
-}
-
-/* Empty State */
-.empty-state {
-  text-align: center;
-  padding: 40px 20px;
-  color: var(--note-count);
-}
-
-.empty-state svg {
-  font-size: 48px;
-  margin-bottom: 16px;
-  opacity: 0.5;
-}
-
-.empty-state p {
-  font-size: 14px;
-}
-
-/* Loading State */
-.sidebar-loading {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  gap: 16px;
-  padding: 40px;
-}
-
-.sidebar-loading-spinner {
-  width: 40px;
-  height: 40px;
-  border: 3px solid var(--border-color);
-  border-top-color: var(--accent-color);
-  border-radius: 50%;
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to { transform: rotate(360deg); }
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-  .sidebar {
-    width: 280px;
-    position: fixed;
-    left: -280px;
-    top: 0;
-    bottom: 0;
-    z-index: 1000;
-    transition: left 0.3s ease;
-  }
-  
-  .sidebar.open {
-    left: 0;
-    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3);
-  }
-  
-  .sidebar-header h2 {
-    font-size: 18px;
-  }
-  
-  .subject-btn {
-    padding: 6px 14px;
-    font-size: 12px;
-  }
-  
-  .topic-header {
-    padding: 10px 12px;
-    font-size: 13px;
-  }
-  
-  .note-btn {
-    padding: 8px 12px;
-    font-size: 12px;
-  }
-}
-
-/* Mobile Menu Button (add this to your global CSS if needed) */
-.mobile-menu-btn {
-  display: none;
-  position: fixed;
-  top: 15px;
-  left: 15px;
-  z-index: 1001;
-  background: var(--accent-color);
-  border: none;
-  color: white;
-  padding: 10px;
-  border-radius: 8px;
-  cursor: pointer;
-}
-
-@media (max-width: 768px) {
-  .mobile-menu-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-}
-
-/* Animation for new notes */
-@keyframes slideIn {
-  from {
-    opacity: 0;
-    transform: translateX(-20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.note-btn {
-  animation: slideIn 0.3s ease;
+.sidebar-container::-webkit-scrollbar-thumb {
+  background: rgba(255,255,255,0.2);
+  border-radius: 10px;
 }

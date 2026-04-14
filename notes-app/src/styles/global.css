@@ -1,6 +1,4 @@
 /* Theme variables are defined in theme.css */
-/* This file uses CSS variables from themes */
-
 * {
   margin: 0;
   padding: 0;
@@ -18,29 +16,6 @@ body {
   display: flex;
   height: 100vh;
   background: var(--bg-main);
-  color: var(--text-primary);
-}
-
-/* Rest of your global styles using CSS variables */
-/* Use var(--bg-main), var(--text-primary), var(--border-color), etc. */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Inter', 'Roboto', sans-serif;
-  overflow: hidden;
-}
-
-/* App Container */
-.app {
-  display: flex;
-  height: 100vh;
-  transition: background 0.3s, color 0.3s;
-  background: var(--bg-secondary);
   color: var(--text-primary);
 }
 
@@ -61,6 +36,51 @@ body {
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/* Subjects Navbar - NEW */
+.subjects-navbar {
+  background: var(--bg-primary);
+  border-bottom: 1px solid var(--border-color);
+  padding: 8px 0;
+  overflow-x: auto;
+  white-space: nowrap;
+  scrollbar-width: thin;
+}
+
+.subjects-navbar::-webkit-scrollbar {
+  height: 3px;
+}
+
+.subjects-scroll {
+  display: flex;
+  gap: 8px;
+  padding: 0 16px;
+}
+
+.subject-nav-btn {
+  padding: 8px 18px;
+  background: var(--bg-secondary);
+  border: 1px solid var(--border-color);
+  border-radius: 30px;
+  color: var(--text-primary);
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.subject-nav-btn:hover {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+}
+
+.subject-nav-btn.active {
+  background: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
 }
 
 /* Breadcrumb */
@@ -169,50 +189,26 @@ body {
   background: var(--accent-color);
 }
 
-/* Responsive */
-@media (max-width: 768px) {
-  .content-header {
-    padding: 12px 20px;
-    flex-direction: column;
-    gap: 10px;
-    align-items: flex-start;
-  }
-  
-  .content-body {
-    padding: 20px;
-  }
-}
-/* ============================================
-   MOBILE RESPONSIVE CSS
-   ============================================ */
-
-/* Mobile Menu Button */
+/* ========== MOBILE MENU & SIDEBAR ========== */
 .mobile-menu-btn {
   display: none;
   position: fixed;
-  top: 15px;
-  left: 15px;
+  top: 12px;
+  left: 12px;
   z-index: 1001;
   background: var(--accent-color);
   border: none;
   color: white;
-  width: 45px;
-  height: 45px;
+  width: 44px;
+  height: 44px;
   border-radius: 12px;
   cursor: pointer;
   align-items: center;
   justify-content: center;
   box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  transition: all 0.3s ease;
 }
 
-.mobile-menu-btn:hover {
-  transform: scale(1.05);
-}
-
-/* Mobile Sidebar Overlay */
 .sidebar-overlay {
-  display: none;
   position: fixed;
   top: 0;
   left: 0;
@@ -223,307 +219,297 @@ body {
   backdrop-filter: blur(2px);
 }
 
-.sidebar-overlay.open {
-  display: block;
+.close-sidebar-btn {
+  background: transparent;
+  border: none;
+  color: var(--text-sidebar);
+  padding: 8px;
+  cursor: pointer;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-/* Responsive Breakpoints */
+/* ========== RESPONSIVE - MOBILE (max-width: 768px) ========== */
 @media (max-width: 768px) {
-  /* Show mobile menu button */
   .mobile-menu-btn {
     display: flex;
   }
 
-  /* Sidebar - Hidden by default, slides in */
   .sidebar {
-    position: fixed;
-    top: 0;
-    left: -320px;
-    bottom: 0;
-    width: 280px;
-    z-index: 1000;
-    transition: left 0.3s ease;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.3);
+    position: fixed !important;
+    top: 0 !important;
+    left: -100% !important;
+    bottom: 0 !important;
+    width: 85% !important;
+    max-width: 300px !important;
+    z-index: 1000 !important;
+    transition: left 0.3s ease !important;
   }
 
   .sidebar.open {
-    left: 0;
+    left: 0 !important;
+    box-shadow: 2px 0 20px rgba(0, 0, 0, 0.3) !important;
   }
 
-  /* Main content - Full width */
   .main-content {
-    width: 100%;
-    margin-left: 0;
+    width: 100% !important;
   }
 
-  /* Content Header - Mobile friendly */
   .content-header {
-    padding: 12px 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 10px;
-    position: sticky;
-    top: 0;
-    z-index: 100;
+    padding: 12px 16px !important;
+    padding-left: 60px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 8px !important;
   }
 
-  /* Breadcrumb - Smaller font */
   .breadcrumb {
-    font-size: 12px;
-    flex-wrap: wrap;
+    font-size: 12px !important;
+    flex-wrap: wrap !important;
   }
 
-  .breadcrumb-item {
-    font-size: 12px;
+  .subjects-navbar {
+    padding: 6px 0 !important;
   }
 
-  /* Content Body */
+  .subjects-scroll {
+    padding: 0 12px !important;
+    gap: 6px !important;
+  }
+
+  .subject-nav-btn {
+    padding: 6px 14px !important;
+    font-size: 13px !important;
+  }
+
   .content-body {
-    padding: 15px;
+    padding: 12px !important;
   }
 
-  /* Markdown Container */
-  .markdown-wrapper {
-    padding: 20px;
-  }
-
-  /* Note Viewer Header */
-  .note-header {
-    padding: 12px 16px;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 12px;
-  }
-
-  .note-meta {
-    width: 100%;
-    justify-content: flex-start;
-    flex-wrap: wrap;
-  }
-
-  .meta-item, .meta-btn {
-    font-size: 12px;
-    padding: 5px 10px;
-  }
-
-  /* Note Content */
   .note-content {
-    padding: 15px;
+    padding: 12px !important;
   }
 
-  /* Markdown Headers - Smaller for mobile */
+  .markdown-wrapper {
+    padding: 16px !important;
+    border-radius: 12px !important;
+  }
+
   .markdown-h1 {
-    font-size: 1.8em;
+    font-size: 1.6em !important;
   }
 
   .markdown-h2 {
-    font-size: 1.4em;
+    font-size: 1.3em !important;
   }
 
   .markdown-h3 {
-    font-size: 1.2em;
+    font-size: 1.1em !important;
   }
 
   .markdown-p {
-    font-size: 1em;
-    line-height: 1.6;
+    font-size: 15px !important;
+    line-height: 1.65 !important;
   }
 
-  /* Code blocks - Scrollable */
-  .code-block-wrapper {
-    margin: 1em 0;
-  }
-
-  pre {
-    font-size: 12px;
-    padding: 12px;
-  }
-
-  /* Tables - Scrollable */
   .table-container {
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
+    overflow-x: auto !important;
+    -webkit-overflow-scrolling: touch !important;
   }
 
   .markdown-table {
-    font-size: 12px;
-    min-width: 500px;
+    min-width: 500px !important;
+    font-size: 12px !important;
   }
 
   .markdown-table th,
   .markdown-table td {
-    padding: 8px 10px;
-  }
-
-  /* Theme Selector Dropdown */
-  .theme-dropdown {
-    position: fixed;
-    top: auto;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    width: 100%;
-    max-width: 100%;
-    border-radius: 20px 20px 0 0;
-    max-height: 60vh;
-  }
-
-  .theme-group-grid {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  /* Toast notifications - Mobile friendly */
-  .error-toast {
-    bottom: 20px;
-    right: 20px;
-    left: 20px;
-    font-size: 13px;
-  }
-
-  /* Loading spinner */
-  .loading-spinner {
-    width: 40px;
-    height: 40px;
-  }
-
-  /* Search input */
-  .search-input {
-    font-size: 16px; /* Prevents zoom on iOS */
-    padding: 12px 12px 12px 40px;
-  }
-}
-
-/* Tablet Styles (769px - 1024px) */
-@media (min-width: 769px) and (max-width: 1024px) {
-  .sidebar {
-    width: 280px;
-  }
-
-  .markdown-wrapper {
-    padding: 30px;
-  }
-
-  .content-body {
-    padding: 20px;
-  }
-}
-
-/* Small Mobile (max-width: 480px) */
-@media (max-width: 480px) {
-  .sidebar {
-    width: 260px;
-  }
-
-  .sidebar-header h2 {
-    font-size: 18px;
-  }
-
-  .subject-btn {
-    padding: 6px 12px;
-    font-size: 12px;
-  }
-
-  .topic-header {
-    padding: 10px 12px;
-    font-size: 13px;
-  }
-
-  .note-btn {
-    padding: 8px 10px;
-    font-size: 12px;
-  }
-
-  .markdown-wrapper {
-    padding: 15px;
-  }
-
-  .markdown-h1 {
-    font-size: 1.5em;
-  }
-
-  .markdown-h2 {
-    font-size: 1.2em;
-  }
-
-  .markdown-h3 {
-    font-size: 1.1em;
-  }
-
-  .content-header {
-    padding: 10px 12px;
-  }
-
-  .note-content {
-    padding: 10px;
-  }
-
-  .meta-item, .meta-btn {
-    font-size: 11px;
-    padding: 4px 8px;
-  }
-}
-
-/* Landscape mode on mobile */
-@media (max-width: 768px) and (orientation: landscape) {
-  .sidebar {
-    width: 260px;
-  }
-
-  .content-header {
-    padding: 8px 12px;
-  }
-
-  .note-content {
-    padding: 10px;
-  }
-
-  .markdown-wrapper {
-    padding: 15px;
+    padding: 8px 10px !important;
   }
 
   .note-header {
-    padding: 8px 12px;
+    padding: 10px 16px !important;
+    flex-direction: column !important;
+    align-items: flex-start !important;
+    gap: 10px !important;
   }
-}
 
-/* Touch-friendly improvements */
-@media (max-width: 768px) {
-  button, 
-  .subject-btn, 
-  .topic-header, 
+  .note-meta {
+    width: 100% !important;
+    justify-content: flex-start !important;
+    flex-wrap: wrap !important;
+  }
+
+  .meta-item,
+  .meta-btn {
+    font-size: 11px !important;
+    padding: 4px 10px !important;
+  }
+
+  .markdown-blockquote {
+    padding: 10px 14px !important;
+    font-size: 13px !important;
+  }
+
+  .markdown-image {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+
+  .code-block-wrapper {
+    font-size: 12px !important;
+  }
+
+  pre {
+    font-size: 11px !important;
+    padding: 10px !important;
+  }
+
+  .inline-code {
+    font-size: 13px !important;
+    padding: 2px 5px !important;
+  }
+
+  .markdown-ul li,
+  .markdown-ol li {
+    font-size: 14px !important;
+    line-height: 1.6 !important;
+  }
+
+  /* Touch targets minimum 44px */
+  button,
+  .subject-nav-btn,
+  .topic-header,
   .note-btn,
   .meta-btn,
   .refresh-btn {
-    min-height: 44px; /* Apple's minimum touch target size */
+    min-height: 44px !important;
   }
 
-  .subject-btn {
-    min-height: 40px;
+  .subject-nav-btn {
+    min-height: 36px !important;
   }
 
-  .note-btn {
-    min-height: 44px;
+  .search-input {
+    font-size: 16px !important;
   }
 
-  /* Better scrolling */
-  .sidebar, .content-body {
-    -webkit-overflow-scrolling: touch;
+  .error-toast {
+    bottom: 15px !important;
+    right: 15px !important;
+    left: 15px !important;
+    font-size: 13px !important;
   }
 
-  /* Disable hover effects on mobile (use active instead) */
-  .subject-btn:hover {
-    transform: none;
+  .theme-dropdown {
+    position: fixed !important;
+    bottom: 0 !important;
+    top: auto !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    border-radius: 20px 20px 0 0 !important;
+    max-height: 60vh !important;
   }
 
-  .subject-btn:active {
-    transform: scale(0.98);
+  .theme-group-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+}
+
+/* ========== SMALL MOBILE (max-width: 480px) ========== */
+@media (max-width: 480px) {
+  .content-header {
+    padding: 10px 12px !important;
+    padding-left: 55px !important;
+  }
+
+  .markdown-wrapper {
+    padding: 12px !important;
+  }
+
+  .markdown-h1 {
+    font-size: 1.4em !important;
+  }
+
+  .markdown-p {
+    font-size: 14px !important;
+  }
+
+  .sidebar {
+    width: 90% !important;
+    max-width: 280px !important;
+  }
+}
+
+/* ========== TABLET (769px - 1024px) ========== */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .sidebar {
+    width: 280px !important;
+  }
+
+  .markdown-wrapper {
+    padding: 28px !important;
+  }
+
+  .markdown-h1 {
+    font-size: 2em !important;
+  }
+
+  .content-body {
+    padding: 20px !important;
+  }
+}
+
+/* ========== LANDSCAPE MODE ON MOBILE ========== */
+@media (max-width: 768px) and (orientation: landscape) {
+  .sidebar {
+    width: 260px !important;
+  }
+
+  .content-header {
+    padding: 8px 12px !important;
+    padding-left: 60px !important;
+  }
+
+  .markdown-wrapper {
+    padding: 12px !important;
+  }
+}
+
+/* ========== TOUCH DEVICE OPTIMIZATIONS ========== */
+@media (max-width: 768px) {
+  .subject-nav-btn:hover {
+    transform: none !important;
+  }
+
+  .subject-nav-btn:active {
+    transform: scale(0.97) !important;
   }
 
   .note-btn:hover {
-    transform: none;
+    transform: none !important;
   }
 
   .note-btn:active {
-    transform: scale(0.98);
+    transform: scale(0.98) !important;
+  }
+
+  .topic-header:hover {
+    transform: none !important;
+  }
+
+  .sidebar,
+  .content-body,
+  .note-content {
+    -webkit-overflow-scrolling: touch !important;
+  }
+
+  .markdown-p,
+  .markdown-li {
+    user-select: text !important;
+    -webkit-user-select: text !important;
   }
 }

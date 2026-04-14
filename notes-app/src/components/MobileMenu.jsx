@@ -1,5 +1,5 @@
 import { FiMenu, FiX } from 'react-icons/fi';
-
+import '../styles/mobilemenu.css';
 function MobileMenu({ isOpen, onToggle }) {
   return (
     <button className="mobile-menu-btn" onClick={onToggle}>

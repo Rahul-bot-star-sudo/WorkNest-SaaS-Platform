@@ -3,6 +3,7 @@ import Sidebar from '../components/Sidebar';
 import NoteViewer from '../components/NoteViewer';
 import ThemeSelector from '../components/ThemeSelector';
 import { FiChevronRight, FiMenu, FiX } from 'react-icons/fi';
+import '../styles/dashboard.css';
 
 function Dashboard() {
   const [selectedSubject, setSelectedSubject] = useState('');
@@ -64,23 +65,11 @@ function Dashboard() {
 
   return (
     <div className="app">
-      {/* Mobile Menu Button */}
-      <button className="mobile-menu-btn" onClick={() => setSidebarOpen(!sidebarOpen)}>
-        {sidebarOpen ? <FiX size={24} /> : <FiMenu size={24} />}
-      </button>
-      
+      {/* Mobile Menu Button - Moved inside header for better structure */}
       {/* Sidebar Overlay */}
       {isMobile && sidebarOpen && (
         <div 
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            background: 'rgba(0,0,0,0.5)',
-            zIndex: 999,
-          }}
+          className="sidebar-overlay"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -101,14 +90,20 @@ function Dashboard() {
       
       <div className="main-content">
         <div className="content-header">
+          {/* Mobile Menu Button - Now inside header */}
+          <button className="mobile-menu-btn" onClick={() => setSidebarOpen(!sidebarOpen)}>
+            {sidebarOpen ? <FiX size={20} /> : <FiMenu size={20} />}
+          </button>
+          
+          <ThemeSelector />
+          
           <div className="breadcrumb">
             <span className="breadcrumb-item">{selectedSubject || 'Select'}</span>
             <FiChevronRight className="breadcrumb-sep" />
-            <span className="breadcrumb-item">{selectedTopic || 'a'}</span>
+            <span className="breadcrumb-item">{selectedTopic || 'Topic'}</span>
             <FiChevronRight className="breadcrumb-sep" />
-            <span className="breadcrumb-item active">{selectedNote || 'note'}</span>
+            <span className="breadcrumb-item active">{selectedNote || 'Note'}</span>
           </div>
-          <ThemeSelector />
         </div>
         
         <div className="content-body">

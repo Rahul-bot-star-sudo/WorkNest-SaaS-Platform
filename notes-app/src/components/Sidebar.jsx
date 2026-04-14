@@ -44,20 +44,45 @@ function Sidebar({
     );
   };
 
+  // Handle subject selection
+  const handleSubjectSelect = (sub) => {
+    setSelectedSubject(sub);
+    const firstTopic = Object.keys(notesConfig[sub].topics)[0];
+    const firstNote = notesConfig[sub].topics[firstTopic]?.notes[0];
+    setSelectedTopic(firstTopic);
+    setSelectedNote(firstNote);
+  };
+
+  // Handle note selection
+  const handleNoteSelect = (topicKey, note) => {
+    setSelectedTopic(topicKey);
+    setSelectedNote(note);
+  };
+
+  // Clear search
+  const clearSearch = () => {
+    setSearchTerm('');
+  };
+
   return (
     <div className="sidebar-container">
+      {/* Header Section */}
       <div className="sidebar-header">
         <FiBook className="sidebar-icon" />
-        <h2>Notes<span className="highlight">Hub</span></h2>
+        <h2>
+          Notes<span className="highlight">Hub</span>
+        </h2>
         <button 
           className="refresh-btn" 
           onClick={() => window.location.reload()} 
           title="Refresh"
+          aria-label="Refresh page"
         >
           <FiRefreshCw />
         </button>
       </div>
 
+      {/* Search Section */}
       <div className="search-container">
         <FiSearch className="search-icon" />
         <input
@@ -66,32 +91,36 @@ function Sidebar({
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           className="search-input"
+          aria-label="Search notes"
         />
         {searchTerm && (
-          <button className="search-clear" onClick={() => setSearchTerm('')}>✕</button>
+          <button 
+            className="search-clear" 
+            onClick={clearSearch}
+            aria-label="Clear search"
+          >
+            ✕
+          </button>
         )}
       </div>
 
+      {/* Search Results Info */}
       {searchTerm && (
         <div className="search-results-info">
           Found {filteredNotes.length} note(s) matching "{searchTerm}"
         </div>
       )}
 
+      {/* Subjects Section */}
       <div className="section">
         <h3 className="section-title">Subjects</h3>
         <div className="subjects-grid">
-          {subjects.map(sub => (
+          {subjects.map((sub) => (
             <button
               key={sub}
-              onClick={() => {
-                setSelectedSubject(sub);
-                const firstTopic = Object.keys(notesConfig[sub].topics)[0];
-                const firstNote = notesConfig[sub].topics[firstTopic]?.notes[0];
-                setSelectedTopic(firstTopic);
-                setSelectedNote(firstNote);
-              }}
+              onClick={() => handleSubjectSelect(sub)}
               className={`subject-btn ${selectedSubject === sub ? 'active' : ''}`}
+              aria-label={`Select ${notesConfig[sub].name} subject`}
             >
               {notesConfig[sub].name}
             </button>
@@ -99,6 +128,7 @@ function Sidebar({
         </div>
       </div>
 
+      {/* Topics & Notes Section */}
       <div className="section">
         <h3 className="section-title">Topics & Notes</h3>
         <div className="topics-list">
@@ -111,25 +141,29 @@ function Sidebar({
             
             return (
               <div key={topicKey} className="topic-item">
-                <button className="topic-header" onClick={() => toggleTopic(topicKey)}>
+                {/* Topic Header */}
+                <button 
+                  className="topic-header" 
+                  onClick={() => toggleTopic(topicKey)}
+                  aria-label={`Toggle ${topicData.name} topic`}
+                >
                   {expandedTopics[topicKey] ? <FiChevronDown /> : <FiChevronRight />}
                   <FiFolder />
                   <span>{topicData.name}</span>
                   <span className="note-count">({topicData.notes.length})</span>
                 </button>
                 
+                {/* Notes List (Collapsible) */}
                 {expandedTopics[topicKey] && (
                   <div className="notes-list">
                     {topicData.notes
                       .filter(note => note.toLowerCase().includes(searchTerm.toLowerCase()))
-                      .map(note => (
+                      .map((note) => (
                         <button
                           key={note}
-                          onClick={() => {
-                            setSelectedTopic(topicKey);
-                            setSelectedNote(note);
-                          }}
+                          onClick={() => handleNoteSelect(topicKey, note)}
                           className={`note-btn ${selectedTopic === topicKey && selectedNote === note ? 'active' : ''}`}
+                          aria-label={`Select note: ${note}`}
                         >
                           <FiFileText />
                           <span>{highlightText(note, searchTerm)}</span>

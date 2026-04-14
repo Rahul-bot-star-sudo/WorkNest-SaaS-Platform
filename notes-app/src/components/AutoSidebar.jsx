@@ -1,8 +1,7 @@
 import { useState, useEffect } from 'react';
 import { FiBook, FiFolder, FiFileText, FiSearch, FiRefreshCw, FiChevronRight, FiChevronDown } from 'react-icons/fi';
 import { scanNotesStructure } from '../utils/autoScanner';
-import '../styles/sidebar.css';
-
+import '../styles/autosidebar.css';
 function Sidebar({ 
   selectedSubject, 
   setSelectedSubject, 

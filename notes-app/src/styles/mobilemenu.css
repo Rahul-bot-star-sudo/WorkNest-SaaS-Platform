@@ -1,0 +1,59 @@
+/* ============================================
+   MOBILEMENU.JS COMPONENT STYLES
+   Uses theme variables - No hardcoded colors
+   ============================================ */
+
+/* ----- Mobile Menu Button ----- */
+.mobile-menu-btn {
+  position: fixed;
+  top: 12px;
+  right: 12px;      /* Changed from left to right */
+  left: auto;       /* Disable left */
+  z-index: 1001;
+  background: var(--bg-elevated);
+  border: 1px solid var(--border-light);
+  border-radius: 50%;
+  width: 44px;
+  height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--text-primary);
+  transition: all 0.2s ease;
+  box-shadow: var(--shadow);
+}
+
+.mobile-menu-btn:hover {
+  background: var(--bg-subtle);
+  transform: scale(1.05);
+}
+
+.mobile-menu-btn:active {
+  transform: scale(0.95);
+}
+
+/* Adjust for different screen sizes */
+@media (max-width: 480px) {
+  .mobile-menu-btn {
+    top: 10px;
+    right: 10px;
+    width: 38px;
+    height: 38px;
+  }
+}
+
+/* For phones with notches (safe area) */
+@supports (padding-top: env(safe-area-inset-top)) {
+  .mobile-menu-btn {
+    top: calc(env(safe-area-inset-top) + 8px);
+    right: calc(env(safe-area-inset-right) + 8px);
+  }
+}
+
+/* ----- Hide on desktop ----- */
+@media (min-width: 769px) {
+  .mobile-menu-btn {
+    display: none;
+  }
+}

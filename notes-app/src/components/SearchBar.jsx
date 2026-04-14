@@ -1,5 +1,5 @@
 import { FiSearch } from 'react-icons/fi';
-
+import '../styles/searchbar.css';
 function SearchBar({ searchTerm, onSearchChange }) {
   return (
     <div className="search-container">
