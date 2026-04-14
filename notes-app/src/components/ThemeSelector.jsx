@@ -10,12 +10,14 @@ function ThemeSelector() {
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
 
-  // Group themes - Exactly 17 themes as per your list
+  // Group themes - USE CORRECT IDs from ThemeContext
   const themeGroups = {
-    'Default & Light': ['default', 'light', 'peach', 'sunset', 'golden', 'lavender'],
-    'Dark & Premium': ['dark', 'zenith-dark', 'vscode', 'github', 'galaxy'],
-    'Casino & Gaming': ['casino-royale', 'las-vegas', 'poker-night'],
-    'Nature': ['green', 'forest', 'ocean']
+    'Default & Light': ['blue', 'light', 'peach', 'sunset', 'golden', 'lavender'],
+    'Dark & Premium': ['dark', 'zenithDark', 'vscode', 'github', 'galaxy'],
+    'Casino & Gaming': ['casinoRoyale', 'lasVegas', 'pokerNight', 'slotMachine', 'blackjack', 'roulette', 'vegasStrip'],
+    'Nature': ['green', 'forest', 'ocean', 'sage'],
+    'Special': ['cotton', 'coffee', 'royal', 'zenith', 'tailwind', 'addicted', 'gamer', 'neon', 'psychedelic', 'hypnotic', 'void', 'godmode', 'multidim', 'disco'],
+    'VS Code': ['vscodePlus', 'vscodeLight', 'vscodeBlue']
   };
 
   // Close on escape key
@@ -51,8 +53,8 @@ function ThemeSelector() {
         setIsOpen(false);
       }
     };
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
   }, [isOpen]);
 
   // Handle touch swipe to close
@@ -75,59 +77,48 @@ function ThemeSelector() {
     setTouchStart(null);
   };
 
+  // Icon lookup - MATCH ThemeContext IDs
   const getThemeIcon = (themeId) => {
     const icons = {
-      'default': '🌊',
-      'light': '☀️',
-      'dark': '🌙',
-      'zenith-dark': '⚡',
-      'vscode': '💻',
-      'golden': '👑',
-      'lavender': '🌸',
-      'green': '🌿',
-      'forest': '🌲',
-      'ocean': '🌊',
-      'peach': '🍑',
-      'sunset': '🌅',
-      'github': '🐙',
-      'galaxy': '🌌',
-      'casino-royale': '🎰',
-      'las-vegas': '✨',
-      'poker-night': '🃏'
+      'blue': '🔵', 'light': '☀️', 'dark': '🌙', 'zenithDark': '⚡',
+      'vscode': '💻', 'golden': '👑', 'lavender': '🌸', 'green': '🌿',
+      'forest': '🌲', 'ocean': '🌊', 'peach': '🍑', 'sunset': '🌅',
+      'github': '🐙', 'galaxy': '🌌', 'casinoRoyale': '🎰',
+      'lasVegas': '✨', 'pokerNight': '🃏', 'slotMachine': '🎰',
+      'blackjack': '🃏', 'roulette': '🎡', 'vegasStrip': '🌃',
+      'sage': '🌿', 'cotton': '🌸', 'coffee': '☕', 'royal': '👑',
+      'zenith': '✨', 'tailwind': '🎨', 'addicted': '💜', 'gamer': '🎮',
+      'neon': '💚', 'psychedelic': '🌈', 'hypnotic': '🌀', 'void': '🕳️',
+      'godmode': '⚡', 'multidim': '🔮', 'disco': '🪩',
+      'vscodePlus': '🚀', 'vscodeLight': '☀️💻', 'vscodeBlue': '🔵💻'
     };
     return icons[themeId] || '🎨';
   };
 
+  // Name lookup - MATCH ThemeContext IDs
   const getThemeName = (themeId) => {
     const names = {
-      'default': 'Default Blue',
-      'light': 'Light Mode',
-      'dark': 'Dark Mode',
-      'zenith-dark': 'Zenith Dark',
-      'vscode': 'VS Code',
-      'golden': 'Golden',
-      'lavender': 'Lavender',
-      'green': 'Green',
-      'forest': 'Forest',
-      'ocean': 'Ocean',
-      'peach': 'Peach',
-      'sunset': 'Sunset',
-      'github': 'GitHub',
-      'galaxy': 'Galaxy',
-      'casino-royale': 'Casino Royale',
-      'las-vegas': 'Las Vegas',
-      'poker-night': 'Poker Night'
+      'blue': 'Default Blue', 'light': 'Light Mode', 'dark': 'Dark Mode',
+      'zenithDark': 'Zenith Dark', 'vscode': 'VS Code', 'golden': 'Golden',
+      'lavender': 'Lavender', 'green': 'Green', 'forest': 'Forest',
+      'ocean': 'Ocean', 'peach': 'Peach', 'sunset': 'Sunset',
+      'github': 'GitHub', 'galaxy': 'Galaxy', 'casinoRoyale': 'Casino Royale',
+      'lasVegas': 'Las Vegas', 'pokerNight': 'Poker Night', 'slotMachine': 'Slot Machine',
+      'blackjack': 'Blackjack', 'roulette': 'Roulette', 'vegasStrip': 'Vegas Strip',
+      'sage': 'Sage', 'cotton': 'Cotton', 'coffee': 'Coffee', 'royal': 'Royal',
+      'zenith': 'Zenith', 'tailwind': 'Tailwind', 'addicted': 'Addicted', 'gamer': 'Gamer',
+      'neon': 'Neon', 'psychedelic': 'Psychedelic', 'hypnotic': 'Hypnotic', 'void': 'Void',
+      'godmode': 'God Mode', 'multidim': 'MultiDim', 'disco': 'Disco',
+      'vscodePlus': 'VS Code+', 'vscodeLight': 'VS Code Light', 'vscodeBlue': 'VS Code Blue'
     };
     return names[themeId] || themeId;
   };
 
-  // List of all 17 theme IDs
-  const allThemeIds = [
-    'default', 'light', 'dark', 'zenith-dark', 'vscode',
-    'golden', 'lavender', 'green', 'forest', 'ocean',
-    'peach', 'sunset', 'github', 'galaxy',
-    'casino-royale', 'las-vegas', 'poker-night'
-  ];
+  const handleThemeChange = (themeId) => {
+    console.log('Changing theme to:', themeId);
+    changeTheme(themeId);
+    setIsOpen(false);
+  };
 
   return (
     <div className="theme-selector">
@@ -177,26 +168,20 @@ function ThemeSelector() {
                 <div key={groupName} className="theme-group">
                   <div className="theme-group-title">{groupName}</div>
                   <div className="theme-group-grid">
-                    {groupThemes.map(themeId => {
-                      if (!allThemeIds.includes(themeId)) return null;
-                      return (
-                        <button
-                          key={themeId}
-                          className={`theme-option ${themeName === themeId ? 'active' : ''}`}
-                          onClick={() => {
-                            changeTheme(themeId);
-                            setIsOpen(false);
-                          }}
-                          aria-label={`Apply ${getThemeName(themeId)} theme`}
-                        >
-                          <span className="theme-icon">{getThemeIcon(themeId)}</span>
-                          <span className="theme-name">{getThemeName(themeId)}</span>
-                          {themeName === themeId && (
-                            <span className="theme-check">✓</span>
-                          )}
-                        </button>
-                      );
-                    })}
+                    {groupThemes.map(themeId => (
+                      <button
+                        key={themeId}
+                        className={`theme-option ${themeName === themeId ? 'active' : ''}`}
+                        onClick={() => handleThemeChange(themeId)}
+                        aria-label={`Apply ${getThemeName(themeId)} theme`}
+                      >
+                        <span className="theme-icon">{getThemeIcon(themeId)}</span>
+                        <span className="theme-name">{getThemeName(themeId)}</span>
+                        {themeName === themeId && (
+                          <span className="theme-check">✓</span>
+                        )}
+                      </button>
+                    ))}
                   </div>
                 </div>
               ))}
@@ -205,12 +190,9 @@ function ThemeSelector() {
             <div className="theme-dropdown-footer">
               <button 
                 className="theme-reset-btn"
-                onClick={() => {
-                  changeTheme('default');
-                  setIsOpen(false);
-                }}
+                onClick={() => handleThemeChange('dark')}
               >
-                Reset to Default
+                Reset to Dark
               </button>
             </div>
           </div>
