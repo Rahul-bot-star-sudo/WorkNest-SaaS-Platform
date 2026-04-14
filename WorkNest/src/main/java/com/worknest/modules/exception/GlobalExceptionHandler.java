@@ -39,4 +39,52 @@ public class GlobalExceptionHandler {
 
         return ResponseEntity.badRequest().body(error);
     }
+
+    @ExceptionHandler(org.springframework.web.bind.MethodArgumentNotValidException.class)
+    public ResponseEntity<ErrorResponse> handleValidationException(
+        org.springframework.web.bind.MethodArgumentNotValidException ex,
+        HttpServletRequest request) {
+
+    String errorMessage = ex.getBindingResult()
+            .getFieldError()
+            .getDefaultMessage();
+
+    ErrorResponse error = new ErrorResponse(
+            errorMessage,
+            400,
+            request.getRequestURI()
+    );
+
+    return ResponseEntity.badRequest().body(error);
+    }
+
+    @ExceptionHandler(UserNotFoundException.class)
+public ResponseEntity<ErrorResponse> handleUserNotFound(
+        UserNotFoundException ex,
+        HttpServletRequest request) {
+
+    ErrorResponse error = new ErrorResponse(
+            ex.getMessage(),
+            404,
+            request.getRequestURI()
+    );
+
+    return ResponseEntity.status(404).body(error);
+}
+
+
+@ExceptionHandler(InvalidPasswordException.class)
+public ResponseEntity<ErrorResponse> handleInvalidPassword(
+        InvalidPasswordException ex,
+        HttpServletRequest request) {
+
+    ErrorResponse error = new ErrorResponse(
+            ex.getMessage(),
+            401,
+            request.getRequestURI()
+    );
+
+    return ResponseEntity.status(401).body(error);
+}
+
 }

@@ -12,7 +12,7 @@ function Login({ onLogin }) {
     try {
       const res = await loginApi({ email, password });
 
-      const { token, role } = res.data.data;
+      const { token, role } = res.data;
 
       localStorage.setItem("token", token);
       localStorage.setItem("role", role);

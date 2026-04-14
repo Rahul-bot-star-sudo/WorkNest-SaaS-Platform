@@ -1,0 +1,58 @@
+/* Full screen center */
+.auth-wrapper {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-main);
+}
+
+/* Card container */
+.auth-card {
+  background: var(--bg-elevated);
+  padding: 2rem;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  width: 350px;
+  text-align: center;
+  border: 1px solid var(--border-light);
+}
+
+/* Link below form */
+.auth-link {
+  margin-top: 1rem;
+  color: var(--primary-color);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.auth-link:hover {
+  color: var(--primary-hover);
+  text-decoration: underline;
+}
+
+/* Dashboard container */
+.dashboard-wrapper {
+  width: 100%;
+  max-width: 900px;
+  margin: auto;
+  text-align: center;
+  color: var(--text-primary);
+}
+
+/* Logout button */
+.logout-btn {
+  margin-top: 1.5rem;
+  padding: 10px 20px;
+  background-color: var(--error-color);
+  color: var(--bg-elevated);
+  border: none;
+  border-radius: var(--border-radius);
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.logout-btn:hover {
+  opacity: 0.9;
+  box-shadow: var(--shadow-hover);
+}
