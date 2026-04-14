@@ -86,3 +86,6 @@ coverage/
 tmp/
 temp/
 *.swp
+
+WorkNest-SaaS-Platform.git/
+*.bfg-report/
