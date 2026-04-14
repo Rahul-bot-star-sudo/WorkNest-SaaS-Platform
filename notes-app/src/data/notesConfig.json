@@ -84,8 +84,8 @@
   "SpringBoot": {
     "name": "SPRINGBOOT",
     "topics": {
-      "short notes": {
-        "name": "short notes",
+      "spring basics": {
+        "name": "spring basics",
         "notes": [
           "@ComponentScan",
           "@Configuration",
@@ -99,6 +99,34 @@
           "IoC",
           "SecurityFilterChain",
           "Server Tomcat"
+        ]
+      },
+      "super admin api": {
+        "name": "super admin api",
+        "notes": [
+          "@Controller",
+          "@Entity",
+          "@GeneratedValue",
+          "@Id",
+          "@ResponseBody",
+          "@service",
+          "@SpringBootApplication",
+          "constructor",
+          "Domain Modeling",
+          "Enum",
+          "existsByRole(...)",
+          "final",
+          "GenerationType.IDENTITY",
+          "IllegalStateException",
+          "Immutability",
+          "injection",
+          "interface",
+          "Jackson",
+          "JPA",
+          "JVM + Class Loading",
+          "ORM Engine",
+          "RBAC",
+          "Spring Convertion"
         ]
       }
     }

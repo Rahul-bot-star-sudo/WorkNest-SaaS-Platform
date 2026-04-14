@@ -18,7 +18,7 @@ info:
 
 paths:
 
-  /api/v1/super-admin:
+  /api/v1/auth/super-admin/register:
     post:
       summary: Create a new super-admin
       tags: [SuperAdmin]
