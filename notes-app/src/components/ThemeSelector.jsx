@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useTheme, themes } from '../context/ThemeContext';
-import { FiChevronDown, FiGrid, FiSun, FiMoon, FiMonitor } from 'react-icons/fi';
+import { FiChevronDown } from 'react-icons/fi';
 import '../styles/themeselector.css';
 
 function ThemeSelector() {
@@ -10,17 +10,12 @@ function ThemeSelector() {
   const dropdownRef = useRef(null);
   const buttonRef = useRef(null);
 
-  // Group themes
+  // Group themes - Exactly 17 themes as per your list
   const themeGroups = {
-    'Default': ['blue', 'dark', 'light', 'green', 'ocean'],
-    'Nature': ['forest', 'sage', 'lavender', 'peach'],
-    'Warm': ['sunset', 'golden', 'coffee'],
-    'Cool': ['galaxy', 'cotton', 'royal'],
-    'Zenith': ['zenith', 'zenithDark'],
-    'VS Code': ['vscode', 'vscodePlus', 'vscodeLight', 'vscodeBlue'],
-    'Special': ['github', 'tailwind', 'addicted', 'casino', 'gamer', 'neon', 'psychedelic'],
-    'Advanced': ['hypnotic', 'void', 'godmode', 'multidim', 'disco'],
-    'Gambling': ['casinoRoyale', 'lasVegas', 'pokerNight', 'slotMachine', 'blackjack', 'roulette', 'vegasStrip']
+    'Default & Light': ['default', 'light', 'peach', 'sunset', 'golden', 'lavender'],
+    'Dark & Premium': ['dark', 'zenith-dark', 'vscode', 'github', 'galaxy'],
+    'Casino & Gaming': ['casino-royale', 'las-vegas', 'poker-night'],
+    'Nature': ['green', 'forest', 'ocean']
   };
 
   // Close on escape key
@@ -81,14 +76,58 @@ function ThemeSelector() {
   };
 
   const getThemeIcon = (themeId) => {
-    const theme = themes[themeId];
-    return theme?.icon || '🎨';
+    const icons = {
+      'default': '🌊',
+      'light': '☀️',
+      'dark': '🌙',
+      'zenith-dark': '⚡',
+      'vscode': '💻',
+      'golden': '👑',
+      'lavender': '🌸',
+      'green': '🌿',
+      'forest': '🌲',
+      'ocean': '🌊',
+      'peach': '🍑',
+      'sunset': '🌅',
+      'github': '🐙',
+      'galaxy': '🌌',
+      'casino-royale': '🎰',
+      'las-vegas': '✨',
+      'poker-night': '🃏'
+    };
+    return icons[themeId] || '🎨';
   };
 
   const getThemeName = (themeId) => {
-    const theme = themes[themeId];
-    return theme?.name || themeId;
+    const names = {
+      'default': 'Default Blue',
+      'light': 'Light Mode',
+      'dark': 'Dark Mode',
+      'zenith-dark': 'Zenith Dark',
+      'vscode': 'VS Code',
+      'golden': 'Golden',
+      'lavender': 'Lavender',
+      'green': 'Green',
+      'forest': 'Forest',
+      'ocean': 'Ocean',
+      'peach': 'Peach',
+      'sunset': 'Sunset',
+      'github': 'GitHub',
+      'galaxy': 'Galaxy',
+      'casino-royale': 'Casino Royale',
+      'las-vegas': 'Las Vegas',
+      'poker-night': 'Poker Night'
+    };
+    return names[themeId] || themeId;
   };
+
+  // List of all 17 theme IDs
+  const allThemeIds = [
+    'default', 'light', 'dark', 'zenith-dark', 'vscode',
+    'golden', 'lavender', 'green', 'forest', 'ocean',
+    'peach', 'sunset', 'github', 'galaxy',
+    'casino-royale', 'las-vegas', 'poker-night'
+  ];
 
   return (
     <div className="theme-selector">
@@ -139,8 +178,7 @@ function ThemeSelector() {
                   <div className="theme-group-title">{groupName}</div>
                   <div className="theme-group-grid">
                     {groupThemes.map(themeId => {
-                      const theme = themes[themeId];
-                      if (!theme) return null;
+                      if (!allThemeIds.includes(themeId)) return null;
                       return (
                         <button
                           key={themeId}
@@ -149,10 +187,10 @@ function ThemeSelector() {
                             changeTheme(themeId);
                             setIsOpen(false);
                           }}
-                          aria-label={`Apply ${theme.name} theme`}
+                          aria-label={`Apply ${getThemeName(themeId)} theme`}
                         >
-                          <span className="theme-icon">{theme.icon}</span>
-                          <span className="theme-name">{theme.name}</span>
+                          <span className="theme-icon">{getThemeIcon(themeId)}</span>
+                          <span className="theme-name">{getThemeName(themeId)}</span>
                           {themeName === themeId && (
                             <span className="theme-check">✓</span>
                           )}
