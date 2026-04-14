@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import { useTheme, themes } from '../context/ThemeContext';
+import { useTheme } from '../context/ThemeContext';
 import { FiChevronDown } from 'react-icons/fi';
 import '../styles/themeselector.css';
 
