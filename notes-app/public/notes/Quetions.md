@@ -8,27 +8,38 @@
 ---
 
 ```
-Explain this concept for backend development learning.
+Explain this backend concept in very simple English.
 
 Concept: [WRITE YOUR TOPIC HERE]
 
-Make very SHORT study notes using this structure:
+Follow this format:
 
-1. What is it? (2–3 lines simple definition)
-2. Why is it used? (purpose)
-3. Where is it used in a Spring Boot project?
-4. Small code example (if applicable)
-5. Internal flow (step-by-step)
-6. Common mistake beginners make
-7. 3 active recall questions
+1. What is it?
+Explain in 1–2 easy lines.
+
+2. Why do we use it?
+Tell the purpose in simple words.
+
+3. Where is it used?
+Explain where it is used in a Spring Boot project.
+
+4. Example
+Show a small and simple code example.
+
+5. How does it work?
+Explain step-by-step in easy language.
+
+6. Common mistakes
+Tell 1–2 mistakes beginners make.
+
+7. Practice questions
+Give 3 simple questions to test understanding.
 
 Rules:
-
-* Use simple English
-* Keep it short and beginner friendly
-* Focus on practical backend development
-* Avoid unnecessary theory
-
+- Use very simple English
+- Keep answers short
+- Focus on real backend use
+- No confusing theory
 ```
 
 ## 1️⃣ **WHY (Problem)**
