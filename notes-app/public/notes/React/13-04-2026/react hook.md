@@ -1,27 +1,44 @@
-### 1. What is it?
 
-React Hook is a **function that lets you use state and lifecycle features** inside functional components.
-Example: `useState`, `useEffect`.
+# 🔹 Concept: React Hook
 
----
+## 1. What is it?
 
-### 2. Why is it used?
-
-* To **manage data (state)** in UI
-* To **handle side effects** (API calls, timers, etc.)
-* Makes code **cleaner than class components**
+React Hook is a **special function** in React that lets you use features like **state and lifecycle inside function components**.
 
 ---
 
-### 3. Where is it used in a Spring Boot project?
+## 2. Why do we use it?
 
-* Used in **React frontend** (not backend)
-* Calls Spring Boot APIs using hooks (mostly `useEffect`)
-* Example: Fetch data from `/api/users`
+We use hooks to:
+
+* store data (state)
+* handle side effects (API calls, etc.)
+
+👉 Without hooks, function components were very limited.
 
 ---
 
-### 4. Small code example
+## 3. Where is it used (Spring Boot project)?
+
+In a full project:
+
+* **React (Frontend):**
+
+  * use hooks to manage UI state
+  * call backend APIs
+
+* **Spring Boot (Backend):**
+
+  * provides APIs (login, data, etc.)
+
+👉 Hooks are used when:
+
+* calling Spring Boot APIs (`useEffect`)
+* storing response data (`useState`)
+
+---
+
+## 4. Example
 
 ```javascript
 import { useState, useEffect } from "react";
@@ -30,39 +47,54 @@ function Users() {
   const [users, setUsers] = useState([]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/api/users")
+    fetch("http://localhost:8080/users")
       .then(res => res.json())
       .then(data => setUsers(data));
   }, []);
 
-  return <div>{users.length}</div>;
+  return (
+    <div>
+      {users.map(u => <p key={u.id}>{u.name}</p>)}
+    </div>
+  );
 }
 ```
 
 ---
 
-### 5. Internal flow (step-by-step)
+## 5. How does it work?
 
-1. Component renders
-2. `useState` creates state variable
-3. `useEffect` runs after render
-4. API call goes to Spring Boot
-5. Response comes back
-6. `setUsers()` updates state
-7. Component re-renders with new data
+Step-by-step:
+
+1. `useState([])`
+   → creates a variable `users`
+
+2. `useEffect(...)`
+   → runs code when component loads
+
+3. API call happens
+   → calls Spring Boot backend
+
+4. Data comes back
+   → `setUsers(data)` updates state
+
+5. UI updates automatically
+   → shows user list
 
 ---
 
-### 6. Common mistake beginners make
+## 6. Common mistakes
 
-* Missing dependency array → infinite API calls
-* Updating state incorrectly
-* Calling hooks inside loops/conditions (wrong ❌)
+❌ Forgetting dependency array
+→ `useEffect` runs again and again
+
+❌ Updating state wrongly
+→ not using `setState` function
 
 ---
 
-### 7. 3 Active Recall Questions
+## 7. Practice questions
 
-1. Why do we use `useEffect` for API calls instead of normal function calls?
-2. What happens if dependency array is missing in `useEffect`?
-3. How does React know when to re-render after `setState`?
+1. What does `useState` store?
+2. Why do we use `useEffect` for API calls?
+3. What happens if dependency array is missing?
