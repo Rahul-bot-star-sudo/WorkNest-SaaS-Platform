@@ -99,6 +99,8 @@ function Login() {
           </svg>
         </div>
 
+        
+
         <h2 className="auth-title animate-slide-up">
           Welcome Back
         </h2>
