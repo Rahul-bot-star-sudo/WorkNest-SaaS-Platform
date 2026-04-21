@@ -5,6 +5,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+    import com.worknest.modules.company.dto.ApiResponse;
+
 import jakarta.servlet.http.HttpServletRequest;
 
 @RestControllerAdvice
@@ -86,5 +88,14 @@ public ResponseEntity<ErrorResponse> handleInvalidPassword(
 
     return ResponseEntity.status(401).body(error);
 }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ApiResponse> handleException(RuntimeException ex) {
+
+        ApiResponse response = new ApiResponse("error", ex.getMessage());
+
+        return ResponseEntity.status(409).body(response);
+    }
+
 
 }

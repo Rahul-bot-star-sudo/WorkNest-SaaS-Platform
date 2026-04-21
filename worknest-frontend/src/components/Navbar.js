@@ -1,5 +1,6 @@
 import "./styles/Navbar.css";
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 
 function Navbar() {
   const [currentTheme, setCurrentTheme] = useState("");
@@ -25,6 +26,8 @@ function Navbar() {
   return (
     <div className="navbar">
       <h2 className="navbar-title">My App</h2>
+
+      <Link to="/create-company">Create Company</Link>
 
       <select 
         onChange={(e) => changeTheme(e.target.value)} 
