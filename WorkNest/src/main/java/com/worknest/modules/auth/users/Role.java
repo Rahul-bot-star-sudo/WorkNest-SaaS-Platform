@@ -2,6 +2,8 @@ package com.worknest.modules.auth.users;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -15,20 +17,20 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Enumerated(EnumType.STRING)
     @Column(unique = true, nullable = false)
-    private String name;
+    private RoleType name;
 
-    // ✅ GETTER
-    public String getName() {
+    // ✅ CORRECT GETTER
+    public RoleType getName() {
         return name;
     }
 
-    // ✅ SETTER
-    public void setName(String name) {
+    // ✅ CORRECT SETTER
+    public void setName(RoleType name) {
         this.name = name;
     }
 
-    // optional but good
     public Long getId() {
         return id;
     }

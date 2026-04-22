@@ -2,6 +2,7 @@ package com.worknest.modules.auth.service;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.worknest.config.JwtUtil;
 import com.worknest.modules.auth.dto.LoginRequest;
@@ -10,12 +11,12 @@ import com.worknest.modules.auth.dto.RegisterRequest;
 import com.worknest.modules.auth.dto.UserResponseDTO;
 import com.worknest.modules.auth.users.Role;
 import com.worknest.modules.auth.users.RoleRepository;
+import com.worknest.modules.auth.users.RoleType;
 import com.worknest.modules.auth.users.User;
 import com.worknest.modules.auth.users.UserRepository;
 import com.worknest.modules.exception.InvalidPasswordException;
 import com.worknest.modules.exception.SuperAdminAlreadyExistsException;
 import com.worknest.modules.exception.UserNotFoundException;
-
 
 
 @Service
@@ -35,13 +36,13 @@ public class AuthService {
         this.passwordEncoder = passwordEncoder;
         this.jwtUtil = jwtUtil;
     }
-
+    @Transactional
     public UserResponseDTO registerSuperAdmin(RegisterRequest request) {
         // This part of the code in the `registerSuperAdmin` method of the `AuthService` class is responsible
         // for registering a new Super Admin user. Here's a breakdown of what each step is doing:
 
         // 1️⃣ Get role from DB
-        Role superAdminRole = roleRepository.findByName("SUPER_ADMIN")
+        Role superAdminRole = roleRepository.findByName(RoleType.SUPER_ADMIN)
                 .orElseThrow(() -> new RuntimeException("SUPER_ADMIN role not found"));
 
         // 2️⃣ Check if already exists
@@ -63,7 +64,7 @@ public class AuthService {
         // 4️⃣ Return DTO
         return new UserResponseDTO(
                 savedUser.getEmail(),
-                savedUser.getRole().getName()
+                savedUser.getRole().getName().name()
         );
     }
 
@@ -76,16 +77,19 @@ public class AuthService {
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new InvalidPasswordException("Invalid password");
         }
-        // 3️⃣ Dummy token
-        String token = jwtUtil.generateToken(user.getEmail());
-
+        
   
         // 4. Get role
-        String role = user.getRole().getName();
+        String role = user.getRole().getName().name();
 
 
+
+        // 3️⃣ Dummy token
+        String token = jwtUtil.generateToken(user.getEmail(), role);
+        
+        
         // 5️⃣ Return DTO
-        return new LoginResponseDTO(token, role);
+        return new LoginResponseDTO(token, role, user.getEmail());
     }
 
 }
