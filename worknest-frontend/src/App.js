@@ -1,33 +1,45 @@
-import { useEffect } from "react";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
-import AuthWrapper from "./components/AuthWrapper";
+import ProtectedRoute from "./components/ProtectedRoute";
+
+import Login from "./pages/Login";
+import Dashboard from "./pages/Dashboard";
+import RegisterSuperAdmin from "./pages/RegisterSuperAdmin";
 import CreateCompany from "./pages/CreateCompany";
 
-import "./App.css";
-
 function App() {
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme) {
-      document.documentElement.setAttribute("data-theme", savedTheme);
-    }
-  }, []);
-
   return (
     <BrowserRouter>
-      <div className="app">
-        <Navbar />
+      <Navbar />
 
-        <main className="app-main">
-          <Routes>
-            <Route path="/" element={<AuthWrapper />} />
-            <Route path="/create-company" element={<CreateCompany />} />
-          </Routes>
-        </main>
-      </div>
+      <Routes>
+        {/* Public */}
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<RegisterSuperAdmin />} />
+
+        {/* Protected */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/create-company"
+          element={
+            <ProtectedRoute>
+              <CreateCompany />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Default */}
+        <Route path="/" element={<Navigate to="/login" />} />
+      </Routes>
     </BrowserRouter>
   );
 }

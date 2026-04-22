@@ -1,35 +1,60 @@
 import "./styles/Navbar.css";
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function Navbar() {
   const [currentTheme, setCurrentTheme] = useState("");
+  const navigate = useNavigate();
+
+  const token = localStorage.getItem("token");
+  const role = localStorage.getItem("role");
+  const email = localStorage.getItem("email");
 
   const changeTheme = (theme) => {
     setCurrentTheme(theme);
     if (theme === "") {
-      document.documentElement.removeAttribute('data-theme');
+      document.documentElement.removeAttribute("data-theme");
     } else {
-      document.documentElement.setAttribute('data-theme', theme);
+      document.documentElement.setAttribute("data-theme", theme);
     }
-    localStorage.setItem('theme', theme);
+    localStorage.setItem("theme", theme);
   };
 
   useEffect(() => {
-    const savedTheme = localStorage.getItem('theme');
+    const savedTheme = localStorage.getItem("theme");
     if (savedTheme && savedTheme !== "") {
       setCurrentTheme(savedTheme);
-      document.documentElement.setAttribute('data-theme', savedTheme);
+      document.documentElement.setAttribute("data-theme", savedTheme);
     }
   }, []);
 
+  const handleLogout = () => {
+    localStorage.clear();
+    navigate("/login");
+  };
+
   return (
     <div className="navbar">
-      <h2 className="navbar-title">My App</h2>
+      
+      {/* LOGO */}
+      <h2 className="navbar-title">
+        <Link to="/dashboard" className="logo-link">
+          My App
+        </Link>
+      </h2>
 
-      <Link to="/create-company">Create Company</Link>
+      {/* NAV LINKS */}
+      <div className="nav-links">
+        {token && role === "SUPER_ADMIN" && (
+          <Link to="/create-company">Create Company</Link>
+        )}
+      </div>
 
-      <select 
+      {/* RIGHT SIDE */}
+      <div className="nav-right">
+        
+        {/* THEME */}
+        <select 
         onChange={(e) => changeTheme(e.target.value)} 
         className="theme-selector" 
         value={currentTheme}
@@ -97,6 +122,17 @@ function Navbar() {
           <option value="zenith-dark">🌙 Zenith Pro (Dark) - Night Coding</option>
         </optgroup>
       </select>
+
+        {/* USER INFO */}
+        {token && (
+          <>
+            <span className="nav-email">{email}</span>
+            <button className="nav-logout" onClick={handleLogout}>
+              Logout
+            </button>
+          </>
+        )}
+      </div>
     </div>
   );
 }

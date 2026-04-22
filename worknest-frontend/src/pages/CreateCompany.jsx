@@ -1,8 +1,10 @@
 import { useState } from "react";
+import "./styles/CreateCompany.css";
 
 export default function CreateCompany() {
   const [name, setName] = useState("");
   const [message, setMessage] = useState("");
+  const [isError, setIsError] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -19,31 +21,48 @@ export default function CreateCompany() {
       const data = await res.json();
 
       if (res.ok) {
-        setMessage(data.message); // success
+        setIsError(false);
+        setMessage(data.message);
+        setName(""); // reset input
       } else {
-        setMessage(data.message); // error
+        setIsError(true);
+        setMessage(data.message);
       }
     } catch (err) {
+      setIsError(true);
       setMessage("Server error");
     }
   };
 
   return (
-    <div>
-      <h2>Create Company</h2>
+    <div className="create-company-container">
+      <div className="create-company-card">
+        <h2 className="create-company-title">Create Company</h2>
 
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          placeholder="Company Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
+        <form onSubmit={handleSubmit} className="create-company-form">
+          <input
+            type="text"
+            placeholder="Company Name"
+            className="create-company-input"
+            value={name}
+            onChange={(e) => setName(e.target.value)}
+          />
 
-        <button type="submit">Create</button>
-      </form>
+          <button type="submit" className="create-company-button">
+            Create
+          </button>
+        </form>
 
-      <p>{message}</p>
+        {message && (
+          <p
+            className={`create-company-message ${
+              isError ? "error" : "success"
+            }`}
+          >
+            {message}
+          </p>
+        )}
+      </div>
     </div>
   );
 }

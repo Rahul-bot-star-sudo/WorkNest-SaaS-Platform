@@ -21,13 +21,17 @@ public class SecurityConfig {
     }
 
     // ✅ Disable security temporarily
-  @Bean
+@Bean
 public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
     http
-        .cors(cors -> cors.configurationSource(corsConfigurationSource())) // ✅ ADD THIS
+        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
-            .anyRequest().permitAll()
+            // ✅ Public APIs
+            .requestMatchers("/api/v1/auth/**").permitAll()
+
+            // 🔒 Protected APIs
+            .anyRequest().authenticated()
         );
 
     return http.build();
