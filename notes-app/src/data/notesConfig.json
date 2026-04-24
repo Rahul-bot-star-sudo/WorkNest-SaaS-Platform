@@ -73,6 +73,13 @@
           "variable"
         ]
       },
+      "24-4-2026": {
+        "name": "24 4 2026",
+        "notes": [
+          "index",
+          "index2"
+        ]
+      },
       "create-react-app": {
         "name": "create react app",
         "notes": [
@@ -133,14 +140,6 @@
   },
   "Web Basic": {
     "name": "WEB BASIC",
-    "topics": {
-      "14-4-2026": {
-        "name": "14 4 2026",
-        "notes": [
-          "index",
-          "index2"
-        ]
-      }
-    }
+    "topics": {}
   }
 }
