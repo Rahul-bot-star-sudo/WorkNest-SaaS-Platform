@@ -5,8 +5,8 @@
       "Short Notes": {
         "name": "Short Notes",
         "notes": [
-          "array",
           "Heap",
+          "array",
           "stack"
         ]
       },
@@ -27,16 +27,16 @@
         "notes": [
           "Abstraction",
           "Access Modifiers",
-          "class",
           "Collection",
           "Command Line Argument",
-          "constructor",
           "DataType",
           "Incapsulation",
           "Inheritance",
           "Interface",
           "Methods",
           "Multi-Threading",
+          "class",
+          "constructor",
           "object",
           "packages",
           "polymorphism",
@@ -109,24 +109,36 @@
           "@GeneratedValue",
           "@Id",
           "@ResponseBody",
-          "@service",
           "@SpringBootApplication",
-          "constructor",
+          "@service",
           "Domain Modeling",
           "Enum",
-          "existsByRole(...)",
-          "final",
           "GenerationType.IDENTITY",
           "IllegalStateException",
           "Immutability",
-          "injection",
-          "interface",
-          "Jackson",
           "JPA",
           "JVM + Class Loading",
+          "Jackson",
           "ORM Engine",
           "RBAC",
-          "Spring Convertion"
+          "Spring Convertion",
+          "constructor",
+          "existsByRole(...)",
+          "final",
+          "injection",
+          "interface"
+        ]
+      }
+    }
+  },
+  "Web Basic": {
+    "name": "WEB BASIC",
+    "topics": {
+      "14-4-2026": {
+        "name": "14 4 2026",
+        "notes": [
+          "index",
+          "index2"
         ]
       }
     }
