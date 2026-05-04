@@ -4,8 +4,8 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.worknest.modules.auth.users.Role;
 import com.worknest.modules.auth.users.RoleRepository;
+import com.worknest.modules.role.dto.RoleResponse;
 
 @Service
 public class RoleService {
@@ -16,7 +16,20 @@ public class RoleService {
         this.roleRepository = roleRepository;
     }
 
-    public List<Role> getAllRoles() {
-        return roleRepository.findAll();
-    }
+
+   public List<String> getAllRoleNames() {
+    return roleRepository.findAll()
+            .stream()
+            .map(role -> role.getName().name())
+            .toList();
+}
+
+public List<RoleResponse> getAllRoles() {
+    return roleRepository.findAll()
+            .stream()
+            .map(role -> new RoleResponse(
+                    role.getName().name()   // enum → string
+            ))
+            .toList();
+}
 }

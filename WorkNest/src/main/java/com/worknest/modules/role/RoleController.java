@@ -5,9 +5,10 @@ import java.util.List;
 import org.springframework.web.bind.annotation.*;
 
 import com.worknest.modules.auth.users.Role;
+import com.worknest.modules.role.dto.RoleResponse;
 
 @RestController
-@RequestMapping("/api/roles")
+@RequestMapping("/api/v1/roles")
 public class RoleController {
 
     private final RoleService roleService;
@@ -17,8 +18,7 @@ public class RoleController {
     }
 
     @GetMapping
-    public List<Role> getRoles() {
-        System.out.println("API HIT");
+    public List<RoleResponse> getRoles() {
         return roleService.getAllRoles();
     }
 }

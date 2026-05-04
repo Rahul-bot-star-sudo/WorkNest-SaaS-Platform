@@ -28,7 +28,7 @@ public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Excepti
         .csrf(csrf -> csrf.disable())
         .authorizeHttpRequests(auth -> auth
             // ✅ Public APIs
-            .requestMatchers("/api/v1/auth/**", "/api/roles/**").permitAll()
+            .requestMatchers("/api/v1/auth/**", "/api/v1/roles/**").permitAll()
 
             // 🔒 Protected APIs
             .anyRequest().authenticated()
