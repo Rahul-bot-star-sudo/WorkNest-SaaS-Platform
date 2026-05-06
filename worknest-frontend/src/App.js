@@ -7,6 +7,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/Dashboard";
 import RegisterSuperAdmin from "./pages/RegisterSuperAdmin";
 import CreateCompany from "./pages/CreateCompany";
+import Register from "./pages/Register";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
         {/* Public */}
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<RegisterSuperAdmin />} />
+        <Route path="/user/register" element={<Register />} />
 
         {/* Protected */}
         <Route
