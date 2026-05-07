@@ -1,4 +1,4 @@
-package com.worknest.modules.auth.users;
+package com.worknest.modules.role;
 
 import java.util.Optional;
 

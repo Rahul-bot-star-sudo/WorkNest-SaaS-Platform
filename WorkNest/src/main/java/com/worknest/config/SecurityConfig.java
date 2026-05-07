@@ -1,54 +1,70 @@
 package com.worknest.config;
-import java.util.List;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.web.cors.CorsConfiguration;
-import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 @Configuration
 public class SecurityConfig {
 
-    // ✅ Password encoder bean
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
-    // ✅ Disable security temporarily
-@Bean
-public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-    http
-        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-        .csrf(csrf -> csrf.disable())
-        .authorizeHttpRequests(auth -> auth
-            // ✅ Public APIs
-            .requestMatchers("/api/v1/auth/**", "/api/v1/roles/**").permitAll()
-
-            // 🔒 Protected APIs
-            .anyRequest().authenticated()
-        );
-
-    return http.build();
 }
+// package com.worknest.config;
+// import java.util.List;
 
-@Bean
-public CorsConfigurationSource corsConfigurationSource() {
-    CorsConfiguration config = new CorsConfiguration();
+// import org.springframework.context.annotation.Bean;
+// import org.springframework.context.annotation.Configuration;
+// import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+// import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+// import org.springframework.security.crypto.password.PasswordEncoder;
+// import org.springframework.security.web.SecurityFilterChain;
+// import org.springframework.web.cors.CorsConfiguration;
+// import org.springframework.web.cors.CorsConfigurationSource;
+// import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-    config.setAllowedOrigins(List.of("http://localhost:3000"));
-    config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
-    config.setAllowedHeaders(List.of("*"));
-    config.setAllowCredentials(true);
+// @Configuration
+// public class SecurityConfig {
 
-    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
-    source.registerCorsConfiguration("/**", config);
+//     // ✅ Password encoder bean
+//     @Bean
+//     public PasswordEncoder passwordEncoder() {
+//         return new BCryptPasswordEncoder();
+//     }
 
-    return source;
-}
-}
+//     // ✅ Disable security temporarily
+// @Bean
+// public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+//     http
+//         .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+//         .csrf(csrf -> csrf.disable())
+//         .authorizeHttpRequests(auth -> auth
+//             // ✅ Public APIs
+//             .requestMatchers("/api/v1/auth/**", "/api/v1/roles/**").permitAll()
+
+//             // 🔒 Protected APIs
+//             .anyRequest().authenticated()
+//         );
+
+//     return http.build();
+// }
+
+// @Bean
+// public CorsConfigurationSource corsConfigurationSource() {
+//     CorsConfiguration config = new CorsConfiguration();
+
+//     config.setAllowedOrigins(List.of("http://localhost:3000"));
+//     config.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
+//     config.setAllowedHeaders(List.of("*"));
+//     config.setAllowCredentials(true);
+
+//     UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+//     source.registerCorsConfiguration("/**", config);
+
+//     return source;
+// }
+// }

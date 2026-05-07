@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.*;
 
-import com.worknest.modules.auth.users.Role;
+import com.worknest.modules.role.Role;
 import com.worknest.modules.role.dto.RoleResponse;
 
 @RestController

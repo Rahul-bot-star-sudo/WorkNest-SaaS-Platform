@@ -4,7 +4,7 @@ import java.util.List;
 
 import org.springframework.stereotype.Service;
 
-import com.worknest.modules.auth.users.RoleRepository;
+import com.worknest.modules.role.RoleRepository;
 import com.worknest.modules.role.dto.RoleResponse;
 
 @Service
