@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Mouse Playground Challenge</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 20px;
+      transition: background-color 0.3s ease;
+    }
+
+    h1 {
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .box {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+      text-align: center;
+    }
+
+    button {
+      padding: 10px 20px;
+      cursor: pointer;
+      border: none;
+      background: #007bff;
+      color: white;
+      border-radius: 5px;
+    }
+
+    img {
+      width: 200px;
+      transition: transform 0.3s ease;
+      cursor: pointer;
+    }
+
+    .zoom {
+      transform: scale(1.5);
+    }
+
+    .info {
+      display: none;
+      margin-top: 10px;
+      color: #555;
+    }
+
+    .hover-card {
+      padding: 20px;
+      background: #e3f2fd;
+      border-radius: 10px;
+      cursor: pointer;
+    }
+
+    .press-box {
+      width: 150px;
+      height: 150px;
+      background: tomato;
+      margin: auto;
+      transition: transform 0.2s ease;
+      cursor: pointer;
+    }
+
+    .move-box {
+      height: 200px;
+      background: #d1ffd1;
+      position: relative;
+      border-radius: 10px;
+    }
+
+    .coords {
+      margin-top: 10px;
+      font-weight: bold;
+    }
+
+    .custom-menu {
+      position: absolute;
+      background: white;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 10px rgba(0,0,0,0.2);
+      display: none;
+      z-index: 1000;
+      border-radius: 5px;
+      overflow: hidden;
+    }
+
+    .custom-menu div {
+      padding: 10px 20px;
+      cursor: pointer;
+    }
+
+    .custom-menu div:hover {
+      background: #f0f0f0;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>Mouse Playground Challenge</h1>
+
+  <div class="container">
+
+    <!-- Task 1 -->
+    <div class="box">
+      <h2>1. Click Event</h2>
+      <button id="colorBtn">Change Background Color</button>
+    </div>
+
+    <!-- Task 2 -->
+    <div class="box">
+      <h2>2. Double Click Event</h2>
+      <img id="zoomImage"
+        src="https://picsum.photos/200"
+        alt="Sample Image">
+      <p>Double click image to zoom</p>
+    </div>
+
+    <!-- Task 3 -->
+    <div class="box">
+      <h2>3. Mouse Over & Out</h2>
+      <div class="hover-card" id="hoverCard">
+        Hover over me
+        <div class="info" id="extraInfo">
+          Extra information is visible now!
+        </div>
+      </div>
+    </div>
+
+    <!-- Task 4 -->
+    <div class="box">
+      <h2>4. Mouse Down & Up</h2>
+      <div class="press-box" id="pressBox"></div>
+      <p>Hold mouse down on the box</p>
+    </div>
+
+    <!-- Task 5 -->
+    <div class="box">
+      <h2>5. Mouse Move</h2>
+      <div class="move-box" id="moveBox"></div>
+      <div class="coords" id="coords">X: 0, Y: 0</div>
+    </div>
+
+    <!-- Task 6 -->
+    <div class="box">
+      <h2>6. Context Menu</h2>
+      <p>Right click anywhere on page</p>
+    </div>
+
+  </div>
+
+  <!-- Custom Right Click Menu -->
+  <div class="custom-menu" id="customMenu">
+    <div>Refresh</div>
+    <div>Settings</div>
+    <div>Logout</div>
+  </div>
+
+  <script>
+
+    // TASK 1 - CLICK EVENT
+    const colorBtn = document.getElementById("colorBtn");
+
+    colorBtn.addEventListener("click", (event) => {
+      console.log(event);
+
+      const randomColor =
+        "#" + Math.floor(Math.random() * 16777215).toString(16);
+
+      document.body.style.backgroundColor = randomColor;
+    });
+
+
+    // TASK 2 - DOUBLE CLICK EVENT
+    const zoomImage = document.getElementById("zoomImage");
+
+    zoomImage.addEventListener("dblclick", (event) => {
+      console.log(event);
+
+      zoomImage.classList.toggle("zoom");
+    });
+
+
+    // TASK 3 - MOUSEOVER & MOUSEOUT
+    const hoverCard = document.getElementById("hoverCard");
+    const extraInfo = document.getElementById("extraInfo");
+
+    hoverCard.addEventListener("mouseover", (event) => {
+      console.log(event);
+
+      extraInfo.style.display = "block";
+    });
+
+    hoverCard.addEventListener("mouseout", (event) => {
+      console.log(event);
+
+      extraInfo.style.display = "none";
+    });
+
+
+    // TASK 4 - MOUSEDOWN & MOUSEUP
+    const pressBox = document.getElementById("pressBox");
+
+    pressBox.addEventListener("mousedown", (event) => {
+      console.log(event);
+
+      pressBox.style.transform = "scale(1.2)";
+    });
+
+    pressBox.addEventListener("mouseup", (event) => {
+      console.log(event);
+
+      pressBox.style.transform = "scale(1)";
+    });
+
+
+    // TASK 5 - MOUSEMOVE
+    const moveBox = document.getElementById("moveBox");
+    const coords = document.getElementById("coords");
+
+    moveBox.addEventListener("mousemove", (event) => {
+      console.log(event);
+
+      coords.innerText = `X: ${event.offsetX}, Y: ${event.offsetY}`;
+    });
+
+
+    // TASK 6 - CONTEXT MENU
+    const customMenu = document.getElementById("customMenu");
+
+    document.addEventListener("contextmenu", (event) => {
+      console.log(event);
+
+      event.preventDefault();
+
+      customMenu.style.display = "block";
+      customMenu.style.left = event.pageX + "px";
+      customMenu.style.top = event.pageY + "px";
+    });
+
+    document.addEventListener("click", () => {
+      customMenu.style.display = "none";
+    });
+
+  </script>
+
+</body>
+</html>
