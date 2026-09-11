@@ -30,3 +30,11 @@ temp/
 # LOG FILES (OPTIONAL)
 # =========================
 *.log
+# IntelliJ IDEA
+.idea/
+
+# VS Code
+.vscode/
+
+# Maven build files
+WorkNest/target/
